@@ -75,14 +75,22 @@ function generateStates () {
   return out;
 }
 
-function addBeads(state) { // TODO: Deal with beade symmetries
+function addBeads(state) {
   const zeros = [];
+  const symmetries = [];
   for (let i = 0; i < 9; i++) {
     if (state[i] === '0') zeros.push(i);
   }
+  const toPlay = zeros.length % 2 ? '1' : '2';
   const out = Array(9).fill(0);
   for (let index of zeros) {
+    let newState = state.split('');
+    newState[index] = toPlay;
+    newState = transformBoard(newState.join(''));
+    if (symmetries.includes(newState)) continue;
     out[index] = zeros.length;
+    symmetries.push(newState);
+
   }
   return out;
 }
