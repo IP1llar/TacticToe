@@ -19,7 +19,6 @@ function menacePlay (board, menace) {
     total += Number(beads[i]);
   }
   let randomChoice = Math.floor(Math.random()*total);
-  console.log({randomChoice, totals, total});
   let chosenIndex = 0;
   while (randomChoice > 0) {
     if (totals[chosenIndex] === 0) chosenIndex++;
@@ -146,5 +145,4 @@ function transformBoard (board, show = false) { // Each board state is given as 
   return largest[0];
 };
 
-const nigel = createMENACE('Nigel');
-console.log(menacePlay('002021001', nigel));
+module.exports = {createMENACE, menacePlay};
