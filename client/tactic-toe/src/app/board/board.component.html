@@ -1,0 +1,19 @@
+<h1>Winner is: {{winner}}</h1>
+<table>
+  <tr>
+    <td><app-cell (click)="handleClick(0)" value={{board[0]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(1)" value={{board[1]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(2)" value={{board[2]}}></app-cell></td>
+  </tr>
+  <tr>
+    <td><app-cell (click)="handleClick(3)" value={{board[3]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(4)" value={{board[4]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(5)" value={{board[5]}}></app-cell></td>
+  </tr>
+  <tr>
+    <td><app-cell (click)="handleClick(6)" value={{board[6]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(7)" value={{board[7]}}></app-cell></td>
+    <td><app-cell (click)="handleClick(8)" value={{board[8]}}></app-cell></td>
+  </tr>
+</table>
+<button (click)="resetBoard()">Reset</button>
