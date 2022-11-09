@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { APIClientService } from '../apiclient.service';
 
 @Component({
   selector: 'app-board',
@@ -13,11 +14,29 @@ export class BoardComponent implements OnInit {
 
   toPlay: 'X' | 'O' = 'X';
 
+  playerMove = true;
+
   handleClick (index: number) {
-    if (this.board[index] || this.winner !== 'TBD') return;
+    if (this.board[index] || this.winner !== 'TBD' || !this.playerMove) return;
+    this.board[index] = this.toPlay;
+    if (this.checkWin()) {
+      this.winner = this.toPlay;
+      return;
+    };
+    this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
+    this.playerMove = !this.playerMove;
+    this.getAiMove();
+  }
+
+  aiMove (index: number) {
     this.board[index] = this.toPlay;
     if (this.checkWin()) this.winner = this.toPlay;
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
+    this.playerMove = !this.playerMove;
+  }
+
+  getAiMove() {
+    const move = this.api.getAiMove(this.board).subscribe(data => this.aiMove(Number(data)));
   }
 
   resetBoard () {
@@ -44,7 +63,7 @@ export class BoardComponent implements OnInit {
     return false;
   }
 
-  constructor() { }
+  constructor(private api: APIClientService) { }
 
   ngOnInit(): void {
   }
