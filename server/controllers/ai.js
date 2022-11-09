@@ -4,7 +4,12 @@ const nigel = ai.createMENACE('Nigel');
 function move (req, res) {
   try {
     console.log('Move registered');
-    const { board } = req.body;
+    let board = req.body;
+    board = board.map(el => {
+      if (el === '') return '0';
+      if (el === 'X') return '1';
+      if (el === 'O') return '2';
+    }).join('');
     const aiMove = ai.menacePlay(board, nigel);
     res.status(200);
     res.send(JSON.stringify(aiMove));
