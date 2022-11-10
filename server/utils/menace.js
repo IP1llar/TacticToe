@@ -1,5 +1,6 @@
 
 
+// TODO: deal with forfeiting properly
 function createMENACE (name, win = 3, lose = -1, draw = 1) {
   const states = generateStates();
   return {name, states, incentives: {
@@ -9,24 +10,37 @@ function createMENACE (name, win = 3, lose = -1, draw = 1) {
   }};
 }
 
+function trainMENACE (menace, {result, aiHistory}) {
+  const value = menace.incentives[result];
+  for (let move of aiHistory) {
+    const index = move[0];
+    const transformed = transformBoard(move[1], true);
+    const transformedBeads = menace.states[transformed[0]];
+    const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true);
+    beads[index] += value;
+    let updatedBeads = transform(beads, transformed[1], transformed[2], true);
+    if (updatedBeads.every(el => el === '0') || updatedBeads.length !== 9) {
+      updatedBeads = addBeads(transformed[0]);
+    }
+    menace.states[transformed[0]] = updatedBeads;
+  }
+  return menace;
+}
+
 function menacePlay (board, menace) {
   const transformed = transformBoard(board, true);
   const transformedBeads = menace.states[transformed[0]];
-  const beads = inverseTransform(transformedBeads, transformed[1], transformed[2]);
-  const totals = beads.split('').map(str => Number(str));
-  let total = 0;
+  const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true);
+  const totals = beads.map(str => Number(str));
+  let total = [];
   for (let i = 0; i < 9; i++) {
-    total += Number(beads[i]);
-  }
-  let randomChoice = Math.floor(Math.random()*total);
-  let chosenIndex = 0;
-  while (randomChoice > 0) {
-    if (totals[chosenIndex] === 0) chosenIndex++;
-    else {
-      totals[chosenIndex]--;
-      randomChoice--;
+    for (let j = 0; j < totals[i]; j++) {
+      total.push(i);
     }
   }
+
+  let randomChoice = total[Math.floor(Math.random()*total.length)];
+  let chosenIndex = Number(randomChoice);
   return chosenIndex;
 }
 
@@ -83,18 +97,30 @@ function addBeads(state) {
   }
   const toPlay = zeros.length % 2 ? '1' : '2';
   const out = Array(9).fill(0);
+  const dict = {
+    9:8,
+    8:6,
+    7:4,
+    6:2,
+    5:2,
+    4:1,
+    3:1,
+    2:1,
+    1:1
+
+  }
   for (let index of zeros) {
     let newState = state.split('');
     newState[index] = toPlay;
     newState = transformBoard(newState.join(''));
     if (symmetries.includes(newState)) continue;
-    out[index] = zeros.length;
+    out[index] = dict[zeros.length];
     symmetries.push(newState);
 
   }
   return out;
 }
-function transform (board, rotation, flip) {
+function transform (board, rotation, flip, beads = false) {
   const temp = [];
   for (let position of rotation) {
     temp.push(board[position]);
@@ -103,10 +129,11 @@ function transform (board, rotation, flip) {
   for (let position of flip) {
     out.push(temp[position]);
   }
+  if (beads) return out;
   return out.join('');
 }
 
-function inverseTransform (board, oldRotation, flip) {
+function inverseTransform (board, oldRotation, flip, beads = false) {
   const temp = [];
   for (let position of flip) {
     temp.push(board[position]);
@@ -116,6 +143,7 @@ function inverseTransform (board, oldRotation, flip) {
   for (let position of rotation) {
     out.push(temp[position]);
   }
+  if (beads) return out;
   return out.join('');
 }
 
@@ -153,4 +181,13 @@ function transformBoard (board, show = false) { // Each board state is given as 
   return largest[0];
 };
 
-module.exports = {createMENACE, menacePlay};
+function randomMove (board) {
+  const zeros = [];
+  for (let i = 0; i < 9; i++) {
+    if (board[i] === '0') zeros.push(i);
+  }
+  return zeros[Math.floor(Math.random()*zeros.length)]
+}
+
+
+module.exports = {createMENACE, menacePlay, trainMENACE, randomMove};

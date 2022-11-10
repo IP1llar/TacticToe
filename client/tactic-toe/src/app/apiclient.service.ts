@@ -10,8 +10,24 @@ export class APIClientService {
 
   constructor(private api: HttpClient) {}
 
-  getAiMove(board: string[]) {
-    return this.api.post<string>(`${this.rootUrl}/ai/move`, JSON.stringify(board), {
+  getAiMove(board: string) {
+    return this.api.post<string>(`${this.rootUrl}/ai/move`, JSON.stringify({board}), {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
+  getRandomMove(board: string) {
+    console.log(board);
+    return this.api.post<string>(`${this.rootUrl}/random/move`, JSON.stringify({board}), {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
+  sendMatch(aiHistory: ((number | string)[])[], result: 'win'|'draw'|'lose') {
+    return this.api.post<any>(`${this.rootUrl}/ai/train`, JSON.stringify({
+      result,
+      aiHistory
+    }), {
       headers: {'Content-Type': 'application/json'}
     })
   }
