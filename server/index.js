@@ -5,6 +5,8 @@ const router = require('./router');
 const cors = require('cors');
 const session = require('express-session');
 const {passport, auth} = require('./utils/passport');
+const db = require('./models/index');
+require('./models')
 
 const port = process.env.PORT || 3001;
 
@@ -30,6 +32,15 @@ app.post('/authenticate', auth(), (req, res) => {
 
 app.use(router);
 
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}`)
-})
+async function start() {
+  try {
+    await db.sequelize.sync();
+    app.listen(port, () => {
+      console.log(`Listening on port: ${port}`)
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+start();
