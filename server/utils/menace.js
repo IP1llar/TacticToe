@@ -1,9 +1,9 @@
 
 
 // TODO: deal with forfeiting properly
-function createMENACE (name, win = 3, lose = -1, draw = 1) {
+function createMENACE (name, win = 3, lose = -1, draw = 1, history = [[0, 0]]) {
   const states = generateStates();
-  return {name, states, incentives: {
+  return {name, states, history, incentives: {
     win,
     lose,
     draw
@@ -12,6 +12,8 @@ function createMENACE (name, win = 3, lose = -1, draw = 1) {
 
 function trainMENACE (menace, {result, aiHistory}) {
   const value = menace.incentives[result];
+  const lastResult = menace.history[menace.history.length - 1]
+  menace.history.push([lastResult[0] + 1, lastResult[1] + value]);
   for (let move of aiHistory) {
     const index = move[0];
     const transformed = transformBoard(move[1], true);
@@ -29,6 +31,7 @@ function trainMENACE (menace, {result, aiHistory}) {
 
 function menacePlay (board, menace) {
   const transformed = transformBoard(board, true);
+  // console.log(transformed)
   const transformedBeads = menace.states[transformed[0]];
   const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true);
   const totals = beads.map(str => Number(str));
@@ -255,11 +258,11 @@ function perfectMove2 (board, firstTurn, currentTurn = firstTurn, depth = 0) {
   }
   // console.log(res);
   if (depth === 0) return res[1];
-  if (res[0] === Infinity) return 0;
+  if (res[0] === Infinity || res[0] === -Infinity) return 0;
   return res[0];
 }
 
-// console.log(perfectMove2('112210020', 1, 1));
+// console.log(perfectMove2('210010000', 2, 2));
 
 
 module.exports = {createMENACE, menacePlay, trainMENACE, randomMove, perfectMove2};

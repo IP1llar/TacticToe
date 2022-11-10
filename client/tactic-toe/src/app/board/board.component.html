@@ -1,4 +1,5 @@
-<h1>Winner is: {{winner}}</h1>
+<div>
+  <h1>Winner is: {{winner}}</h1>
 <table>
   <tr>
     <td><app-cell (click)="handleClick(0)" value={{board[0]}}></app-cell></td>
@@ -16,4 +17,6 @@
     <td><app-cell (click)="handleClick(8)" value={{board[8]}}></app-cell></td>
   </tr>
 </table>
-<button (click)="resetBoard()">Reset</button><button (click)="randomAiGo()">Random AI</button>
+<button (click)="resetBoard()">Reset</button><button (click)="randomAiGo()">Random AI</button><button (click)="perfectAiGo()">Perfect AI</button>
+</div>
+<app-chart [history]="currentMenace.history"></app-chart>

@@ -18,11 +18,13 @@ export class BoardComponent implements OnInit {
 
   randomAi = false;
 
+  perfectAi = false;
+
   aiHistory: ((number | string)[])[] = [];
 
   playerMove = false;
 
-  currentMenace:any = {};
+  currentMenace:any = {history: ['0', 0]};
 
   parseBoard(board: string[]) {
     return board.map(el => {
@@ -33,17 +35,19 @@ export class BoardComponent implements OnInit {
   }
 
   handleClick (index: number) {
+    console.log(this.currentMenace.history)
+    console.log(this.board);
     if (!this.playerMove || this.board[index] !== '') {
       console.log('You can not go there');
       return;
     };
-    console.log({index})
     this.spacesLeft--;
     if (this.board[index] || this.winner !== 'TBD' || !this.playerMove) return;
     this.board[index] = this.toPlay;
     if (this.checkWin()) {
       this.winner = this.toPlay;
       this.randomAi = false;
+      this.perfectAi = false;
       this.api.sendMatch(this.aiHistory, 'lose').subscribe(data => this.currentMenace = data);
       return;
     };
@@ -51,6 +55,7 @@ export class BoardComponent implements OnInit {
       this.api.sendMatch(this.aiHistory, 'draw').subscribe(data => this.currentMenace = data);
       this.winner = 'Draw';
       this.randomAi = false;
+      this.perfectAi = false;
       return;
     };
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
@@ -59,13 +64,15 @@ export class BoardComponent implements OnInit {
   }
 
   aiMove (index: number) {
-    if (this.currentMenace.states) console.log(this.currentMenace.states['000000000'])
+    console.log(this.board);
+    // if (this.currentMenace.states) console.log(this.currentMenace.states['000000000'])
     this.spacesLeft--;
     this.aiHistory.push([index, this.parseBoard(this.board)]);
     this.board[index] = this.toPlay;
     if (this.checkWin()) {
       this.winner = this.toPlay;
       this.randomAi = false;
+      this.perfectAi = false;
       this.api.sendMatch(this.aiHistory, 'win').subscribe(data => this.currentMenace = data);
       return;
     };
@@ -73,11 +80,13 @@ export class BoardComponent implements OnInit {
       this.api.sendMatch(this.aiHistory, 'draw').subscribe(data => this.currentMenace = data);
       this.winner = 'Draw';
       this.randomAi = false;
+      this.perfectAi = false;
       return;
     };
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
     this.playerMove = !this.playerMove;
     if (this.randomAi) this.getRandomMove();
+    if (this.perfectAi) this.getPerfectMove();
   }
 
 
@@ -87,6 +96,10 @@ export class BoardComponent implements OnInit {
 
   getRandomMove() {
     const move = this.api.getRandomMove(this.parseBoard(this.board)).subscribe(data => this.handleClick(Number(data)));
+  }
+
+  getPerfectMove() {
+    const move = this.api.getPerfectMove(this.parseBoard(this.board)).subscribe(data => this.handleClick(Number(data)));
   }
 
   
@@ -105,6 +118,12 @@ export class BoardComponent implements OnInit {
     this.randomAi = true;
     if (this.winner !== 'TBD') this.resetBoard();
     this.getRandomMove();
+  }
+
+  perfectAiGo () {
+    this.perfectAi = true;
+    if (this.winner !== 'TBD') this.resetBoard();
+    this.getPerfectMove();
   }
 
   checkWin () {

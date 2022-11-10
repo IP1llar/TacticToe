@@ -41,9 +41,10 @@ function random (req, res) {
 }
 
 function perfect (req, res) {
+  console.log('perfect')
   try {
     let { board }= req.body;
-    const aiMove = ai.perfectMove2(board);
+    const aiMove = ai.perfectMove2(board, 2, 2);
     res.status(200);
     res.send(JSON.stringify(aiMove));
   } catch (error) {

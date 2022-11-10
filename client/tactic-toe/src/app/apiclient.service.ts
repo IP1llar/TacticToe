@@ -17,8 +17,13 @@ export class APIClientService {
   }
 
   getRandomMove(board: string) {
-    console.log(board);
     return this.api.post<string>(`${this.rootUrl}/random/move`, JSON.stringify({board}), {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
+  getPerfectMove(board: string) {
+    return this.api.post<string>(`${this.rootUrl}/perfect/move`, JSON.stringify({board}), {
       headers: {'Content-Type': 'application/json'}
     })
   }
