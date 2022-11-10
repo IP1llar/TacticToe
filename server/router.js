@@ -12,5 +12,6 @@ router.post('/ai/move', (req, res, next) => {
 router.post('/ai/train', ai.train);
 
 router.post('/random/move', ai.random);
+router.post('/perfect/move', ai.perfect);
 
 module.exports = router;

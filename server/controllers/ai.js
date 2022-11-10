@@ -40,4 +40,17 @@ function random (req, res) {
   }
 }
 
-module.exports = { move, train, random }
+function perfect (req, res) {
+  try {
+    let { board }= req.body;
+    const aiMove = ai.perfectMove2(board);
+    res.status(200);
+    res.send(JSON.stringify(aiMove));
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send('Error');
+  }
+}
+
+module.exports = { move, train, random, perfect }

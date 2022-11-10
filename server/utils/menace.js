@@ -45,6 +45,7 @@ function menacePlay (board, menace) {
 }
 
 function checkWin (board) {
+  // console.log('Checking win for ', board)
   const wins = [
     [0,1,2],
     [3,4,5],
@@ -56,7 +57,7 @@ function checkWin (board) {
     [2,4,6]
   ]
   for (let win of wins) {
-    if (board[win[0]] === '0') continue;
+    if (`${board[win[0]]}` === '0') continue;
     if (board[win[0]] === board[win[1]] && board[win[0]] === board[win[2]]) return true;
   }
   return false;
@@ -189,5 +190,76 @@ function randomMove (board) {
   return zeros[Math.floor(Math.random()*zeros.length)]
 }
 
+function perfectMove (board, firstTurn, currentTurn = 1, depth = 0) {
+  if(typeof board === 'string') board = board.split('').map(el => Number(el));
+  // console.log({board, firstTurn, currentTurn})
+  const res = [];
+  const possibleMoves = [];
+  const state = [...board];
+  for (let i = 0; i < 9; i++) {
+    if (state[i] === 0) possibleMoves.push(i);
+  }
+  for (let move of possibleMoves) {
+    let total = 0;
+    let newBoard = [...board];
+    newBoard[move] = currentTurn;
+    const win = checkWin(newBoard);
+    if (win) {
+      // console.log('win', currentTurn === firstTurn)
+      if (currentTurn === firstTurn) total = 1;
+      else total = -1;
+    } else {
+      total = perfectMove(newBoard, firstTurn, currentTurn === 1 ? 2 : 1, depth + 1);
+      // if (total < toAdd) total += toAdd;
+    }
+    // console.log({newBoard, depth, total, currentTurn});
+    res.push([total, move]);
+  }
+  // console.log({res})
+  if (depth === 0) return res;
+  if (res.length === 0) return 0;
+  let val = 0;
+  if (firstTurn === currentTurn) val = res.reduce((acc, prev) => prev[0] > acc ? prev[0]: acc, res[0][0]);
+  else val = res.reduce((acc, prev) => prev[0] < acc ? prev[0]: acc, res[0][0]);
+  // console.log({val});
+  return val;
+}
 
-module.exports = {createMENACE, menacePlay, trainMENACE, randomMove};
+function perfectMove2 (board, firstTurn, currentTurn = firstTurn, depth = 0) {
+  if(typeof board === 'string') board = board.split('').map(el => Number(el));
+  // console.log({board, firstTurn, currentTurn})
+  let res = [];
+  res.push(currentTurn === firstTurn ? -Infinity : Infinity);
+  const possibleMoves = [];
+  const state = [...board];
+  for (let i = 0; i < 9; i++) {
+    if (state[i] === 0) possibleMoves.push(i);
+  }
+  for (let move of possibleMoves) {
+    let total = 0;
+    let newBoard = [...board];
+    newBoard[move] = currentTurn;
+    const win = checkWin(newBoard);
+    if (win) {
+      if (currentTurn === firstTurn) total = 1;
+      else total = -1;
+    } else {
+      total = perfectMove2(newBoard, firstTurn, currentTurn === 1 ? 2 : 1, depth + 1)
+    }
+    // console.log([total, move], newBoard)
+    if (currentTurn === firstTurn) {
+      if (res[0] < total) res = [total, move] 
+    } else {
+      if (res[0] > total) res = [total, move] 
+    }
+  }
+  // console.log(res);
+  if (depth === 0) return res[1];
+  if (res[0] === Infinity) return 0;
+  return res[0];
+}
+
+// console.log(perfectMove2('112210020', 1, 1));
+
+
+module.exports = {createMENACE, menacePlay, trainMENACE, randomMove, perfectMove2};
