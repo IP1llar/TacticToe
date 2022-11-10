@@ -1,4 +1,6 @@
 const passport = require('passport');
+const db = require('../models');
+const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local');
 
 passport.serializeUser(function(user, done) {
@@ -10,9 +12,13 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    if (username === 'admin' && password === 'admin') { // TODO: query database
-      return done(null, username);
+  async function(email, password, done) {
+    const user = await db.Users.findOne({where: {email}});
+    console.log(user);
+    if (user === null) return done('no such user', false)
+    const match = await bcrypt.compare(password, user.password);
+    if (match) { // TODO: query database
+      return done(null, email);
     } else {
       return done('unauthorised access', false)
     }

@@ -4,7 +4,7 @@ const app = express();
 const router = require('./router');
 const cors = require('cors');
 const session = require('express-session');
-const {passport, auth} = require('./utils/passport');
+const {passport} = require('./utils/passport');
 const db = require('./models/index');
 require('./models')
 
@@ -26,15 +26,11 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.post('/authenticate', auth(), (req, res) => {
-  res.status(200).json({'statusCode': 200, 'message':'hello'});
-})
-
 app.use(router);
 
 async function start() {
   try {
-    await db.sequelize.sync();
+    await db.sequelize.sync({force: true});
     app.listen(port, () => {
       console.log(`Listening on port: ${port}`)
     })

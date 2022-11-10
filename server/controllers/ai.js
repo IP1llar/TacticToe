@@ -1,5 +1,6 @@
 const ai = require('../utils/menace');
 const nigel = ai.createMENACE('Nigel');
+const db = require('../models');
 
 function move (req, res) {
   try {
