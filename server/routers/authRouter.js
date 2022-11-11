@@ -8,4 +8,6 @@ authRouter.post('/login', auth(), (req, res) => {
 
 authRouter.post('/register', users.register);
 
+authRouter.delete('/logout', users.logout);
+
 module.exports = authRouter;

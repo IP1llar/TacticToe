@@ -22,4 +22,20 @@ async function register (req, res) {
   }
 }
 
-module.exports = {register};
+function logout (req, res) {
+  try {
+    if (req.user) {
+      req.logout(function(error) {
+        if (error) throw new Error();
+      })
+      res.status(200).json('User logged out')
+    } else {
+      res.status(404).json('User not found');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({"statusCode": 200, "message": error});
+  }
+}
+
+module.exports = {register, logout};

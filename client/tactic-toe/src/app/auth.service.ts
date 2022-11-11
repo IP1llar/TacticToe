@@ -30,4 +30,8 @@ export class AuthService {
     return this.http.post('/api/register', {email, firstName, lastName, password});
   }
 
+  logout() {
+    return this.http.delete('/api/logout', {withCredentials: true});
+  }
+
 }

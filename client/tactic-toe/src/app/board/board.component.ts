@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { APIClientService } from '../apiclient.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-board',
@@ -144,9 +146,18 @@ export class BoardComponent implements OnInit {
     return false;
   }
 
-  constructor(private api: APIClientService) { this.getAiMove() }
+  constructor(private api: APIClientService, private authService : AuthService, private router : Router) { this.getAiMove() }
 
   ngOnInit(): void {
+  }
+
+  onLogout() {
+    this.authService.logout()
+      .subscribe((response : any ) => { // TODO: fix typing
+        console.log('response', response);
+        this.authService.setUserInfo({'user' : {}});
+        this.router.navigate(['login'])
+      })
   }
 
 }
