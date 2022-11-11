@@ -10,8 +10,8 @@ export class APIClientService {
 
   constructor(private api: HttpClient) {}
 
-  getAiMove(board: string) {
-    return this.api.post<string>(`${this.rootUrl}/ai/move`, JSON.stringify({board}), {
+  getAiMove(board: object) {
+    return this.api.post<string>(`${this.rootUrl}/ai/move`, JSON.stringify(board), {
       headers: {'Content-Type': 'application/json'}
     })
   }

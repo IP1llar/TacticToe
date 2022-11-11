@@ -8,16 +8,22 @@ import { BoardComponent } from './board/board.component';
 import { CellComponent } from './cell/cell.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartComponent } from './chart/chart.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     CellComponent,
-    ChartComponent
+    ChartComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     NgChartsModule,

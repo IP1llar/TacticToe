@@ -1,13 +1,15 @@
 
 
 // TODO: deal with forfeiting properly
-function createMENACE (name, win = 3, lose = -1, draw = 1, history = [[0, 0]]) {
+function createMENACE (name, win = 3, lose = -1, draw = 1, history = [[0, 0]], results = {wins: 0, draws: 0, losses: 0}) {
   const states = generateStates();
   return {name, states, history, incentives: {
     win,
     lose,
     draw
-  }};
+  }, 
+    results
+  };
 }
 
 function trainMENACE (menace, {result, aiHistory}) {

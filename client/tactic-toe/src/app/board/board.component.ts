@@ -91,7 +91,7 @@ export class BoardComponent implements OnInit {
 
 
   getAiMove() {
-    const move = this.api.getAiMove(this.parseBoard(this.board)).subscribe(data => this.aiMove(Number(data)));
+    const move = this.api.getAiMove({board: this.parseBoard(this.board), id:1}).subscribe(data => this.aiMove(Number(data)));
   }
 
   getRandomMove() {
