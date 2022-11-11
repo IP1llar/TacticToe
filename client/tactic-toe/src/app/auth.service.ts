@@ -9,11 +9,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  public isLoggedIn = false;
+
   isAuthenticated(){
     console.log('checking if logged in')
     let result = false;
     return this.http.get('/api/loggedin', {withCredentials: true}).pipe(
-      map(() => true),
+      map(() => {
+        this.isLoggedIn = true;
+        return true;
+      }),
       catchError(() => of(false))
     )
   }
@@ -31,6 +36,7 @@ export class AuthService {
   }
 
   logout() {
+    this.isLoggedIn = false;
     return this.http.delete('/api/logout', {withCredentials: true});
   }
 

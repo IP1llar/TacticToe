@@ -11,6 +11,11 @@ import { ChartComponent } from './chart/chart.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
+import { YourAiComponent } from './your-ai/your-ai.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     CellComponent,
     ChartComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavbarComponent,
+    CreateAnAiComponent,
+    YourAiComponent,
+    AboutComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

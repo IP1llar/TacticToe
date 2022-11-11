@@ -1,0 +1,9 @@
+<main>
+  <h1 [routerLink]="['/home']">t<span>A</span>ct<span>I</span>c-toe</h1>
+  <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/login']">Login</h3>
+  <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/register']">Register</h3>
+  <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/create']">Create an AI</h3>
+  <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/yourai']">Your Ai</h3>
+  <h3 [routerLink]="['/about']">About</h3>
+  <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
+</main>

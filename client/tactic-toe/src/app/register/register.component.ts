@@ -14,16 +14,25 @@ export class RegisterComponent implements OnInit {
     userEmail: ['', [Validators.required, Validators.email]], // TODO:  validate
     userFirstName: ['', Validators.required],
     userLastName: ['', Validators.required],
-    userPassword: ['', [Validators.required, Validators.minLength(5)]]
+    userPassword: ['', [Validators.required, Validators.minLength(6)]]
   })
+
+  registerSuccess = 'null';
 
   onSubmit() {
     console.warn(this.registerForm.value);
     const { userEmail, userFirstName, userLastName, userPassword } = this.registerForm.value;
     this.authService.register(userEmail as string, userFirstName as string, userLastName as string, userPassword as string)
-      .subscribe((response : any ) => { // TODO: fix typing
-        console.log('response', response);
-        this.router.navigate(['login'])
+      .subscribe({
+        next: (response : any ) => { // TODO: fix typing
+          this.registerSuccess = 'success';
+          console.log('response', response);
+          this.router.navigate(['login'])
+        },
+        error: error => {
+          console.log(error);
+          this.registerSuccess = 'error';
+        }
       })
   }
 

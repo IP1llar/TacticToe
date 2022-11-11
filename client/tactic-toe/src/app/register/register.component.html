@@ -1,16 +1,41 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <label for="email">Email:</label>
-  <input type="email" id="email" formControlName="userEmail">
+<main>
+  <div class="standOut">
+    <h2>Register<span class="error" *ngIf="registerSuccess==='error'"> - User already exists</span></h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class='error' *ngIf="registerForm.controls.userEmail.invalid && (registerForm.controls.userEmail.dirty || registerForm.controls.userEmail.touched); else validEmail">
+        <p *ngIf="registerForm.controls.userEmail.errors?.['required']">Email is required</p>
+        <p *ngIf="registerForm.controls.userEmail.errors?.['email']">Email is not valid</p>
+      </div>
+      <ng-template #validEmail><label for="email">Email</label></ng-template>
+      <input type="email" id="email" formControlName="userEmail">
 
-  <label for="firstName">First Name:</label>
-  <input type="text" id="firstName" formControlName="userFirstName">
 
-  <label for="lastName">Last Name:</label>
-  <input type="text" id="lastName" formControlName="userLastName">
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" formControlName="userPassword">
+      <div class='error' *ngIf="registerForm.controls.userFirstName.invalid && (registerForm.controls.userFirstName.dirty || registerForm.controls.userFirstName.touched); else validFirstName">
+        <p *ngIf="registerForm.controls.userFirstName.errors?.['required']">First Name is required</p>
+      </div>
+      <ng-template #validFirstName><label for="firstName">First Name</label></ng-template>
+      <input type="text" id="firstName" formControlName="userFirstName">
+    
+      <div class='error' *ngIf="registerForm.controls.userLastName.invalid && (registerForm.controls.userLastName.dirty || registerForm.controls.userLastName.touched); else validLastName">
+        <p *ngIf="registerForm.controls.userLastName.errors?.['required']">Last Name is required</p>
+      </div>
+      <ng-template #validLastName><label for="lastName">Last Name</label></ng-template>
+      <input type="text" id="lastName" formControlName="userLastName">
+    
 
-  <button type="submit" [disabled]="!registerForm.valid">Register</button>
-</form>
-<button [routerLink]="['/login']">Login</button>
+
+      <div class='error' *ngIf="registerForm.controls.userPassword.invalid && (registerForm.controls.userPassword.dirty || registerForm.controls.userPassword.touched); else validPassword">
+        <p *ngIf="registerForm.controls.userPassword.errors?.['required']">Password is required</p>
+        <p *ngIf="registerForm.controls.userPassword.errors?.['minlength']">Password must have at least 6 characters</p>
+      </div>
+      <ng-template #validPassword><label for="password">Password</label></ng-template>
+      <input type="password" formControlName="userPassword">
+
+      <div class="buttons">
+        <button type="button" [routerLink]="['/login']">Login</button>
+        <button type="submit" [disabled]="!registerForm.valid">Register</button>
+      </div>
+    </form>
+  </div>
+</main>

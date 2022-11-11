@@ -1,10 +1,25 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <label for="email">Email:</label>
-  <input type="email" formControlName="userEmail">
-
-  <label for="password">Password:</label>
-  <input type="password" formControlName="userPassword">
-
-  <input type="submit" [disabled]="!loginForm.valid">
-</form>
-<button (click)="checkLoggedIn()">Check logged in</button><button [routerLink]="['/register']">Register</button>
+<main>
+  <div class="standOut">
+    <h2>Login<span class="error" *ngIf="loginSuccess==='error'"> - Incorrect email/password</span></h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class='error' *ngIf="loginForm.controls.userEmail.invalid && (loginForm.controls.userEmail.dirty || loginForm.controls.userEmail.touched); else validEmail">
+        <p *ngIf="loginForm.controls.userEmail.errors?.['required']">Email is required</p>
+        <p *ngIf="loginForm.controls.userEmail.errors?.['email']">Email is not valid</p>
+      </div>
+      <ng-template #validEmail><label for="email">Email</label></ng-template>
+      <input type="email" name="email" formControlName="userEmail">
+      
+      <div class='error' *ngIf="loginForm.controls.userPassword.invalid && (loginForm.controls.userPassword.dirty || loginForm.controls.userPassword.touched); else validPassword">
+        <p *ngIf="loginForm.controls.userPassword.errors?.['required']">Password is required</p>
+        <p *ngIf="loginForm.controls.userPassword.errors?.['minlength']">Password must have at least 6 characters</p>
+      </div>
+      <ng-template #validPassword><label for="password">Password</label></ng-template>
+      <input type="password" formControlName="userPassword">
+      
+      <div class="buttons">
+        <button type="button" [routerLink]="['/register']">Register</button>
+        <button type="submit" [disabled]="!loginForm.valid">Login</button>
+      </div>
+    </form>
+  </div>
+</main>

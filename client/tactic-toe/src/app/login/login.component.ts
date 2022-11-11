@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
     userPassword: ['', [Validators.required, Validators.minLength(6)]]
   })
 
+  loginSuccess = 'null';
+
   constructor(
     private authService : AuthService, 
     private router : Router, 
@@ -32,11 +34,17 @@ export class LoginComponent implements OnInit {
 
   login(email: string, password: string) {
     this.authService.validate(email, password)
-      .subscribe((response : any ) => { // TODO: fix typing
-        console.log('response', response);
-        this.authService.setUserInfo({'user' : response['user']});
-        this.router.navigate(['home'])
-      })
+      .subscribe({
+        next: (response : any ) => { // TODO: fix typing
+          this.loginSuccess = 'success';
+          this.authService.setUserInfo({'user' : response['user']});
+          this.router.navigate(['home'])
+        },
+        error: error => {
+          console.log(error);
+          this.loginSuccess = 'error';
+        }}
+      )
   }
 
   checkLoggedIn() {
