@@ -1,9 +1,10 @@
-<form class="form-signin">
-  <h1>Please sign in</h1>
-  <label for="inputEmail">Email address</label>
-  <input type="email" name="userEmail" id="inputEmail" [(ngModel)]="userEmail" class="form-control" placeholder="Email address" required autofocus>
-  <label for="inputPassword">Password</label>
-  <input type="password" name="userPassword" id="inputPassword" [(ngModel)]="userPassword" class="form-control" placeholder="Password" required>
-  <button (click)="login()" type="button">Sign in</button>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <label for="email">Email:</label>
+  <input type="email" formControlName="userEmail">
+
+  <label for="password">Password:</label>
+  <input type="password" formControlName="userPassword">
+
+  <input type="submit" [disabled]="!loginForm.valid">
 </form>
-<button (click)="checkLoggedIn()">Check logged in</button>
+<button (click)="checkLoggedIn()">Check logged in</button><button [routerLink]="['/register']">Register</button>

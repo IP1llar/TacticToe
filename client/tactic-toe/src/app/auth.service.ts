@@ -9,7 +9,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public isAuthenticated(){
+  isAuthenticated(){
     console.log('checking if logged in')
     let result = false;
     return this.http.get('/api/loggedin', {withCredentials: true}).pipe(
@@ -18,17 +18,16 @@ export class AuthService {
     )
   }
 
-  public setUserInfo(user:any) {
+  setUserInfo(user:any) {
     localStorage.setItem('userInfo', JSON.stringify(user));
   }
 
-  public validate(email:string, password:string) {
-    console.log('Attempting validation');
-    return this.http.post('/api/login', {'username': email, 'password': password}, {
-      headers: {
-        credentials: 'include',
-        mode: 'cors',
-      }
-    });
+  validate(email:string, password:string) {
+    return this.http.post('/api/login', {'username': email, 'password': password}, {withCredentials: true});
   }
+
+  register(email:string, firstName:string, lastName:string, password:string) {
+    return this.http.post('/api/register', {email, firstName, lastName, password});
+  }
+
 }
