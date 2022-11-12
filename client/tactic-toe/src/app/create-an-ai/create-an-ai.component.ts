@@ -8,16 +8,9 @@ import { APIClientService } from '../apiclient.service';
 })
 export class CreateAnAiComponent implements OnInit {
 
-  allAI: any[] = [];
-
   constructor(private auth : APIClientService) { }
 
   ngOnInit(): void {
-    this.fetchAllAi();
-  }
-
-  fetchAllAi() {
-    this.auth.getAllAi().subscribe(data => this.allAI = data);
   }
 
 }

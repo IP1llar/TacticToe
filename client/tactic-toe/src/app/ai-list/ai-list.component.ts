@@ -9,19 +9,13 @@ import { AuthService } from '../auth.service';
 })
 export class AiListComponent implements OnInit {
 
-  allAI: any[] = [];
+  allAi: any[] = [];
 
-  constructor(private api : APIClientService) { }
+  constructor(public api : APIClientService) { }
 
   ngOnInit(): void {
-    this.fetchAllAi();
+    this.api.sharedAllAi.subscribe(data => this.allAi = data)
   }
 
-  fetchAllAi() {
-    this.api.getAllAi().subscribe(data => {
-      this.allAI = data;
-      console.log(data);
-    });
-  }
 
 }

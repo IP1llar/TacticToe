@@ -1,3 +1,3 @@
-<main>
-  <app-ai-info *ngFor="let ai of allAI" [ai]="ai"></app-ai-info>
+<main *ngIf="allAi">
+  <app-ai-info *ngFor="let ai of allAi" [ai]="ai"></app-ai-info>
 </main>

@@ -58,13 +58,14 @@ function perfect (req, res) {
   }
 }
 
-function create (req, res) {
+async function create (req, res) {
   console.log(req.user);
   try {
+    console.log(req.body)
     let { name, win, lose, draw, color } = req.body;
     console.log({ name, win, lose, draw, color })
     const newAi = ai.createMENACE(name, win, lose, draw, color);
-    db.Ais.create({...newAi, UserId: req.user})
+    await db.Ais.create({...newAi, UserId: req.user})
     res.status(200);
     res.send(JSON.stringify('created'));
   } catch (error) {

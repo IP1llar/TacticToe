@@ -4,12 +4,10 @@ const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local');
 
 passport.serializeUser(function(user, done) { // TODO: think about just done(null, user.id) then deserialize using id
-  console.log('serialising user', user)
   if (user) done(null, user.id);
 })
 
 passport.deserializeUser(function(id, done) {
-  console.log('deserializing id', id);
   done(null, id);
 });
 
