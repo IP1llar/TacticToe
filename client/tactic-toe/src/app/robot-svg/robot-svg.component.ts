@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-robot-svg',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./robot-svg.component.css']
 })
 export class RobotSvgComponent implements OnInit {
+
+  @Input() fillColor = 'blue'
 
   constructor() { }
 

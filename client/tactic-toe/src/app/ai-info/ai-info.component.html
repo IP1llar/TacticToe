@@ -1,10 +1,9 @@
 <div class="standOut">
   <div class="title">
-    <app-robot-svg></app-robot-svg>
+    <app-robot-svg [fillColor]="ai.color"></app-robot-svg>
     <h2>{{ai.name}}</h2>
   </div>
   <p>Games played: <span>{{ai.results.wins + ai.results.draws + ai.results.losses}}</span></p>
-  <p>Color: {{ai.color}}</p>
   <div class="buttons">
     <button>Train</button>
     <button>Stats</button>
