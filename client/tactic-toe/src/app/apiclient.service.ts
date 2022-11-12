@@ -35,4 +35,10 @@ export class APIClientService {
     })
   }
 
+  getAllAi() {
+    return this.api.get<object[]>('api/ai/getAllAi', {
+      withCredentials: true
+    })
+  }
+
 }

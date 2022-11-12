@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     history: {
       allowNull: false,
-      type: DataTypes.ARRAY(DataTypes.ARRAY(DataTypes.INTEGER)) // TODO: change history to numbers
+      type: DataTypes.ARRAY(DataTypes.ARRAY(DataTypes.INTEGER))
     },
     incentives: {
       allowNull: false,
@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     results: {
       allowNull: false,
       type: DataTypes.JSONB
+    },
+    color: {
+      allowNull: false,
+      type: DataTypes.STRING
     }
   })
   return Ais;

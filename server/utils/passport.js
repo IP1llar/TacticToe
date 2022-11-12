@@ -10,7 +10,7 @@ passport.serializeUser(function(user, done) { // TODO: think about just done(nul
 
 passport.deserializeUser(function(id, done) {
   console.log('deserializing id', id);
-  done(null, true);
+  done(null, id);
 });
 
 passport.use(new LocalStrategy(
@@ -32,7 +32,6 @@ const auth = () => {
       if (error) res.status(400).json({"statusCode": 200, "message": error});
       req.login(user, function(error) {
         if (error) return next(error);
-        console.log(user);
         next();
       })
     })(req, res, next);
@@ -40,7 +39,6 @@ const auth = () => {
 }
 
 const isLoggedIn = (req, res, next) => {
-  console.log(req)
   if(req.isAuthenticated()){
       return next()
   }

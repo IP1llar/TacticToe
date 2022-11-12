@@ -37,27 +37,3 @@ input {
   padding: 5px;
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-around;
-}
-
-button {
-  margin: 10px 20px;
-  width: 100px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--button-color);
-  color: var(--nav-text-color);
-}
-
-button:hover {
-  background-color: var(--nav-bg-color);
-  color: var(--nav-text-color);
-}
-
-button:disabled {
-  background-color: var(--text-color);
-  color: var(--shadow-color);
-}

@@ -16,6 +16,9 @@ import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
 import { YourAiComponent } from './your-ai/your-ai.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { AiInfoComponent } from './ai-info/ai-info.component';
+import { AiListComponent } from './ai-list/ai-list.component';
+import { RobotSvgComponent } from './robot-svg/robot-svg.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { HomeComponent } from './home/home.component';
     CreateAnAiComponent,
     YourAiComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    AiInfoComponent,
+    AiListComponent,
+    RobotSvgComponent
   ],
   imports: [
     BrowserModule,
