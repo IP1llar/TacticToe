@@ -6,7 +6,6 @@ async function register (req, res) {
     const { email, firstName, lastName, password } = req.body;
     const user = await Users.findOne({where: {email}});
     if (user) return res.status(409).send({error: '409', message: 'User already exists'})
-    if (password === '') throw new Error(); // Todo: give message
     const hash = await bcrypt.hash(password, 10);
     const newUser = await Users.create({
       ...req.body,

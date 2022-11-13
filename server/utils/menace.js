@@ -1,7 +1,6 @@
 
 
-// TODO: deal with forfeiting properly
-function createMENACE (name, win = 3, lose = -1, draw = 1, color = 'black', history = [[0, 0]], results = {wins: 0, draws: 0, losses: 0}) {
+function createMENACE (name, win = 3, lose = -1, draw = 1, color = 'black', history = [[0, 0]], results = {win: 0, draw: 0, lose: 0}) {
   const states = generateStates();
   return {name, states, history, incentives: {
     win,
@@ -16,6 +15,7 @@ function createMENACE (name, win = 3, lose = -1, draw = 1, color = 'black', hist
 function trainMENACE (menace, {result, aiHistory}) {
   const value = menace.incentives[result];
   const lastResult = menace.history[menace.history.length - 1]
+  menace.results[result]++;
   menace.history.push([lastResult[0] + 1, lastResult[1] + value]);
   for (let move of aiHistory) {
     const index = move[0];
@@ -23,9 +23,12 @@ function trainMENACE (menace, {result, aiHistory}) {
     const transformedBeads = menace.states[transformed[0]];
     const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true);
     beads[index] += value;
+    beads.map(el => Number(el) < 0 ? 0 : el)
     let updatedBeads = transform(beads, transformed[1], transformed[2], true);
-    if (updatedBeads.every(el => el === '0') || updatedBeads.length !== 9) {
+    if (updatedBeads.every(el => el === 0) || updatedBeads.length !== 9 || updatedBeads.some(el => Number(el) < 0)) { // TODO: review these conditions
+      console.log('Violating beads', updatedBeads)
       updatedBeads = addBeads(transformed[0]);
+      console.log('Beads after fixing', updatedBeads)
     }
     menace.states[transformed[0]] = updatedBeads;
   }

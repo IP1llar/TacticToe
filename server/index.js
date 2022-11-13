@@ -7,7 +7,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const {passport} = require('./utils/passport');
 const db = require('./models/index');
-require('./models')
 
 const port = process.env.PORT || 3001;
 const SECRET = process.env.SECRET || 'this is not very secure';

@@ -2,12 +2,13 @@ const ai = require('../utils/menace');
 const nigel = ai.createMENACE('Nigel');
 const db = require('../models');
 
-async function move (req, res) {
+async function move(req, res) {
   try {
-    let { board, id }= req.body;
-    // const retrieved = await retrieveAI(req.user.id || 1, id); // TODO: Remove
-    // const aiMove = ai.menacePlay(board, retrieved);
-    const aiMove = ai.menacePlay(board, nigel);
+    let { board, id } = req.body;
+    const retrieved = await retrieveAI(req.user, id);
+    // console.log({ retrieved, body: { board, id } })
+    const aiMove = ai.menacePlay(board, retrieved);
+    // const aiMove = ai.menacePlay(board, nigel);
     res.status(200);
     res.send(JSON.stringify(aiMove));
   } catch (error) {
@@ -17,13 +18,17 @@ async function move (req, res) {
   }
 }
 
-function train (req, res) {
+async function train(req, res) {
   try {
-    let match = req.body;
-
-    ai.trainMENACE(nigel, match);
+    // console.log(req.body);
+    let { match, id } = req.body;
+    let retrieved = await retrieveAI(req.user, id);
+    ai.trainMENACE(retrieved, match);
+    await updateAi(retrieved);
+    // console.log(retrieved, 'menace to be sent back')
+    retrieved = await retrieveAI(req.user, id);
     res.status(201);
-    res.send(nigel)
+    res.send(retrieved)
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -31,12 +36,33 @@ function train (req, res) {
   }
 }
 
-function random (req, res) {
+async function updateAi(ai) {
+  // console.log(ai, 'to update');
   try {
-    let { board }= req.body;
+    const toUpdate = await db.Ais.update({
+      states: ai.states,
+      history: ai.history,
+      name: ai.name,
+      incentives: ai.incentives,
+      results: ai.results,
+      color: ai.color
+    }, {
+      where: {
+        id: ai.id
+      }
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error');
+  }
+}
+
+function random(req, res) {
+  try {
+    let { board } = req.body;
     const aiMove = ai.randomMove(board);
     res.status(200);
-    res.send(JSON.stringify(aiMove));
+    res.json(aiMove);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -44,13 +70,13 @@ function random (req, res) {
   }
 }
 
-function perfect (req, res) {
-  console.log('perfect')
+function perfect(req, res) {
+  // console.log('perfect')
   try {
-    let { board }= req.body;
-    const aiMove = ai.perfectMove2(board, 2, 2);
+    let { board, toPlay } = req.body;
+    const aiMove = ai.perfectMove2(board, toPlay === 'X' ? 1 : 2);
     res.status(200);
-    res.send(JSON.stringify(aiMove));
+    res.json(aiMove);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -58,16 +84,16 @@ function perfect (req, res) {
   }
 }
 
-async function create (req, res) {
-  console.log(req.user);
+async function create(req, res) {
+  // console.log(req.user);
   try {
-    console.log(req.body)
+    // console.log(req.body)
     let { name, win, lose, draw, color } = req.body;
-    console.log({ name, win, lose, draw, color })
+    // console.log({ name, win, lose, draw, color })
     const newAi = ai.createMENACE(name, win, lose, draw, color);
-    await db.Ais.create({...newAi, UserId: req.user})
+    await db.Ais.create({ ...newAi, UserId: req.user })
     res.status(200);
-    res.send(JSON.stringify('created'));
+    res.json('created');
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -75,11 +101,13 @@ async function create (req, res) {
   }
 }
 
-async function retrieveAI (UserId, aiId) {
+async function retrieveAI(UserId, aiId) {
   try {
-    const retrieved = await db.Ais.findOne({where:{
-      UserId, id: aiId
-    }})
+    const retrieved = await db.Ais.findOne({
+      where: {
+        UserId, id: aiId
+      }
+    })
     if (retrieved) return retrieved;
     throw new Error();
   } catch (error) {
@@ -88,10 +116,10 @@ async function retrieveAI (UserId, aiId) {
   }
 }
 
-async function getAllAi (req, res) {
+async function getAllAi(req, res) {
   try {
     const retrieved = await db.Ais.findAll({
-      where:{
+      where: {
         UserId: req.user
       },
       attributes: ['id', 'name', 'results', 'color']
@@ -105,4 +133,22 @@ async function getAllAi (req, res) {
   }
 }
 
-module.exports = { move, train, random, perfect, create, getAllAi }
+async function get(req, res) {
+  // console.log(req.body);
+  try {
+    const retrieved = await db.Ais.findOne({
+      where: {
+        UserId: req.user,
+        id: req.body.id
+      },
+    })
+    res.status(200);
+    res.send(JSON.stringify(retrieved));
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send('Error');
+  }
+}
+
+module.exports = { move, train, random, perfect, create, getAllAi, get }

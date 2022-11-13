@@ -17,6 +17,5 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   })
-  console.log({Users})
   return Users;
 }

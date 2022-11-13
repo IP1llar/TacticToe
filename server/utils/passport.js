@@ -8,7 +8,7 @@ passport.serializeUser(function(user, done) { // TODO: think about just done(nul
 })
 
 passport.deserializeUser(function(id, done) {
-  done(null, id);
+  done(null, id); // TODO: get user from database and change any req.user reference 
 });
 
 passport.use(new LocalStrategy(
@@ -16,7 +16,7 @@ passport.use(new LocalStrategy(
     const user = await db.Users.findOne({where: {email}});
     if (user === null) return done('no such user', false)
     const match = await bcrypt.compare(password, user.password);
-    if (match) { // TODO: query database
+    if (match) {
       return done(null, {id: user.id, email, firstName: user.firstName, lastName: user.lastName});
     } else {
       return done('unauthorised access', false)
