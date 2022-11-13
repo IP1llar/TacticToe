@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AiInfoComponent implements OnInit {
 
-  @Input() ai = {name: 'Bruce', results: {wins:1, draws: 2, losses: 700}, color:'black'};
+  @Input() ai = {id: 1, name: 'Bruce', results: {win:1, draw: 2, lose: 700}, color:'black'};
 
   constructor() { }
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { APIClientService } from '../apiclient.service';
 import { AuthService } from '../auth.service';
 
@@ -11,22 +12,20 @@ import { AuthService } from '../auth.service';
 export class BoardComponent implements OnInit {
 
   board: string[] = Array(9).fill('');
-
   spacesLeft = 9;
-
-  winner: 'TBD' | 'X' | 'O' | 'Draw' = 'TBD';
-
+  winner: '' | 'TBD' | 'X' | 'O' | 'Draw' = '';
   toPlay: 'X' | 'O' = 'X';
-
   randomAi = false;
-
   perfectAi = false;
-
+  smartAi = false;
   aiHistory: ((number | string)[])[] = [];
-
   playerMove = false;
-
-  currentMenace:any = {history: ['0', 0]};
+  currentMenace:any = {history: ['0', 0], results:{win:0, draw:0, lose:0}};
+  id = 1;
+  controls = this.fb.group({
+    randomness: [100],
+    firstGo: [true]
+  })
 
   parseBoard(board: string[]) {
     return board.map(el => {
@@ -37,8 +36,6 @@ export class BoardComponent implements OnInit {
   }
 
   handleClick (index: number) {
-    console.log(this.currentMenace.history)
-    console.log(this.board);
     if (!this.playerMove || this.board[index] !== '') {
       console.log('You can not go there');
       return;
@@ -50,14 +47,22 @@ export class BoardComponent implements OnInit {
       this.winner = this.toPlay;
       this.randomAi = false;
       this.perfectAi = false;
-      this.api.sendMatch(this.aiHistory, 'lose').subscribe(data => this.currentMenace = data);
+      this.smartAi = false;
+      this.api.sendMatch(this.aiHistory, 'lose', this.id).subscribe(data => {
+        this.api.getAllAi();
+        this.currentMenace = data;
+      });
       return;
     };
     if (this.spacesLeft === 0) {
-      this.api.sendMatch(this.aiHistory, 'draw').subscribe(data => this.currentMenace = data);
+      this.api.sendMatch(this.aiHistory, 'draw', this.id).subscribe(data => {
+        this.api.getAllAi();
+        this.currentMenace = data;
+      });
       this.winner = 'Draw';
       this.randomAi = false;
       this.perfectAi = false;
+      this.smartAi = false;
       return;
     };
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
@@ -66,8 +71,6 @@ export class BoardComponent implements OnInit {
   }
 
   aiMove (index: number) {
-    console.log(this.board);
-    // if (this.currentMenace.states) console.log(this.currentMenace.states['000000000'])
     this.spacesLeft--;
     this.aiHistory.push([index, this.parseBoard(this.board)]);
     this.board[index] = this.toPlay;
@@ -75,25 +78,35 @@ export class BoardComponent implements OnInit {
       this.winner = this.toPlay;
       this.randomAi = false;
       this.perfectAi = false;
-      this.api.sendMatch(this.aiHistory, 'win').subscribe(data => this.currentMenace = data);
+      this.smartAi = false;
+      this.api.sendMatch(this.aiHistory, 'win', this.id).subscribe(data => {
+        this.api.getAllAi();
+        this.currentMenace = data;
+      });
       return;
     };
     if (this.spacesLeft === 0) {
-      this.api.sendMatch(this.aiHistory, 'draw').subscribe(data => this.currentMenace = data);
+      this.api.sendMatch(this.aiHistory, 'draw', this.id).subscribe(data => {
+        this.api.getAllAi();
+        this.currentMenace = data;
+      });
       this.winner = 'Draw';
       this.randomAi = false;
       this.perfectAi = false;
+      this.smartAi = false;
       return;
     };
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
     this.playerMove = !this.playerMove;
-    if (this.randomAi) this.getRandomMove();
-    if (this.perfectAi) this.getPerfectMove();
+    // if (this.randomAi) this.getRandomMove();
+    // if (this.perfectAi) this.getPerfectMove();
+    if (this.smartAi && this.playerMove) this.getSmartMove();
+
   }
 
 
   getAiMove() {
-    const move = this.api.getAiMove({board: this.parseBoard(this.board), id:1}).subscribe(data => this.aiMove(Number(data)));
+    const move = this.api.getAiMove(this.parseBoard(this.board), this.currentMenace.id).subscribe(data => this.aiMove(Number(data)));
   }
 
   getRandomMove() {
@@ -101,7 +114,13 @@ export class BoardComponent implements OnInit {
   }
 
   getPerfectMove() {
-    const move = this.api.getPerfectMove(this.parseBoard(this.board)).subscribe(data => this.handleClick(Number(data)));
+    const move = this.api.getPerfectMove(this.parseBoard(this.board), this.toPlay).subscribe(data => this.handleClick(Number(data)));
+  }
+
+  getSmartMove() {
+    const randomness = this.controls.value.randomness;
+    if ((Math.random() * 100) < (randomness as number)) this.getRandomMove();
+    else this.getPerfectMove();
   }
 
   
@@ -113,7 +132,11 @@ export class BoardComponent implements OnInit {
     this.winner = 'TBD';
     this.spacesLeft = 9;
     this.aiHistory = [];
-    this.getAiMove()
+    if (this.controls.value.firstGo) this.getAiMove();
+    else {
+      this.playerMove = true;
+      if (this.smartAi) this.getSmartMove();
+    }
   }
 
   randomAiGo () {
@@ -126,6 +149,11 @@ export class BoardComponent implements OnInit {
     this.perfectAi = true;
     if (this.winner !== 'TBD') this.resetBoard();
     this.getPerfectMove();
+  }
+
+  smartAiGo () {
+    this.smartAi = true;
+    if (this.winner !== 'TBD') this.resetBoard();
   }
 
   checkWin () {
@@ -146,18 +174,24 @@ export class BoardComponent implements OnInit {
     return false;
   }
 
-  constructor(private api: APIClientService, private authService : AuthService, private router : Router) { this.getAiMove() }
+  constructor(
+    private api: APIClientService, 
+    private authService : AuthService, 
+    private router : Router,
+    private route : ActivatedRoute,
+    private fb : FormBuilder
+    ) {}
 
   ngOnInit(): void {
-  }
+    this.route.paramMap.subscribe(data => {
+      this.id = data.get('id') as unknown as number;
+      this.api.getAi(this.id)
+        .subscribe(ai => {
+          this.currentMenace = ai;
+          console.log('getting ai using params', ai);
+        });
+    })
 
-  onLogout() {
-    this.authService.logout()
-      .subscribe((response : any ) => { // TODO: fix typing
-        console.log('response', response);
-        this.authService.setUserInfo({'user' : {}});
-        this.router.navigate(['login'])
-      })
   }
 
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { APIClientService } from '../apiclient.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginForm = this.fb.group({
-    userEmail: ['', [Validators.required, Validators.email]], // TODO: validate
+    userEmail: ['', [Validators.required, Validators.email]],
     userPassword: ['', [Validators.required, Validators.minLength(6)]]
   })
 
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private authService : AuthService, 
     private router : Router, 
     private http : HttpClient,
-    private fb : FormBuilder) { }
+    private fb : FormBuilder,
+    private api : APIClientService) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +40,8 @@ export class LoginComponent implements OnInit {
         next: (response : any ) => { // TODO: fix typing
           this.loginSuccess = 'success';
           this.authService.setUserInfo({'user' : response['user']});
-          this.router.navigate(['home'])
+          this.api.getAllAi();
+          this.router.navigate(['create'])
         },
         error: error => {
           console.log(error);

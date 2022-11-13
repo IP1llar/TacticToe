@@ -20,6 +20,7 @@ import { AiInfoComponent } from './ai-info/ai-info.component';
 import { AiListComponent } from './ai-list/ai-list.component';
 import { RobotSvgComponent } from './robot-svg/robot-svg.component';
 import { CreateFormComponent } from './create-form/create-form.component';
+import { TrainComponent } from './train/train.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CreateFormComponent } from './create-form/create-form.component';
     AiInfoComponent,
     AiListComponent,
     RobotSvgComponent,
-    CreateFormComponent
+    CreateFormComponent,
+    TrainComponent
   ],
   imports: [
     BrowserModule,

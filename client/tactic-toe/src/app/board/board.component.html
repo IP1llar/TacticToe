@@ -1,23 +1,74 @@
-<div>
-  <h1>Winner is: {{winner}}</h1>
-<table>
-  <tr>
-    <td><app-cell (click)="handleClick(0)" value={{board[0]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(1)" value={{board[1]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(2)" value={{board[2]}}></app-cell></td>
-  </tr>
-  <tr>
-    <td><app-cell (click)="handleClick(3)" value={{board[3]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(4)" value={{board[4]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(5)" value={{board[5]}}></app-cell></td>
-  </tr>
-  <tr>
-    <td><app-cell (click)="handleClick(6)" value={{board[6]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(7)" value={{board[7]}}></app-cell></td>
-    <td><app-cell (click)="handleClick(8)" value={{board[8]}}></app-cell></td>
-  </tr>
-</table>
-<button (click)="resetBoard()">Reset</button><button (click)="randomAiGo()">Random AI</button><button (click)="perfectAiGo()">Perfect AI</button>
+<div class="main">
+  <div class="title">
+    <h1>
+      Training -
+      <span style="color:{{ currentMenace.color }}">{{ currentMenace.name }}</span> 
+    </h1>
+    <app-robot-svg [fillColor]="currentMenace.color"></app-robot-svg>
+  </div>
+  <div class="container">
+    <div class="left">
+      <table>
+        <tr>
+          <td>
+            <app-cell (click)="handleClick(0)" value="{{ board[0] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(1)" value="{{ board[1] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(2)" value="{{ board[2] }}"></app-cell>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <app-cell (click)="handleClick(3)" value="{{ board[3] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(4)" value="{{ board[4] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(5)" value="{{ board[5] }}"></app-cell>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <app-cell (click)="handleClick(6)" value="{{ board[6] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(7)" value="{{ board[7] }}"></app-cell>
+          </td>
+          <td>
+            <app-cell (click)="handleClick(8)" value="{{ board[8] }}"></app-cell>
+          </td>
+        </tr>
+      </table>
+      <form [formGroup]="controls">
+        <button (click)="resetBoard()">Play</button>
+        <button type='button' (click)="smartAiGo()">Fast game</button>
+        <div class="firstGo">
+          <label for="firstGo">Ai goes first: </label>
+          <input type="checkbox" formControlName="firstGo" id="firstGo">
+        </div>
+        <div class="randomness">
+          <label for="randomness">Randomness</label>
+          <input type="range" min="0" max="100" value="100" class="slider" id="randomness" formControlName="randomness"> 
+        </div>
+      </form>
+    </div>
+    <div>
+      <h1>Winner is: {{ winner }}</h1>
+      <app-chart [history]="currentMenace.history"></app-chart>
+      <p>
+        Wins: <span>{{ currentMenace.results.win }}</span>
+      </p>
+      <p>
+        Draws: <span>{{ currentMenace.results.draw }}</span>
+      </p>
+      <p>
+        Losses: <span>{{ currentMenace.results.lose }}</span>
+      </p>
+    </div>
+  </div>
+  
 </div>
-<app-chart [history]="currentMenace.history"></app-chart>
-<button (click)="onLogout()">Logout</button>

@@ -7,16 +7,18 @@ import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { TrainComponent } from './train/train.component';
 import { YourAiComponent } from './your-ai/your-ai.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'create', component: CreateAnAiComponent, canActivate: [AuthGuard]},
   { path: 'yourai', component: CreateAnAiComponent, canActivate: [AuthGuard]},
+  {path: 'train/:id', component: TrainComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: '', redirectTo: '/home', pathMatch: 'full'}
+  { path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -6,6 +6,8 @@
 }
 
 body {
+
+  overflow: hidden;
   color: var(--text-color);
   background-color: var(--primary-bg-color);
 }
@@ -46,6 +48,11 @@ button:hover {
 }
 
 button:disabled {
+  background-color: var(--text-color);
+  color: var(--shadow-color);
+}
+
+button:active {
   background-color: var(--text-color);
   color: var(--shadow-color);
 }

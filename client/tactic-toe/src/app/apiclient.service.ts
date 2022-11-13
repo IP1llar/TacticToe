@@ -15,28 +15,31 @@ export class APIClientService {
   }
 
 
-  getAiMove(board: object) {
-    return this.api.post<string>(`api/ai/move`, JSON.stringify(board), {
+  getAiMove(board: string, id:number) {
+    return this.api.post<string>(`api/ai/move`, JSON.stringify({board, id}), {
       headers: {'Content-Type': 'application/json'}
     })
   }
 
   getRandomMove(board: string) {
-    return this.api.post<string>(`api/random/move`, JSON.stringify({board}), {
+    return this.api.post<string>(`api/ai/randommove`, JSON.stringify({board}), {
       headers: {'Content-Type': 'application/json'}
     })
   }
 
-  getPerfectMove(board: string) {
-    return this.api.post<string>(`api/perfect/move`, JSON.stringify({board}), {
+  getPerfectMove(board: string, toPlay: 'X' | 'O') {
+    return this.api.post<string>(`api/ai/perfectmove`, JSON.stringify({board, toPlay}), {
       headers: {'Content-Type': 'application/json'}
     })
   }
 
-  sendMatch(aiHistory: ((number | string)[])[], result: 'win'|'draw'|'lose') {
+  sendMatch(aiHistory: ((number | string)[])[], result: 'win'|'draw'|'lose', id:number) {
     return this.api.post<any>(`api/ai/train`, JSON.stringify({
-      result,
-      aiHistory
+      match: {
+        result,
+        aiHistory
+      },
+      id
     }), {
       headers: {'Content-Type': 'application/json'}
     })
@@ -49,9 +52,17 @@ export class APIClientService {
     }).subscribe({
       next: data => {
         this.allAi.next(data);
+        console.log(data);
       },
       error: error => console.log(error)
     })
+  }
+
+  getAi(id:number) {
+    return this.api.post('api/ai/get', JSON.stringify({id: id}), {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'}
+    });
   }
 
   createAi(ai: {name:string, win:number, lose:number, draw:number, color:string}) {
