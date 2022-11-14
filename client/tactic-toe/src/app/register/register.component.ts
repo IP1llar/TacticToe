@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
     userEmail: ['', [Validators.required, Validators.email]], // TODO:  validate
     userFirstName: ['', Validators.required],
     userLastName: ['', Validators.required],
-    userPassword: ['', [Validators.required, Validators.minLength(6)]]
+    userPassword: ['', [Validators.required, Validators.minLength(6)]] // TODO: Add second password (check typed correctly)
   })
 
   registerSuccess = 'null';

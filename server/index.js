@@ -10,7 +10,7 @@ const db = require('./models/index');
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {cors: {
-  origin: "http://localhost:4200",
+  origin: "http://localhost:4200", // TODO: .env
   methods: ["GET", "POST"],
   credentials: true
 }});
@@ -25,7 +25,7 @@ const corsConfig = {
 }
 app.use(cors(corsConfig));
 
-app.use(cookieParser());
+app.use(cookieParser()); // TODO: Check if cookieParser is needed with passport
 app.use(session({
   name: 'sid',
   saveUninitialized: false,
@@ -36,7 +36,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.json());
-
 app.use(router);
 
 async function start() {

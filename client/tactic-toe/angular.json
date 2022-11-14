@@ -23,7 +23,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "src/darktheme.css",
+                "bundleName": "darktheme",
+                "inject":false
+              }
             ],
             "scripts": []
           },

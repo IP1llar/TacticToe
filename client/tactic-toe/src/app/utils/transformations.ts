@@ -1,3 +1,5 @@
+// TODO: fix typing
+
 export module transformations {
   export function transform (board:any, rotation:number[], flip:number[], beads = false) {
     const temp = [];

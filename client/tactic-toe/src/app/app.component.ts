@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tactic-toe';
+
+  // ngOnInit() {
+  //   const link = document.createElement('link');
+  //   link.setAttribute("href", 'theme.css');
+  //   link.setAttribute('rel', 'stylesheet')
+  //   document.getElementsByTagName('head')[0].appendChild(link)
+  // }
 }

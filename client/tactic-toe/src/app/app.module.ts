@@ -70,3 +70,5 @@ import { MatchBoardComponent } from './match-board/match-board.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// TODO: Make favicon

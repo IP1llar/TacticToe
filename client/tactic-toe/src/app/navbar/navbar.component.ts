@@ -51,18 +51,20 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleDarkMode () { // TODO: Make work
-    document.documentElement.style.setProperty('--primary-bg-color', 'red')
-    console.log('toggling', this.isDark, getComputedStyle(document.documentElement).getPropertyValue('--primary-bg-color'));
     this.isDark = !this.isDark;
-    if (this.isDark) {
-      Object.keys(this.darkMode).forEach(key => {
-        document.documentElement.style.setProperty(`--${key}`, (this.lightMode as any)[key]);
-      });
-    } else {
-      Object.keys(this.darkMode).forEach(key => {
-        document.documentElement.style.setProperty(`--${key}`, (this.lightMode as any)[key]);
-      });
+    if (this.isDark) this.loadTheme('darktheme.css');
+    else {
+      document.getElementById('darkTheme')?.remove()
     }
+  }
+
+  loadTheme(cssFile: string) {
+    const head = document.getElementsByTagName('head')[0];
+    const newLink = document.createElement('link');
+    newLink.rel = 'stylesheet';
+    newLink.href = cssFile;
+    newLink.id = 'darkTheme'
+    head.appendChild(newLink)
   }
 
 }

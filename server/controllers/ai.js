@@ -1,16 +1,15 @@
 const ai = require('../utils/menace');
-const nigel = ai.createMENACE('Nigel');
 const db = require('../models');
+
+// TODO: Better error messages
 
 async function move(req, res) {
   try {
     let { board, id } = req.body;
     const retrieved = await retrieveAI(req.user, id);
-    // console.log({ retrieved, body: { board, id } })
     const aiMove = ai.menacePlay(board, retrieved);
-    // const aiMove = ai.menacePlay(board, nigel);
     res.status(200);
-    res.send(JSON.stringify(aiMove));
+    res.send(JSON.stringify(aiMove)); // TODO: res.json
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -20,12 +19,10 @@ async function move(req, res) {
 
 async function train(req, res) {
   try {
-    // console.log(req.body);
     let { match, id } = req.body;
     let retrieved = await retrieveAI(req.user, id);
     ai.trainMENACE(retrieved, match);
     await updateAi(retrieved);
-    // console.log(retrieved, 'menace to be sent back')
     retrieved = await retrieveAI(req.user, id);
     res.status(201);
     res.send(retrieved)
@@ -37,7 +34,6 @@ async function train(req, res) {
 }
 
 async function updateAi(ai) {
-  // console.log(ai, 'to update');
   try {
     const toUpdate = await db.Ais.update({
       states: ai.states,
@@ -57,11 +53,8 @@ async function updateAi(ai) {
 }
 
 async function editAi(req, res) {
-  // console.log(req.user);
   try {
-    // console.log(req.body)
     let { name, win, lose, draw, color, id } = req.body;
-    // console.log({ name, win, lose, draw, color })
     const toUpdate = await db.Ais.update({
       name: name,
       incentives: {
@@ -96,10 +89,9 @@ function random(req, res) {
 }
 
 function perfect(req, res) {
-  // console.log('perfect')
   try {
     let { board, toPlay } = req.body;
-    const aiMove = ai.perfectMove2(board, toPlay === 'X' ? 1 : 2);
+    const aiMove = ai.perfectMove(board, toPlay === 'X' ? 1 : 2);
     res.status(200);
     res.json(aiMove);
   } catch (error) {
@@ -110,11 +102,8 @@ function perfect(req, res) {
 }
 
 async function create(req, res) {
-  // console.log(req.user);
   try {
-    // console.log(req.body)
     let { name, win, lose, draw, color } = req.body;
-    // console.log({ name, win, lose, draw, color })
     const newAi = ai.createMENACE(name, win, lose, draw, color);
     await db.Ais.create({ ...newAi, UserId: req.user })
     res.status(200);
@@ -159,7 +148,6 @@ async function getAllAi(req, res) {
 }
 
 async function get(req, res) {
-  // console.log(req.body);
   try {
     const retrieved = await db.Ais.findOne({
       where: {

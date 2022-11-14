@@ -20,7 +20,7 @@ export class ChartComponent implements OnInit {
       {
         data: this.history.map(el => el[1]),
         tension: 0.5,
-        borderColor: 'black',
+        borderColor: 'black', // TODO: Set color to user's choice
         pointBackgroundColor: 'black',
         pointBorderColor: 'black'
       }

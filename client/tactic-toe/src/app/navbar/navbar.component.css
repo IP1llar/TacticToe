@@ -10,6 +10,7 @@ main {
 
 h1 {
   padding: 20px;
+  cursor: pointer;
 }
 
 h1 span {
@@ -22,6 +23,7 @@ h1:hover span {
 
 h3 {
   padding: 10px;
+  cursor: pointer;
 }
 
 h1:hover, h3:hover {

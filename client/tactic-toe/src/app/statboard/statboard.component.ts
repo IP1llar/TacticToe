@@ -34,7 +34,7 @@ export class StatboardComponent implements OnInit {
     this.getBeads();
   }
 
-  checkWin () {
+  checkWin () { // TODO: make modular
     const wins = [
       [0,1,2],
       [3,4,5],

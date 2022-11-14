@@ -14,7 +14,7 @@ async function register (req, res) {
     req.login(user, function(error) {
       if (error) throw new Error(); // Todo: give message
     })
-    res.status(201).json("User created");
+    res.status(201).json("User created"); // TODO: login by default or redirect to login page on client?
   } catch (error) {
     console.log(error);
     res.status(500).json({"statusCode": 200, "message": error});

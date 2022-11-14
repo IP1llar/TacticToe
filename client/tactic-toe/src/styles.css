@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-bg-color:  #fffafbff;
+  --nav-bg-color: #7de2d1ff;
+  --nav-text-color: #fffafbff;
+  --text-accent-color: #339989ff;
+  --button-color: #339989ff;
+  --text-color: #2b2c28ff; 
+  --shadow-color: rgb(181, 184, 171); 
+  --error: #c83f3f;
+}
+
 * {
   margin: 0;
   box-sizing: border-box;
@@ -10,17 +21,6 @@ body {
   overflow: hidden;
   color: var(--text-color);
   background-color: var(--primary-bg-color);
-}
-
-:root {
-  --primary-bg-color:  #fffafbff;
-  --nav-bg-color: #7de2d1ff;
-  --nav-text-color: #fffafbff;
-  --text-accent-color: #339989ff;
-  --button-color: #339989ff;
-  --text-color: #2b2c28ff; 
-  --shadow-color: rgb(181, 184, 171); 
-  --error: #c83f3f;
 }
 
 .error {

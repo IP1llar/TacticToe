@@ -6,5 +6,7 @@
   <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/battle']">Battle</h3>
   <h3 [routerLink]="['/about']">About</h3>
   <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
-  <!-- <h3 (click)="toggleDarkMode()">Toggle Dark Mode</h3> -->
+  <h3 class="darkModeIcon" (click)="toggleDarkMode()"><span *ngIf="!isDark" class="material-symbols-outlined">dark_mode</span> <span *ngIf="isDark" class="material-symbols-outlined">
+    light_mode
+    </span></h3>
 </main>
