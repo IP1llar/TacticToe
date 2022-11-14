@@ -1,0 +1,20 @@
+.main {
+  width: 100vw;
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: start center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.standOut {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

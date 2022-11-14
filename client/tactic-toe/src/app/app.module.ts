@@ -25,6 +25,11 @@ import { StatsComponent } from './stats/stats.component';
 import { StatboardComponent } from './statboard/statboard.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { EditComponent } from './edit/edit.component';
+import { BattleComponent } from './battle/battle.component';
+import { AiBattleListComponent } from './ai-battle-list/ai-battle-list.component';
+import { AiBattleInfoComponent } from './ai-battle-info/ai-battle-info.component';
+import { MatchComponent } from './match/match.component';
+import { MatchBoardComponent } from './match-board/match-board.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,12 @@ import { EditComponent } from './edit/edit.component';
     StatsComponent,
     StatboardComponent,
     EditPageComponent,
-    EditComponent
+    EditComponent,
+    BattleComponent,
+    AiBattleListComponent,
+    AiBattleInfoComponent,
+    MatchComponent,
+    MatchBoardComponent
   ],
   imports: [
     BrowserModule,

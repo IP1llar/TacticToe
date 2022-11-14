@@ -1,0 +1,10 @@
+<div class="standOut">
+  <div class="title">
+    <app-robot-svg [fillColor]="ai.color"></app-robot-svg>
+    <h2>{{ai.name}}</h2>
+  </div>
+  <p>Games played: <span>{{ai.results.win + ai.results.draw + ai.results.lose}}</span></p>
+  <div class="buttons">
+    <button [disabled]="chosen===ai.id" >Choose</button>
+  </div>
+</div>

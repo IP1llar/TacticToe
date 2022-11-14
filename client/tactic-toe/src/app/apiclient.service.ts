@@ -9,6 +9,7 @@ export class APIClientService {
 
   allAi: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public sharedAllAi: Observable<any[]> = this.allAi.asObservable();
+  chosen = 1;
 
   constructor(private api: HttpClient) {
     this.getAllAi();
@@ -52,6 +53,7 @@ export class APIClientService {
     }).subscribe({
       next: data => {
         this.allAi.next(data);
+        this.chosen = (data[0] as any).id
         console.log(data);
       },
       error: error => console.log(error)

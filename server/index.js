@@ -8,6 +8,14 @@ const cookieParser = require('cookie-parser')
 const {passport} = require('./utils/passport');
 const db = require('./models/index');
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http, {cors: {
+  origin: "http://localhost:4200",
+  methods: ["GET", "POST"],
+  credentials: true
+}});
+require('./utils/socket')(io);
+
 const port = process.env.PORT || 3001;
 const SECRET = process.env.SECRET || 'this is not very secure';
 
@@ -34,7 +42,7 @@ app.use(router);
 async function start() {
   try {
     await db.sequelize.sync({force: true});
-    app.listen(port, () => {
+    http.listen(port, () => {
       console.log(`Listening on port: ${port}`)
     })
   } catch (error) {

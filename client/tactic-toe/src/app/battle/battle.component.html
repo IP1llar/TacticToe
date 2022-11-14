@@ -1,0 +1,30 @@
+<body class="container">
+  <div class="connect standOut">
+    <h2>Connect</h2>
+    <form *ngIf="!socketService.connected" [formGroup]="connect">
+      <div class="hostcheckbox">
+        <label for="host">Host:</label>
+        <div class="checkbox">
+          <input type="checkbox" id="host" formControlName="host">
+          <span class="checkmark" (click)="toggleCheckbox('host')"></span>
+        </div>
+      </div>
+      <div class="host" *ngIf="connect.value.host; else join">
+        <p>Your key is: <span *ngIf="socketService.socket.id !== undefined">{{socketService.socket.id.slice(0, 5)}}</span></p>
+        <button (click)="host()" type="button" [disabled]="socketService.searching">Host</button>
+      </div>
+      <ng-template #join>
+        <div class="join">
+          <label for="join">Enter key:</label>
+          <input type="text" id="join" formControlName="key">
+          <button (click)="joinMatch()" type="button">Join</button>
+        </div>
+      </ng-template>
+    </form>
+
+  </div>
+  <div class="yourAi standOut">
+    <h2>Your Ai</h2>
+    <app-ai-battle-list></app-ai-battle-list>
+  </div>
+</body>

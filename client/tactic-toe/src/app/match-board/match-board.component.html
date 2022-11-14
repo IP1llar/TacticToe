@@ -1,0 +1,28 @@
+<h1 *ngIf="winner===''; else turn">Begin a game!</h1>
+<ng-template #turn><h1 *ngIf="winner==='TBD'; else win">Turn: {{toPlay}}</h1></ng-template>
+<ng-template #win><h1>Winner is: {{ winner }}</h1></ng-template>
+<div class="vs">
+  <h3>{{currentMenace.name}}</h3>
+  <h3>VS</h3>
+  <h3>{{socket.opponent}}</h3>
+</div>
+<table>
+  <tr>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[0] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[1] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[2] }}"></app-cell></td>
+  </tr>
+  <tr>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[3] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[4] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[5] }}"></app-cell></td>
+  </tr>
+  <tr>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[6] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[7] }}"></app-cell></td>
+    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[8] }}"></app-cell></td>
+  </tr>
+</table>
+<div class="buttons">
+  <button (click)="getAiMove()" [disabled]="!socket.turn || winner==='X' || winner==='O'">Play</button>
+</div>

@@ -1,0 +1,3 @@
+<main *ngIf="allAi">
+  <app-ai-battle-info *ngFor="let ai of allAi" [ai]="ai" [chosen]="chosen" (click)="handleClick(ai.id)" ></app-ai-battle-info>
+</main>

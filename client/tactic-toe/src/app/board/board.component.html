@@ -2,7 +2,7 @@
   <div class="title">
     <h1>
       Training -
-      <span style="color:{{ currentMenace.color }}">{{ currentMenace.name }}</span> 
+      <span [attr.color]="currentMenace.color">{{ currentMenace.name }}</span> 
     </h1>
     <app-robot-svg [fillColor]="currentMenace.color"></app-robot-svg>
   </div>
@@ -55,7 +55,7 @@
       <div class="stats">
         <h1>Stats</h1>
       <div class="chart">
-        <h2><span style="color:{{ currentMenace.color }}">{{ currentMenace.name }}</span>'s history</h2>
+        <h2><span [attr.color]="currentMenace.color">{{ currentMenace.name }}</span>'s history</h2>
         <app-chart [history]="currentMenace.history" [dimensions]="[300,200]"></app-chart>
       </div>
       <div class="gameStats">
