@@ -22,8 +22,7 @@ function trainMENACE (menace, {result, aiHistory}) {
     const transformed = transformBoard(move[1], true);
     const transformedBeads = menace.states[transformed[0]];
     const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true);
-    beads[index] += value;
-    beads.map(el => Number(el) < 0 ? 0 : el)
+    beads[index] = beads[index]+value >= 0 ? beads[index]+value : 0;
     let updatedBeads = transform(beads, transformed[1], transformed[2], true);
     if (updatedBeads.every(el => el === 0) || updatedBeads.length !== 9 || updatedBeads.some(el => Number(el) < 0)) { // TODO: review these conditions
       console.log('Violating beads', updatedBeads)

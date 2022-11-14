@@ -73,4 +73,16 @@ export class APIClientService {
     });
   }
 
+  edit(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
+    console.log('editing', ai)
+    return this.api.post('api/ai/edit', JSON.stringify(ai), {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'}
+    });
+  }
+
+  updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string}) {
+
+  }
+
 }

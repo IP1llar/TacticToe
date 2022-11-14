@@ -11,6 +11,10 @@ export class CellComponent implements OnInit {
 
   @Output() clicked: boolean = false;
 
+  @Input() height = 150;
+  @Input() width = 150;
+  @Input() color = 'black';
+
   constructor() { }
 
   ngOnInit(): void {

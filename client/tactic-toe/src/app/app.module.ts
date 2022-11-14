@@ -21,6 +21,10 @@ import { AiListComponent } from './ai-list/ai-list.component';
 import { RobotSvgComponent } from './robot-svg/robot-svg.component';
 import { CreateFormComponent } from './create-form/create-form.component';
 import { TrainComponent } from './train/train.component';
+import { StatsComponent } from './stats/stats.component';
+import { StatboardComponent } from './statboard/statboard.component';
+import { EditPageComponent } from './edit-page/edit-page.component';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { TrainComponent } from './train/train.component';
     AiListComponent,
     RobotSvgComponent,
     CreateFormComponent,
-    TrainComponent
+    TrainComponent,
+    StatsComponent,
+    StatboardComponent,
+    EditPageComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

@@ -5,4 +5,5 @@
   <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/yourai']">Your Ai</h3>
   <h3 [routerLink]="['/about']">About</h3>
   <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
+  <!-- <h3 (click)="toggleDarkMode()">Toggle Dark Mode</h3> -->
 </main>

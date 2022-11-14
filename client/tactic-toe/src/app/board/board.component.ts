@@ -15,6 +15,8 @@ export class BoardComponent implements OnInit {
   spacesLeft = 9;
   winner: '' | 'TBD' | 'X' | 'O' | 'Draw' = '';
   toPlay: 'X' | 'O' = 'X';
+  longTimeOut = 500;
+  shortTimeOut = 100;
   randomAi = false;
   perfectAi = false;
   smartAi = false;
@@ -22,6 +24,7 @@ export class BoardComponent implements OnInit {
   playerMove = false;
   currentMenace:any = {history: ['0', 0], results:{win:0, draw:0, lose:0}};
   id = 1;
+  dimensions = [120, 120];
   controls = this.fb.group({
     randomness: [100],
     firstGo: [true]
@@ -106,7 +109,10 @@ export class BoardComponent implements OnInit {
 
 
   getAiMove() {
-    const move = this.api.getAiMove(this.parseBoard(this.board), this.currentMenace.id).subscribe(data => this.aiMove(Number(data)));
+    const move = this.api.getAiMove(this.parseBoard(this.board), this.currentMenace.id).subscribe(data => {
+      if (this.smartAi) setTimeout(()=> this.aiMove(Number(data)), this.shortTimeOut);
+      else setTimeout(()=> this.aiMove(Number(data)), this.longTimeOut)
+    });
   }
 
   getRandomMove() {
@@ -119,8 +125,11 @@ export class BoardComponent implements OnInit {
 
   getSmartMove() {
     const randomness = this.controls.value.randomness;
-    if ((Math.random() * 100) < (randomness as number)) this.getRandomMove();
-    else this.getPerfectMove();
+    setTimeout(()=> {
+      if ((Math.random() * 100) < (randomness as number)) this.getRandomMove();
+      else this.getPerfectMove();
+    }, this.shortTimeOut)
+    
   }
 
   
@@ -172,6 +181,10 @@ export class BoardComponent implements OnInit {
       if (this.board[win[0]] === this.board[win[1]] && this.board[win[0]] === this.board[win[2]]) return true;
     }
     return false;
+  }
+
+  toggleCheckbox(name: string) {
+    this.controls.controls.firstGo.setValue(!this.controls.value.firstGo);
   }
 
   constructor(

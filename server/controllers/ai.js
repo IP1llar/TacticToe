@@ -53,7 +53,32 @@ async function updateAi(ai) {
     })
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error');
+  }
+}
+
+async function editAi(req, res) {
+  // console.log(req.user);
+  try {
+    // console.log(req.body)
+    let { name, win, lose, draw, color, id } = req.body;
+    // console.log({ name, win, lose, draw, color })
+    const toUpdate = await db.Ais.update({
+      name: name,
+      incentives: {
+        win, lose, draw
+      },
+      color: color
+    }, {
+      where: {
+        id: id
+      }
+    })
+    res.status(200);
+    res.json('Edited');
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send('Error');
   }
 }
 
@@ -151,4 +176,4 @@ async function get(req, res) {
   }
 }
 
-module.exports = { move, train, random, perfect, create, getAllAi, get }
+module.exports = { move, train, random, perfect, create, getAllAi, get, editAi }

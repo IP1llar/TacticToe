@@ -7,67 +7,73 @@
     <app-robot-svg [fillColor]="currentMenace.color"></app-robot-svg>
   </div>
   <div class="container">
-    <div class="left">
+    <div class="left standOut">
+      <h1 *ngIf="winner===''; else turn">Begin a game!</h1>
+      <ng-template #turn><h1 *ngIf="winner==='TBD'; else win">Turn: {{toPlay}}</h1></ng-template>
+      <ng-template #win><h1>Winner is: {{ winner }}</h1></ng-template>
       <table>
         <tr>
-          <td>
-            <app-cell (click)="handleClick(0)" value="{{ board[0] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(1)" value="{{ board[1] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(2)" value="{{ board[2] }}"></app-cell>
-          </td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(0)" value="{{ board[0] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(1)" value="{{ board[1] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(2)" value="{{ board[2] }}"></app-cell></td>
         </tr>
         <tr>
-          <td>
-            <app-cell (click)="handleClick(3)" value="{{ board[3] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(4)" value="{{ board[4] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(5)" value="{{ board[5] }}"></app-cell>
-          </td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(3)" value="{{ board[3] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(4)" value="{{ board[4] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(5)" value="{{ board[5] }}"></app-cell></td>
         </tr>
         <tr>
-          <td>
-            <app-cell (click)="handleClick(6)" value="{{ board[6] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(7)" value="{{ board[7] }}"></app-cell>
-          </td>
-          <td>
-            <app-cell (click)="handleClick(8)" value="{{ board[8] }}"></app-cell>
-          </td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(6)" value="{{ board[6] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(7)" value="{{ board[7] }}"></app-cell></td>
+          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(8)" value="{{ board[8] }}"></app-cell></td>
         </tr>
       </table>
       <form [formGroup]="controls">
-        <button (click)="resetBoard()">Play</button>
-        <button type='button' (click)="smartAiGo()">Fast game</button>
+        <button (click)="resetBoard()" [disabled]="winner==='TBD'">Play</button>
+        <button type='button' (click)="smartAiGo()" [disabled]="winner==='TBD'">Fast game</button>
         <div class="firstGo">
-          <label for="firstGo">Ai goes first: </label>
-          <input type="checkbox" formControlName="firstGo" id="firstGo">
+          <label for="firstGo">Ai goes first (X): </label>
+          <div class="checkbox">
+            <input type="checkbox" formControlName="firstGo" id="firstGo">
+            <span class="checkmark" (click)="toggleCheckbox('firstGo')"></span>
+          </div>
         </div>
         <div class="randomness">
           <label for="randomness">Randomness</label>
-          <input type="range" min="0" max="100" value="100" class="slider" id="randomness" formControlName="randomness"> 
+          <div class="bar">
+            <p class="percentage">0%</p>
+            <div class="slidecontainer">
+              <input type="range" min="0" max="100" value="100" class="slider" id="randomness" formControlName="randomness">
+            </div> 
+            <p class="percentage">100%</p>
+          </div>
         </div>
       </form>
     </div>
-    <div>
-      <h1>Winner is: {{ winner }}</h1>
-      <app-chart [history]="currentMenace.history"></app-chart>
-      <p>
-        Wins: <span>{{ currentMenace.results.win }}</span>
-      </p>
-      <p>
-        Draws: <span>{{ currentMenace.results.draw }}</span>
-      </p>
-      <p>
-        Losses: <span>{{ currentMenace.results.lose }}</span>
-      </p>
+
+    <div class="right">
+      <div class="stats">
+        <h1>Stats</h1>
+      <div class="chart">
+        <h2><span style="color:{{ currentMenace.color }}">{{ currentMenace.name }}</span>'s history</h2>
+        <app-chart [history]="currentMenace.history" [dimensions]="[300,200]"></app-chart>
+      </div>
+      <div class="gameStats">
+        <div class="gamesPlayed">
+          <p>Games played:</p>
+          <p>Wins:</p>
+          <p>Draws:</p>
+          <p>Losses:</p>
+        </div>
+        <div class="spans">
+          <p><span>{{ currentMenace.results.win + currentMenace.results.draw + currentMenace.results.lose }}</span></p>
+          <p><span>{{ currentMenace.results.win }}</span></p>
+          <p><span>{{ currentMenace.results.draw }}</span></p>
+          <p><span>{{ currentMenace.results.lose }}</span></p>
+        </div>
+      </div>
+      </div>
+      <app-statboard [currentMenace]="currentMenace"></app-statboard>
     </div>
   </div>
   

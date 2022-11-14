@@ -1,0 +1,44 @@
+main {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.standOut {
+  width: 25vw;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h3 {
+  color: var(--text-accent-color);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.incentives {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  grid-column-start: 0;
+  grid-column-end: 3;
+  ;
+}
+
+input, select {
+  margin-bottom: 20px;
+  padding: 5px;
+}

@@ -12,7 +12,9 @@ export class ChartComponent implements OnInit {
 
   @Input() history: ([string, number])[] = [['0',0]]
 
-  public lineChartData: ChartConfiguration<'line'>['data'] = {
+  @Input() dimensions = [400,200];
+
+  public lineChartData: ChartConfiguration<'line'>['data'] = { // TODO: decide how to display history of first turn or second turn
     labels: this.history.map(el => el[0]),
     datasets: [
       {
@@ -39,7 +41,7 @@ export class ChartComponent implements OnInit {
 
   ngOnChanges() {
     this.lineChartData = {
-      labels: this.history.map(el => el[0]),
+      labels: this.history.map(el => el[0]), 
       datasets: [
         {
           data: this.history.map(el => el[1]),

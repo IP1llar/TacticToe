@@ -1,0 +1,26 @@
+<div class="standOut">
+  <h2>States</h2>
+<div class="container">
+  <div class="buttons">
+    <button (click)="handleUndo()">Undo</button>
+    <button (click)="reset()">Reset</button>
+  </div>
+  <table>
+    <tr>
+      <td><app-cell (click)="handleCellClick(0)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[0]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(1)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[1]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(2)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[2]}}"></app-cell></td>
+    </tr>
+    <tr>
+      <td><app-cell (click)="handleCellClick(3)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[3]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(4)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[4]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(5)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[5]}}"></app-cell></td>
+    </tr>
+    <tr>
+      <td><app-cell (click)="handleCellClick(6)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[6]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(7)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[7]}}"></app-cell></td>
+      <td><app-cell (click)="handleCellClick(8)" [height]="dimensions[0]" [width]="dimensions[1]" value="{{board[8]}}"></app-cell></td>
+    </tr>
+  </table>
+</div>
+</div>
