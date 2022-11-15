@@ -10,7 +10,7 @@ const db = require('./models/index');
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {cors: {
-  origin: "http://localhost:4200", // TODO: .env
+  origin: process.env.CLIENTURL || "http://localhost:4200", // TODO: .env
   methods: ["GET", "POST"],
   credentials: true
 }});
@@ -20,12 +20,11 @@ const port = process.env.PORT || 3001;
 const SECRET = process.env.SECRET || 'this is not very secure';
 
 const corsConfig = {
-  origin: ['http://localhost:3000', 'http://localhost:4200'],
+  origin: [process.env.URL || 'http://localhost:3000', process.env.CLIENTURL || 'http://localhost:4200'],
   credentials: true,
 }
 app.use(cors(corsConfig));
 
-app.use(cookieParser()); // TODO: Check if cookieParser is needed with passport
 app.use(session({
   name: 'sid',
   saveUninitialized: false,

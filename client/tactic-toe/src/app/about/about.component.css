@@ -1,0 +1,43 @@
+.standOut {
+  padding: 20px;
+  margin: 20px;
+  max-width: 1000px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+span {
+  color: var(--text-accent-color);
+}
+
+img {
+  width: 30%;
+  float: right;
+}
+
+a {
+  color: var(--text-accent-color);
+}
+
+a:hover {
+  color: var(--nav-bg-color);
+}
+
+@media only screen and (max-width: 500px) {
+  img {
+    width: 100%;
+  }
+}

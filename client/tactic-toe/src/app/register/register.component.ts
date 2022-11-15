@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent implements OnInit {
 
   registerForm = this.fb.group({
-    userEmail: ['', [Validators.required, Validators.email]], // TODO:  validate
+    userEmail: ['', [Validators.required, Validators.email]],
     userFirstName: ['', Validators.required],
     userLastName: ['', Validators.required],
     userPassword: ['', [Validators.required, Validators.minLength(6)]] // TODO: Add second password (check typed correctly)
@@ -20,13 +20,11 @@ export class RegisterComponent implements OnInit {
   registerSuccess = 'null';
 
   onSubmit() {
-    console.warn(this.registerForm.value);
     const { userEmail, userFirstName, userLastName, userPassword } = this.registerForm.value;
     this.authService.register(userEmail as string, userFirstName as string, userLastName as string, userPassword as string)
       .subscribe({
-        next: (response : any ) => { // TODO: fix typing
+        next: (response) => {
           this.registerSuccess = 'success';
-          console.log('response', response);
           this.router.navigate(['login'])
         },
         error: error => {

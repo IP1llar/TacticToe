@@ -21,7 +21,9 @@ h2 {
   border-radius: 5px;
   box-shadow: 0px 0px 5px var(--shadow-color);
 }
-/* 
-app-ai-list {
-  height: fill;
-} */
+
+@media only screen and (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}

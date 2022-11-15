@@ -8,6 +8,7 @@ main {
   width: 25vw;
   padding: 20px;
   border-radius: 5px;
+  min-width: 350px;
   box-shadow: 0px 0px 5px var(--shadow-color);
   display: flex;
   flex-direction: column;

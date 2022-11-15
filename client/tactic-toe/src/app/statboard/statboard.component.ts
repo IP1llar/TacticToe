@@ -86,6 +86,7 @@ export class StatboardComponent implements OnInit {
     this.toPlay = 'X';
     this.winner = 'TBD';
     this.history = [];
+    this.getBeads();
   }
 
   getBeads () {

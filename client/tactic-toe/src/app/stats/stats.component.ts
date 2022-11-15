@@ -13,5 +13,4 @@ export class StatsComponent implements OnInit {
   }
 
 }
-// TODO: Make editable
 // TODO: Think about responsiveness

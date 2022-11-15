@@ -1,3 +1,3 @@
-<main [style.height]="height + 'px'" [style.width]="width + 'px'" [style.color]="(value !== 'X' && value !== 'O')?'var(--shadow-color)':color">
+<main [style.height]="calculatedDimensions[0]" [style.width]="calculatedDimensions[1]" [style.color]="(value !== 'X' && value !== 'O')?'var(--shadow-color)':'var(--text-color)'">
   <h1>{{value}}</h1> <!-- TODO: Change colour to the ai colour -->
 </main>

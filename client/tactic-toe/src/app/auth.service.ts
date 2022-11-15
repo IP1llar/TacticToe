@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import { dataResponse, response } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 export class AuthService {
 
   constructor(private http: HttpClient) { }
+  
 
   public isLoggedIn = false;
 
   isAuthenticated(){
-    console.log('checking if logged in')
     let result = false;
     return this.http.get('/api/loggedin', {withCredentials: true}).pipe(
       map(() => {
@@ -23,21 +24,23 @@ export class AuthService {
     )
   }
 
-  setUserInfo(user:any) {
+  setUserInfo(user:any) { // TODO: Make use of this
     localStorage.setItem('userInfo', JSON.stringify(user));
   }
 
   validate(email:string, password:string) {
-    return this.http.post('/api/login', {'username': email, 'password': password}, {withCredentials: true});
+    // {'statusCode': 200, 'message':'logged in', 'user':req.user}
+    return this.http.post<dataResponse>('/api/login', {'username': email, 'password': password}, {withCredentials: true});
   }
 
   register(email:string, firstName:string, lastName:string, password:string) {
-    return this.http.post('/api/register', {email, firstName, lastName, password});
+    return this.http.post<response>('/api/register', {email, firstName, lastName, password});
   }
 
   logout() {
     this.isLoggedIn = false;
-    return this.http.delete('/api/logout', {withCredentials: true});
+    this.setUserInfo({});
+    return this.http.delete<response>('/api/logout', {withCredentials: true});
   }
 
 }

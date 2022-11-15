@@ -1,12 +1,35 @@
 <main>
-  <h1 [routerLink]="['/create']">t<span>A</span>ct<span>I</span>c-toe</h1>
-  <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/login']">Login</h3>
-  <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/register']">Register</h3>
-  <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/yourai']">Your Ai</h3>
-  <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/battle']">Battle</h3>
-  <h3 [routerLink]="['/about']">About</h3>
-  <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
-  <h3 class="darkModeIcon" (click)="toggleDarkMode()"><span *ngIf="!isDark" class="material-symbols-outlined">dark_mode</span> <span *ngIf="isDark" class="material-symbols-outlined">
-    light_mode
-    </span></h3>
+  <div class="bigNav" *ngIf="bigNav">
+    <h1 [routerLink]="['/create']">t<span>A</span>ct<span>I</span>c-toe</h1>
+    <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/login']">Login</h3>
+    <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/register']">Register</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/yourai']">Your Ai</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/battle']">Battle</h3>
+    <h3 [routerLink]="['/about']">About</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
+    <h3 class="darkModeIcon" (click)="toggleDarkMode()">
+      <span *ngIf="!isDark" class="material-symbols-outlined">dark_mode</span> 
+      <span *ngIf="isDark" class="material-symbols-outlined">light_mode</span>
+    </h3>
+  </div>
+  <div class="smallNav" *ngIf="!bigNav">
+    <h1 [routerLink]="['/create']">t<span>A</span>ct<span>I</span>c-toe</h1>
+    <div class="hamburger" [class.active]="clicked" (click)="onClick()">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+    <div class="hamburgerList" *ngIf="clicked" [class.active]="clicked">
+      <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/login']">Login</h3>
+    <h3 *ngIf="!this.authService.isLoggedIn" [routerLink]="['/register']">Register</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/yourai']">Your Ai</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" [routerLink]="['/battle']">Battle</h3>
+    <h3 [routerLink]="['/about']">About</h3>
+    <h3 *ngIf="this.authService.isLoggedIn" (click)="onLogout()">Logout</h3>
+    <h3 class="darkModeIcon" (click)="toggleDarkMode()">
+      <span *ngIf="!isDark" class="material-symbols-outlined">dark_mode</span> 
+      <span *ngIf="isDark" class="material-symbols-outlined">light_mode</span>
+    </h3>
+    </div>
+  </div>
 </main>

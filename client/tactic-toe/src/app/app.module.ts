@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,6 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
-import { YourAiComponent } from './your-ai/your-ai.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { AiInfoComponent } from './ai-info/ai-info.component';
@@ -41,7 +41,6 @@ import { MatchBoardComponent } from './match-board/match-board.component';
     RegisterComponent,
     NavbarComponent,
     CreateAnAiComponent,
-    YourAiComponent,
     AboutComponent,
     HomeComponent,
     AiInfoComponent,
@@ -65,6 +64,7 @@ import { MatchBoardComponent } from './match-board/match-board.component';
     AppRoutingModule,
     HttpClientModule,
     NgChartsModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

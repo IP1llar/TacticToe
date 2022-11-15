@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit {
   winner: '' | 'TBD' | 'X' | 'O' | 'Draw' = '';
   toPlay: 'X' | 'O' = 'X';
   longTimeOut = 500;
-  shortTimeOut = 100;
+  shortTimeOut = 0;
   randomAi = false;
   perfectAi = false;
   smartAi = false;

@@ -7,25 +7,27 @@
     <app-robot-svg [fillColor]="currentMenace.color"></app-robot-svg>
   </div>
   <div class="container">
-    <div class="left standOut">
+    <div class="left">
       <h1 *ngIf="winner===''; else turn">Begin a game!</h1>
       <ng-template #turn><h1 *ngIf="winner==='TBD'; else win">Turn: {{toPlay}}</h1></ng-template>
-      <ng-template #win><h1>Winner is: {{ winner }}</h1></ng-template>
-      <table>
+      <ng-template #win><h1 *ngIf="winner!=='Draw'; else draw">Winner is: {{ winner }}</h1></ng-template>
+      <ng-template #draw><h1>It's a draw!</h1></ng-template>
+      <table> 
+        <!-- TODO: make its own component -->
         <tr>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(0)" value="{{ board[0] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(1)" value="{{ board[1] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(2)" value="{{ board[2] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(0)" value="{{ board[0] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(1)" value="{{ board[1] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(2)" value="{{ board[2] }}"></app-cell></td>
         </tr>
         <tr>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(3)" value="{{ board[3] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(4)" value="{{ board[4] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(5)" value="{{ board[5] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(3)" value="{{ board[3] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(4)" value="{{ board[4] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(5)" value="{{ board[5] }}"></app-cell></td>
         </tr>
         <tr>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(6)" value="{{ board[6] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(7)" value="{{ board[7] }}"></app-cell></td>
-          <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(8)" value="{{ board[8] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(6)" value="{{ board[6] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(7)" value="{{ board[7] }}"></app-cell></td>
+          <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" (click)="handleClick(8)" value="{{ board[8] }}"></app-cell></td>
         </tr>
       </table>
       <form [formGroup]="controls">

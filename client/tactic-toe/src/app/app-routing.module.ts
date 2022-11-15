@@ -15,7 +15,7 @@ import { TrainComponent } from './train/train.component';
 // import { YourAiComponent } from './your-ai/your-ai.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  // { path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, // TODO: think about putting back
   { path: 'create', component: CreateAnAiComponent, canActivate: [AuthGuard]},
   { path: 'yourai', component: CreateAnAiComponent, canActivate: [AuthGuard]},
   {path: 'train/:id', component: TrainComponent, canActivate: [AuthGuard]},

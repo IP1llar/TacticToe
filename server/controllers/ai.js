@@ -9,7 +9,7 @@ async function move(req, res) {
     const retrieved = await retrieveAI(req.user, id);
     const aiMove = ai.menacePlay(board, retrieved);
     res.status(200);
-    res.send(JSON.stringify(aiMove)); // TODO: res.json
+    res.json(aiMove);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -20,6 +20,7 @@ async function move(req, res) {
 async function train(req, res) {
   try {
     let { match, id } = req.body;
+    console.log({match, id})
     let retrieved = await retrieveAI(req.user, id);
     ai.trainMENACE(retrieved, match);
     await updateAi(retrieved);

@@ -9,6 +9,7 @@ export class AiBattleInfoComponent implements OnInit {
 
   @Input() ai = {id: 1, name: 'Bruce', results: {win:1, draw: 2, lose: 700}, color:'black'};
   @Input() chosen = 1;
+  @Input() clickFunction : (index : number) => void = index => index;
 
   constructor() { }
 

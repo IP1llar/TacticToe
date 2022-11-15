@@ -37,9 +37,9 @@ export class LoginComponent implements OnInit {
   login(email: string, password: string) {
     this.authService.validate(email, password)
       .subscribe({
-        next: (response : any ) => { // TODO: fix typing
+        next: (response) => {
           this.loginSuccess = 'success';
-          this.authService.setUserInfo({'user' : response['user']});
+          this.authService.setUserInfo({'user' : response['data']});
           this.api.getAllAi();
           this.router.navigate(['create'])
         },

@@ -37,23 +37,15 @@ export class EditComponent implements OnInit {
           this.editForm.controls.incentives.controls.win.setValue(this.currentMenace.incentives.win);
           this.editForm.controls.incentives.controls.draw.setValue(this.currentMenace.incentives.draw);
           this.editForm.controls.incentives.controls.lose.setValue(this.currentMenace.incentives.lose);
-          console.log('getting ai using params', ai);
         });
     })
   }
 
   handleSubmit() {
     const { name, color, incentives } = this.editForm.value;
-    console.log({
-      name: name as string,
-      color: color as string,
-      win: incentives?.win as number,
-      draw: incentives?.draw as number,
-      lose: incentives?.lose as number,
-    });
     this.api
-      .edit({
-        name: name as string,
+      .updateAi({
+        name: name as string, // TODO: Can we deal with this by defining ai type
         color: color as string,
         win: incentives?.win as number,
         draw: incentives?.draw as number,

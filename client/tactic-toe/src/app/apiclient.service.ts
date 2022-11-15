@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { succinctAi } from './aiType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class APIClientService {
 
-  allAi: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public sharedAllAi: Observable<any[]> = this.allAi.asObservable();
+  allAi: BehaviorSubject<succinctAi[]> = new BehaviorSubject<succinctAi[]>([]);
+  // TODO: Find all anys
+  public sharedAllAi: Observable<succinctAi[]> = this.allAi.asObservable();
   chosen = 1;
 
   constructor(private api: HttpClient) {
@@ -34,11 +36,11 @@ export class APIClientService {
     })
   }
 
-  sendMatch(aiHistory: ((number | string)[])[], result: 'win'|'draw'|'lose', id:number) {
+  sendMatch(matchMoves: ((number | string)[])[], result: 'win'|'draw'|'lose', id:number) {
     return this.api.post<any>(`api/ai/train`, JSON.stringify({
       match: {
         result,
-        aiHistory
+        matchMoves
       },
       id
     }), {
@@ -48,12 +50,12 @@ export class APIClientService {
 
   getAllAi() {
     console.log('Getting all ai')
-    this.api.get<object[]>('api/ai/getAllAi', {
+    this.api.get<succinctAi[]>('api/ai/getAllAi', {
       withCredentials: true
     }).subscribe({
       next: data => {
         this.allAi.next(data);
-        this.chosen = (data[0] as any).id
+        if (data.length) this.chosen = (data[0] as any).id
         console.log(data);
       },
       error: error => console.log(error)
@@ -75,16 +77,12 @@ export class APIClientService {
     });
   }
 
-  edit(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
+  updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
     console.log('editing', ai)
     return this.api.post('api/ai/edit', JSON.stringify(ai), {
       withCredentials: true,
       headers: {'Content-Type': 'application/json'}
     });
-  }
-
-  updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string}) {
-
   }
 
 }

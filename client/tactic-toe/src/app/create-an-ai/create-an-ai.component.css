@@ -25,3 +25,9 @@ h2 {
 app-ai-list {
   height: fill;
 } */
+
+@media only screen and (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}

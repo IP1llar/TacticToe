@@ -8,21 +8,22 @@
 </div>
 <table>
   <tr>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[0] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[1] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[2] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[0] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[1] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[2] }}"></app-cell></td>
   </tr>
   <tr>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[3] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[4] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[5] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[3] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[4] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[5] }}"></app-cell></td>
   </tr>
   <tr>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[6] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[7] }}"></app-cell></td>
-    <td><app-cell [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[8] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[6] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[7] }}"></app-cell></td>
+    <td><app-cell [responsive]="true" [height]="dimensions[0]" [width]="dimensions[1]" [color]="currentMenace.color" value="{{ board[8] }}"></app-cell></td>
   </tr>
 </table>
 <div class="buttons">
+  <!-- TODO: Implement play again -->
   <button (click)="getAiMove()" [disabled]="!socket.turn || winner==='X' || winner==='O'">Play</button>
 </div>

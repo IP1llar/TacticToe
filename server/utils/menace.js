@@ -115,6 +115,7 @@ function inverseRotation (rotation) { // Invert a rotation
 
 
 function trainMENACE (menace, {result, matchMoves}) { // Teach the ai from its previous match
+  console.log(matchMoves);
   const value = menace.incentives[result]; // Check how to reward (or punish) the ai
   const lastResult = menace.history[menace.history.length - 1]
   menace.results[result]++;

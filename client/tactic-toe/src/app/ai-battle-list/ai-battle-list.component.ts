@@ -12,12 +12,14 @@ export class AiBattleListComponent implements OnInit {
 
   chosen = 1;
 
-  constructor(public api : APIClientService) { }
+  constructor(public api : APIClientService) {
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   ngOnInit(): void {
     this.api.sharedAllAi.subscribe(data => {
       this.allAi = data;
-      this.chosen = data[0].id;
+      this.chosen = data[0].id; 
     })
   }
 
@@ -25,4 +27,5 @@ export class AiBattleListComponent implements OnInit {
     this.chosen = id;
     this.api.chosen = this.chosen;
   }
+
 }

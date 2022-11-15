@@ -8,3 +8,7 @@
   --shadow-color: rgb(181, 184, 171); 
   --error: #c83f3f;
 }
+
+body {
+  background-image: url('./app/backgrounds/darkBackgroundTransparent.png');
+}

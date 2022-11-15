@@ -3,9 +3,35 @@ main {
   height: 10vh;
   background-color: var(--nav-bg-color);
   color: var(--nav-text-color);
+  box-shadow: 0px 1px 2px var(--shadow-color);
+}
+
+.bigNav {
+  height: 100%;
   display: flex;
   align-items: center;
-  box-shadow: 0px 1px 2px var(--shadow-color);
+}
+
+.smallNav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.hamburgerList {
+  position: absolute;
+  width: 200px;
+  max-height: 0;
+  overflow: hidden;
+  right: 0;
+  top: 10vh;
+  background-color: var(--nav-bg-color);
+}
+
+.hamburgerList.active {
+  max-height: 1000px;
+  z-index: 10;
 }
 
 h1 {
@@ -28,4 +54,43 @@ h3 {
 
 h1:hover, h3:hover {
   color: var(--text-accent-color)
+}
+
+.hamburger {
+  margin: 10px;
+  margin-left: auto;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: var(--nav-text-color);
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.hamburger:hover:not(.active) .bar1 {
+  transform: translate(0, -3px) rotate(10deg);
+}
+
+.hamburger:hover:not(.active) .bar3 {
+  transform: translate(0, 3px) rotate(-10deg);
+}
+
+.active .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+.active .bar2 {opacity: 0;}
+
+.active .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
+.hamburger:hover.active .bar1 {
+  transform: translate(0, 11px) rotate(-55deg);
+}
+
+.hamburger:hover.active .bar3 {
+  transform: translate(0, -11px) rotate(55deg);
 }

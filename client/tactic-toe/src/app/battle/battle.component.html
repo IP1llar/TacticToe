@@ -15,8 +15,10 @@
       </div>
       <ng-template #join>
         <div class="join">
-          <label for="join">Enter key:</label>
-          <input type="text" id="join" formControlName="key">
+          <div class="joinInput">
+            <label for="join">Enter key:  </label>
+            <input type="text" id="join" formControlName="key">
+          </div>
           <button (click)="joinMatch()" type="button">Join</button>
         </div>
       </ng-template>

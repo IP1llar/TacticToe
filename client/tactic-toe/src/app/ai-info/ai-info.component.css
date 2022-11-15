@@ -1,5 +1,6 @@
 
 .standOut {
+  background-color: var(--primary-bg-color);
   width: 15vw;
   padding: 20px;
   border-radius: 5px;
@@ -8,6 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 175px;
 }
 
 h2, span {

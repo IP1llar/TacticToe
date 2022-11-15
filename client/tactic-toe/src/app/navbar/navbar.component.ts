@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -12,45 +13,37 @@ export class NavbarComponent implements OnInit {
   constructor(
     public authService:AuthService, 
     private router : Router,
-    private host: ElementRef) { }
+    private breakpointObserver : BreakpointObserver
+    ) { }
+    
+    bigNav = false;
+    isDark = false;
+    clicked = false;
 
-  isDark = false;
-
-  lightMode = {
-    'primary-bg-color': '#fffafbff',
-    'nav-bg-color': '#7de2d1ff',
-    'nav-text-color': '#fffafbff',
-    'text-accent-color': '#339989ff',
-    'button-color': '#339989ff',
-    'text-color': '#2b2c28ff',
-    'shadow-color': '#B5B8ABff',
-    'error': '#c83f3fff'
-  }
-
-  darkMode = {
-    'primary-bg-color': '#2b2c28ff',
-    'nav-bg-color': '#b5b8abff',
-    'nav-text-color': '#fffafbff',
-    'text-accent-color': '#339989ff',
-    'button-color': '#339989ff',
-    'text-color': '#fffafbff',
-    'shadow-color': '#B5B8ABff',
-    'error': '#c83f3fff'
+  onClick() {
+    console.log(this.clicked, 'hello');
+    this.clicked = !this.clicked;
   }
 
   ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(min-width: 700px)'])
+      .subscribe((state: BreakpointState) => {
+        this.bigNav = state.matches;
+        this.clicked = false;
+      })
   }
 
   onLogout() {
     this.authService.logout()
-      .subscribe((response : any ) => { // TODO: fix typing
+      .subscribe((response ) => {
         console.log('response', response);
         this.authService.setUserInfo({});
         this.router.navigate(['login'])
       })
   }
 
-  toggleDarkMode () { // TODO: Make work
+  toggleDarkMode () {
     this.isDark = !this.isDark;
     if (this.isDark) this.loadTheme('darktheme.css');
     else {

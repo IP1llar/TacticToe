@@ -5,6 +5,6 @@
   </div>
   <p>Games played: <span>{{ai.results.win + ai.results.draw + ai.results.lose}}</span></p>
   <div class="buttons">
-    <button [disabled]="chosen===ai.id" >Choose</button>
+    <button [disabled]="chosen===ai.id" (click)="clickFunction(ai.id)">Choose</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-// TODO: fix typing
+// TODO: fix typing and comment
 
 export module transformations {
   export function transform (board:any, rotation:number[], flip:number[], beads = false) {
