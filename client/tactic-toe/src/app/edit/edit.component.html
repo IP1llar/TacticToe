@@ -30,7 +30,7 @@
     </div>
   
     <div class="buttons">
-      <button [disabled]="!editForm.valid">Edit</button>
+      <button [disabled]="!editForm.valid" [routerLink]="['/train', id]">Edit</button>
     </div>
   
   </form>

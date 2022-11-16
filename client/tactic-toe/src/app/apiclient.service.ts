@@ -49,14 +49,12 @@ export class APIClientService {
   }
 
   getAllAi() {
-    console.log('Getting all ai')
     this.api.get<succinctAi[]>('api/ai/getAllAi', {
       withCredentials: true
     }).subscribe({
       next: data => {
         this.allAi.next(data);
         if (data.length) this.chosen = (data[0] as any).id
-        console.log(data);
       },
       error: error => console.log(error)
     })
@@ -70,7 +68,6 @@ export class APIClientService {
   }
 
   createAi(ai: {name:string, win:number, lose:number, draw:number, color:string}) {
-    console.log('creating', ai)
     return this.api.post('api/ai/create', JSON.stringify(ai), {
       withCredentials: true,
       headers: {'Content-Type': 'application/json'}
@@ -78,7 +75,6 @@ export class APIClientService {
   }
 
   updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
-    console.log('editing', ai)
     return this.api.post('api/ai/edit', JSON.stringify(ai), {
       withCredentials: true,
       headers: {'Content-Type': 'application/json'}

@@ -1,8 +1,6 @@
 function ioFunctions (io) {
   keys = [];
-  console.log({io})
   io.on('connection', socket => {
-    console.log(`Socket ${socket.id} connected`)
     socket.on('hosting', key => {
       keys.push(key);
       socket.join(key);
@@ -21,12 +19,14 @@ function ioFunctions (io) {
     })
 
     socket.on('turn', (index, key) => {
-      console.log('turn');
       socket.to(key).emit('turn', index);
     })
 
     socket.on('opponent', (opponentName, key) => {
       socket.to(key).emit('opponent', opponentName);
+    })
+    socket.on('play again', (key) => {
+      io.to(key).emit('play again', socket.id)
     })
   })
 }

@@ -45,7 +45,6 @@ export class BattleComponent implements OnInit {
 
   host () {
     this.socketService.host();
-    console.log(this.api.chosen);
   }
 
   joinMatch () {

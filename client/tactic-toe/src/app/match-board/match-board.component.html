@@ -26,4 +26,5 @@
 <div class="buttons">
   <!-- TODO: Implement play again -->
   <button (click)="getAiMove()" [disabled]="!socket.turn || winner==='X' || winner==='O'">Play</button>
+  <button (click)="handlePlayAgain()" [disabled]="winner!=='X' && winner!=='O' && winner!=='Draw' && socket.playAgainObservable">Play Again</button>
 </div>

@@ -55,13 +55,11 @@ export class StatboardComponent implements OnInit {
   }
 
   handleCellClick (index: number) {
-    console.log(this.winner);
     if (this.board[index] === 'X' || this.board[index] === 'O') {
       console.log('You can not go there');
       return;
     };
     if (this.board[index] === 'X' || this.board[index] === 'O'|| this.winner !== 'TBD') return;
-    console.log('clicked');
     this.board[index] = this.toPlay;
     this.history.push(index);
     if (this.checkWin()) {

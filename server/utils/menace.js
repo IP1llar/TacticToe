@@ -115,7 +115,6 @@ function inverseRotation (rotation) { // Invert a rotation
 
 
 function trainMENACE (menace, {result, matchMoves}) { // Teach the ai from its previous match
-  console.log(matchMoves);
   const value = menace.incentives[result]; // Check how to reward (or punish) the ai
   const lastResult = menace.history[menace.history.length - 1]
   menace.results[result]++;
@@ -131,9 +130,7 @@ function trainMENACE (menace, {result, matchMoves}) { // Teach the ai from its p
     let updatedBeads = transform(beads, transformed[1], transformed[2], true); // transform the beads back to be stored
     // Check for some edge cases
     if (updatedBeads.every(el => el === 0) || updatedBeads.length !== 9 || updatedBeads.some(el => Number(el) < 0)) { // TODO: review these conditions
-      console.log('Violating beads', updatedBeads)
       updatedBeads = addBeads(transformed[0]);
-      console.log('Beads after fixing', updatedBeads)
     }
     menace.states[transformed[0]] = updatedBeads; // store the beads
   }

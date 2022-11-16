@@ -201,7 +201,6 @@ export class BoardComponent implements OnInit {
       this.api.getAi(this.id)
         .subscribe(ai => {
           this.currentMenace = ai;
-          console.log('getting ai using params', ai);
         });
     })
 

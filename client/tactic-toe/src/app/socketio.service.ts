@@ -15,6 +15,7 @@ export class SocketioService {
   searching = false;
   turn = false;
   turnObservable = new EventEmitter(false);
+  playAgainObservable = new EventEmitter(false);
   key : number = 0;
   opponent = 'Bruce';
 
@@ -24,10 +25,8 @@ export class SocketioService {
       });
     this.socket.on('message', (msg:string) => {
       if (msg === 'failure') this.searching = this.connected = false;
-      console.log(msg);
     });
     this.socket.on('allconnected', (key : number, socketId: string) => {
-      console.log({key, socketId, socket:this.socket.id});
       this.key = key;
       this.connected = true;
       if (socketId === this.socket.id) {
@@ -37,12 +36,21 @@ export class SocketioService {
       this.connectedObservable.emit(this.connected);
     })
     this.socket.on('turn', (index : number) => {
-      console.log({index});
       this.indexObservable.next(index);
       this.turnObservable.next(true)
     })
     this.socket.on('opponent', (opponentName : string) => {
       this.opponent = opponentName;
+    })
+    this.socket.on('play again', (id : string) => {
+      if (id === this.socket.id) {
+        this.turnObservable.next(true);
+        this.turn = true;
+      } else {
+        this.turnObservable.next(false);
+        this.turn = false;
+      }
+      this.playAgainObservable.next(true);
     })
   }
 
@@ -77,6 +85,12 @@ export class SocketioService {
   emitTurn (index:number) {
     if (this.socket) {
       this.socket.emit('turn', index, this.key);
+    }
+  }
+
+  playAgain () {
+    if (this.socket) {
+      this.socket.emit('play again', this.key);
     }
   }
 

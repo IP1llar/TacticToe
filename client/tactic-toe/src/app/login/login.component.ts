@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.warn(this.loginForm.value);
     this.login(this.loginForm.value.userEmail as string, this.loginForm.value.userPassword as string);
   }
 
@@ -44,16 +43,13 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['create'])
         },
         error: error => {
-          console.log(error);
           this.loginSuccess = 'error';
         }}
       )
   }
 
   checkLoggedIn() {
-    this.http.get('/api/loggedin', {withCredentials: true}).subscribe(data => {
-      console.log({data})
-    })
+    this.http.get('/api/loggedin', {withCredentials: true}).subscribe(data => {})
   }
 
 }

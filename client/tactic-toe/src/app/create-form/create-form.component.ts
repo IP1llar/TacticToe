@@ -24,13 +24,6 @@ export class CreateFormComponent implements OnInit {
 
   handleSubmit() {
     const { name, color, incentives } = this.createForm.value;
-    console.log({
-      name: name as string,
-      color: color as string,
-      win: incentives?.win as number,
-      draw: incentives?.draw as number,
-      lose: incentives?.lose as number,
-    });
     this.api
       .createAi({
         name: name as string,
@@ -41,7 +34,6 @@ export class CreateFormComponent implements OnInit {
       })
       .subscribe((data) => {
         this.api.getAllAi();
-        console.log(this.api.allAi);
       });
   }
 }

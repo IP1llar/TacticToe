@@ -28,7 +28,6 @@ export class CellComponent implements OnInit {
         .observe([`(min-width: ${this.breakpoint[0]}px)`])
         .subscribe((state: BreakpointState) => {
           if (!state.matches && this.responsive) {
-            console.log('doing this')
             this.calculatedDimensions = [`min(${this.height}px, ${this.breakpoint[1]}vw)`, `min(${this.height}px, ${this.breakpoint[1]}vw)`]
           } else if (this.responsive) {
             this.calculatedDimensions = [`${this.height}px`, `${this.width}px`]

@@ -23,13 +23,11 @@ export class MatchComponent implements OnInit {
 
 
   handleClick (index: number) {
-    console.log(this.winner);
     if (this.board[index] === 'X' || this.board[index] === 'O') {
       console.log('You can not go there');
       return;
     };
     if (this.board[index] === 'X' || this.board[index] === 'O'|| this.winner !== 'TBD') return;
-    console.log('clicked');
     this.board[index] = this.toPlay;
     if (this.checkWin()) {
       this.winner = this.toPlay;

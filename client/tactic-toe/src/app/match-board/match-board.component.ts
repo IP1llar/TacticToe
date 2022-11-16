@@ -36,24 +36,23 @@ export class MatchBoardComponent implements OnInit {
         .subscribe(ai => {
           this.currentMenace = ai;
           this.socket.sendName((ai as any).name);
-          console.log('getting ai using params', ai);
         });
     })
     this.socket.indexObservable.subscribe(data => {
       this.handleClick(data);
     })
+    this.socket.playAgainObservable.subscribe(data => {
+      if (data) this.resetBoard();
+    })
   }
 
   handleClick (index: number) {
-    console.log(index);
-    console.log(this.winner);
+    this.spacesLeft--;
     if (this.board[index] === 'X' || this.board[index] === 'O') {
       console.log('You can not go there');
       return;
     };
     if (this.board[index] === 'X' || this.board[index] === 'O'|| this.winner !== 'TBD') return;
-    console.log('hi');
-    console.log('clicked');
     this.board[index] = this.toPlay;
     if (this.checkWin()) {
       this.winner = this.toPlay;
@@ -88,6 +87,7 @@ export class MatchBoardComponent implements OnInit {
     this.board = Array(9).fill('');
     this.toPlay = 'X';
     this.winner = 'TBD';
+    this.socket.playAgainObservable.next(false);
   }
 
   parseBoard(board: string[]) {
@@ -97,8 +97,15 @@ export class MatchBoardComponent implements OnInit {
       else return '2';
     }).join('');
   }
-
+  
   aiMove (index: number) {
+    this.socket.turnObservable.next(false);
+    this.socket.turn = false;
+    if (this.board[index] === 'X' || this.board[index] === 'O') {
+      console.log('You can not go there');
+      return;
+    };
+    if (this.board[index] === 'X' || this.board[index] === 'O'|| this.winner !== 'TBD') return;
     this.spacesLeft--;
     this.aiHistory.push([index, this.parseBoard(this.board)]);
     this.board[index] = this.toPlay;
@@ -120,8 +127,6 @@ export class MatchBoardComponent implements OnInit {
     };
     this.toPlay = this.toPlay === 'X' ? 'O' : 'X';
     this.playerMove = !this.playerMove;
-    this.socket.turnObservable.next(false);
-    this.socket.turn = false;
 
   }
 
@@ -142,5 +147,9 @@ export class MatchBoardComponent implements OnInit {
     randomness: [100],
     firstGo: [true]
   })
+
+  handlePlayAgain() {
+    this.socket.playAgain();
+  }
 
 }

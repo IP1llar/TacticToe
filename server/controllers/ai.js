@@ -20,7 +20,6 @@ async function move(req, res) {
 async function train(req, res) {
   try {
     let { match, id } = req.body;
-    console.log({match, id})
     let retrieved = await retrieveAI(req.user, id);
     ai.trainMENACE(retrieved, match);
     await updateAi(retrieved);

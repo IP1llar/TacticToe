@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
     clicked = false;
 
   onClick() {
-    console.log(this.clicked, 'hello');
     this.clicked = !this.clicked;
   }
 
@@ -37,7 +36,6 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.authService.logout()
       .subscribe((response ) => {
-        console.log('response', response);
         this.authService.setUserInfo({});
         this.router.navigate(['login'])
       })
