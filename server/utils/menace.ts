@@ -34,7 +34,7 @@ function generateStates () {
   return out; // An object with board states as keys, and probabilities as values
 }
 
-function checkWin (board) { // Check if there's a win by cycling through all possible combinations
+function checkWin (board:any) { // Check if there's a win by cycling through all possible combinations
   const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
   for (let win of wins) {
     if (`${board[win[0]]}` === '0') continue;
@@ -43,7 +43,7 @@ function checkWin (board) { // Check if there's a win by cycling through all pos
   return false;
 }
 
-function addBeads(state) { // Calculate beads (probabilites) given a board state taking into account probabilities
+function addBeads(state:any) { // Calculate beads (probabilites) given a board state taking into account probabilities
   const zeros = []; // Check where possible moves are
   for (let i = 0; i < 9; i++) {
     if (state[i] === '0') zeros.push(i);
@@ -64,7 +64,7 @@ function addBeads(state) { // Calculate beads (probabilites) given a board state
 }
 
 // TODO: set smallest instead of largest for memory? Wouldn't make a difference unless store as bare number and readd any 0s at the start
-function transformBoard (board, show = false) { // Each board state is given as a string '012120200' where 0 is empty, 1 is X and 2 is O, To store the state we rotate the board until we get the largest base 3 number, 'normalising' the board
+function transformBoard (board:any, show = false) { // Each board state is given as a string '012120200' where 0 is empty, 1 is X and 2 is O, To store the state we rotate the board until we get the largest base 3 number, 'normalising' the board
   let largest = [board, [0,1,2,3,4,5,6,7,8], [0,1,2,3,4,5,6,7,8]]; // An array so we can keep track of the used rotation and flip
   const rotations = [[0,1,2,3,4,5,6,7,8],[6,3,0,7,4,1,8,5,2],[8,7,6,5,4,3,2,1,0],[2,5,8,1,4,7,0,3,6]] // Every possible matrix rotation
   const flips = [[0,1,2,3,4,5,6,7,8],[2,1,0,5,4,3,8,7,6]] // Every matrix flip
@@ -79,7 +79,7 @@ function transformBoard (board, show = false) { // Each board state is given as 
   return largest[0]; // Just the board
 };
 
-function transform (board, rotation, flip, notjoin = false) { // Apply the rotation and flip
+function transform (board:any, rotation:any, flip:any, notjoin = false) { // Apply the rotation and flip
   const temp = [];
   for (let position of rotation) {
     temp.push(board[position]);
@@ -92,7 +92,7 @@ function transform (board, rotation, flip, notjoin = false) { // Apply the rotat
   return out.join(''); // return as string
 }
 
-function inverseTransform (board, oldRotation, flip, beads = false) { // Invert a transformation
+function inverseTransform (board:any, oldRotation:any, flip:any, beads = false) { // Invert a transformation
   const temp = [];
   for (let position of flip) {
     temp.push(board[position]);
@@ -106,7 +106,7 @@ function inverseTransform (board, oldRotation, flip, beads = false) { // Invert 
   return out.join('');
 }
 
-function inverseRotation (rotation) { // Invert a rotation
+function inverseRotation (rotation:any) { // Invert a rotation
   const inverses = {
     '012345678': [0,1,2,3,4,5,6,7,8],
     '630741852': [2,5,8,1,4,7,0,3,6],
@@ -140,12 +140,12 @@ function trainMENACE (menace:ai, {result, matchMoves}) { // Teach the ai from it
   return menace;
 }
 
-function menacePlay (board, menace:ai) {
+function menacePlay (board:any, menace:ai) {
   const transformed = transformBoard(board, true); // Normalise board
   const transformedBeads = menace.states[transformed[0]]; // Get beads using normalised board
   const beads:any = inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform to match the current match state
   // Pick a place to go using the numbers of beads a weighted probabilities
-  const totals = beads.map(str => Number(str)); // TODO: Check if 'Number' still necessary
+  const totals = beads.map((str:string) => Number(str)); // TODO: Check if 'Number' still necessary
   let total = [];
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < totals[i]; j++) {
@@ -158,7 +158,7 @@ function menacePlay (board, menace:ai) {
   return chosenIndex;
 }
 
-function randomMove (board) { // Make a random move given a board
+function randomMove (board:any) { // Make a random move given a board
   const zeros = []; // Calculate possible moves
   for (let i = 0; i < 9; i++) {
     if (board[i] === '0') zeros.push(i);
@@ -166,7 +166,8 @@ function randomMove (board) { // Make a random move given a board
   return zeros[Math.floor(Math.random()*zeros.length)] // Pick a random move
 }
 
-function perfectMove (board, firstTurn, currentTurn = firstTurn, depth = 0) { // Min-max algorithm
+
+function perfectMove (board:any, firstTurn:any, currentTurn:any = firstTurn, depth:number = 0) { // Min-max algorithm
   // Calculate the best move assuming your opponent will play the best move by rating a win by +1, a draw as +0 and a loss as -1
   // When summing up at the end, on our turn pick the best move for us, on the opponent's turn pick the best move for the,
   if(typeof board === 'string') board = board.split('').map(el => Number(el)); // TODO: Check if still needed

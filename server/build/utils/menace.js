@@ -149,7 +149,7 @@ function menacePlay(board, menace) {
     const transformedBeads = menace.states[transformed[0]]; // Get beads using normalised board
     const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform to match the current match state
     // Pick a place to go using the numbers of beads a weighted probabilities
-    const totals = beads.map(str => Number(str)); // TODO: Check if 'Number' still necessary
+    const totals = beads.map((str) => Number(str)); // TODO: Check if 'Number' still necessary
     let total = [];
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < totals[i]; j++) {
