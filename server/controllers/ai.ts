@@ -1,9 +1,13 @@
+import express from 'express'
 const ai = require('../utils/menace');
-const db = require('../models');
+const {db} = require('../models');
+import {User} from '../models/users'
+import {ai} from '../models/ais'
+
 
 // TODO: Better error messages
 
-async function move(req, res) {
+async function move(req:express.Request, res:express.Response) {
   try {
     let { board, id } = req.body;
     const retrieved = await retrieveAI(req.user, id);
@@ -17,7 +21,7 @@ async function move(req, res) {
   }
 }
 
-async function train(req, res) {
+async function train(req:express.Request, res:express.Response) {
   try {
     let { match, id } = req.body;
     let retrieved = await retrieveAI(req.user, id);
@@ -33,7 +37,7 @@ async function train(req, res) {
   }
 }
 
-async function updateAi(ai) {
+async function updateAi(ai:ai) {
   try {
     const toUpdate = await db.Ais.update({
       states: ai.states,
@@ -52,7 +56,7 @@ async function updateAi(ai) {
   }
 }
 
-async function editAi(req, res) {
+async function editAi(req:express.Request, res:express.Response) {
   try {
     let { name, win, lose, draw, color, id } = req.body;
     const toUpdate = await db.Ais.update({
@@ -75,7 +79,7 @@ async function editAi(req, res) {
   }
 }
 
-function random(req, res) {
+function random(req:express.Request, res:express.Response) {
   try {
     let { board } = req.body;
     const aiMove = ai.randomMove(board);
@@ -88,7 +92,7 @@ function random(req, res) {
   }
 }
 
-function perfect(req, res) {
+function perfect(req:express.Request, res:express.Response) {
   try {
     let { board, toPlay } = req.body;
     const aiMove = ai.perfectMove(board, toPlay === 'X' ? 1 : 2);
@@ -101,7 +105,7 @@ function perfect(req, res) {
   }
 }
 
-async function create(req, res) {
+async function create(req:express.Request, res:express.Response) {
   try {
     let { name, win, lose, draw, color } = req.body;
     const newAi = ai.createMENACE(name, win, lose, draw, color);
@@ -115,7 +119,7 @@ async function create(req, res) {
   }
 }
 
-async function retrieveAI(UserId, aiId) {
+async function retrieveAI(UserId:User, aiId:number) {
   try {
     const retrieved = await db.Ais.findOne({
       where: {
@@ -130,7 +134,7 @@ async function retrieveAI(UserId, aiId) {
   }
 }
 
-async function getAllAi(req, res) {
+async function getAllAi(req:express.Request, res:express.Response) {
   try {
     const retrieved = await db.Ais.findAll({
       where: {
@@ -147,7 +151,7 @@ async function getAllAi(req, res) {
   }
 }
 
-async function get(req, res) {
+async function get(req:express.Request, res:express.Response) {
   try {
     const retrieved = await db.Ais.findOne({
       where: {
@@ -164,4 +168,4 @@ async function get(req, res) {
   }
 }
 
-module.exports = { move, train, random, perfect, create, getAllAi, get, editAi }
+export { move, train, random, perfect, create, getAllAi, get, editAi }

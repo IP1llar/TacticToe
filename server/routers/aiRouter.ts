@@ -11,4 +11,4 @@ aiRouter.post('/edit', ai.editAi)
 aiRouter.post('/randommove', ai.random);
 aiRouter.post('/perfectmove', ai.perfect);
 
-module.exports = aiRouter;
+export  {aiRouter};
