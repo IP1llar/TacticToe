@@ -1,7 +1,10 @@
-const router = require('express').Router();
-const aiRouter = require('./aiRouter');
-const ai = require('../controllers/ai')
-const authRouter = require('./authRouter');
+import express from 'express';
+
+
+const router = express.Router();
+const {aiRouter} = require('./aiRouter');
+// const {ai} = require('../controllers/ai') Not used
+const {authRouter} = require('./authRouter');
 const {isLoggedIn} = require('../utils/passport');
 
 router.use('/', authRouter);
@@ -15,4 +18,4 @@ router.get('/loggedin', isLoggedIn, (req, res) => {
   res.json('logged in')
 })
 
-module.exports = router;
+export {router};

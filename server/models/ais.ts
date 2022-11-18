@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize:any, DataTypes:any) => {
   const Ais = sequelize.define('Ai', {
     name: {
       allowNull: false,
@@ -26,4 +26,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
   return Ais;
+}
+export type ai = {
+  id: string
+  name:string,
+  states: {
+    [state:string] : number[]
+  },
+  history: number[][],
+  incentives: incentive,
+  results: result,
+  color: string 
+}
+
+type result = {
+  win: number,
+  draw: number,
+  lose: number
+}
+type incentive = {
+  win: number,
+  draw: number,
+  lose: number
 }

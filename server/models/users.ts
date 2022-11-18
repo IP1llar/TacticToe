@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize:any, DataTypes:any) => {
   const Users = sequelize.define('User', {
     email: {
       allowNull: false,
@@ -18,4 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
   return Users;
+}
+
+export type User = {
+  id?: string,
+  email?:string,
+  firstName?:string,
+  lastName?:string,
+  password?:string
 }
