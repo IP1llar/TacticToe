@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { APIClientService } from '../apiclient.service';
 
 @Component({
   selector: 'app-create-an-ai',
@@ -8,7 +7,7 @@ import { APIClientService } from '../apiclient.service';
 })
 export class CreateAnAiComponent implements OnInit {
 
-  constructor(private auth : APIClientService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

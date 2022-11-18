@@ -15,7 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
 import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
 import { AiInfoComponent } from './ai-info/ai-info.component';
 import { AiListComponent } from './ai-list/ai-list.component';
 import { RobotSvgComponent } from './robot-svg/robot-svg.component';
@@ -42,7 +41,6 @@ import { MatchBoardComponent } from './match-board/match-board.component';
     NavbarComponent,
     CreateAnAiComponent,
     AboutComponent,
-    HomeComponent,
     AiInfoComponent,
     AiListComponent,
     RobotSvgComponent,
