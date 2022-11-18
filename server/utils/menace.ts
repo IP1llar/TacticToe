@@ -1,5 +1,6 @@
 // TODO: split up into create and play functions (modularity)
 import {ai} from '../models/ais'
+import {transformation} from './transformation'
 //?josepcomments 
 
 function createMENACE (name:string, win:number = 3, lose:number = -1, draw:number = 1, color:string = 'red', history:[number[]] = [[0, 0]], results:{win:number,draw:number,lose:number} = {win: 0, draw: 0, lose: 0}) {
@@ -24,7 +25,7 @@ function generateStates () {
       boardArr[place] = toPlay;
       let newState = boardArr.join('');
       if (checkWin(newState)) continue; // If it's a win then the AI doesn't need to know where to go next as the game is over
-      newState = transformBoard(newState); // To deal with symmetries, we need to normalise which state is stored
+      newState = transformation.transformBoard(newState); // To deal with symmetries, we need to normalise which state is stored
       if (temp.includes(newState)) continue;
       if (numbers[0].length === 0) continue; // TODO: Check if necessary
       temp.push(newState);
@@ -55,67 +56,13 @@ function addBeads(state:any) { // Calculate beads (probabilites) given a board s
   for (let index of zeros) { // Loop through each possible move and add the right number of beads
     let boardArr = state.split(''); // Create a new board as if you'd just played there
     boardArr[index] = toPlay;
-    let newState = transformBoard(boardArr.join('')); // Get the normalised version
+    let newState = transformation.transformBoard(boardArr.join('')); // Get the normalised version
     if (symmetries.includes(newState)) continue; // If true, we've already accounted for a symmetry of this position and don't need to add more beads
     out[index] = dict[zeros.length]; // Otherwise add beads and add state to symmetry array
     symmetries.push(newState);
   }
   return out; // Returns an array of beads
 }
-
-// TODO: set smallest instead of largest for memory? Wouldn't make a difference unless store as bare number and readd any 0s at the start
-function transformBoard (board:any, show = false) { // Each board state is given as a string '012120200' where 0 is empty, 1 is X and 2 is O, To store the state we rotate the board until we get the largest base 3 number, 'normalising' the board
-  let largest = [board, [0,1,2,3,4,5,6,7,8], [0,1,2,3,4,5,6,7,8]]; // An array so we can keep track of the used rotation and flip
-  const rotations = [[0,1,2,3,4,5,6,7,8],[6,3,0,7,4,1,8,5,2],[8,7,6,5,4,3,2,1,0],[2,5,8,1,4,7,0,3,6]] // Every possible matrix rotation
-  const flips = [[0,1,2,3,4,5,6,7,8],[2,1,0,5,4,3,8,7,6]] // Every matrix flip
-  for (let flip of flips) { // Loop through flips and rotations to generate every symmetric board
-    for (let rotation of rotations) {
-      const boardTra = transform(board, rotation, flip)
-      const boardTernary = Number(Number(boardTra).toString(3));
-      if (boardTernary > Number(Number(largest[0]).toString(3))) largest = [boardTra, rotation, flip]; // Compare board to largest and store the largest
-    }
-  }
-  if (show) return largest; // board, rotation and flip
-  return largest[0]; // Just the board
-};
-
-function transform (board:any, rotation:any, flip:any, notjoin = false) { // Apply the rotation and flip
-  const temp = [];
-  for (let position of rotation) {
-    temp.push(board[position]);
-  }
-  const out = [];
-  for (let position of flip) {
-    out.push(temp[position]);
-  }
-  if (notjoin) return out; // return as array 
-  return out.join(''); // return as string
-}
-
-function inverseTransform (board:any, oldRotation:any, flip:any, beads = false) { // Invert a transformation
-  const temp = [];
-  for (let position of flip) {
-    temp.push(board[position]);
-  }
-  const out = [];
-  const rotation = inverseRotation(oldRotation);
-  for (let position of rotation) {
-    out.push(temp[position]);
-  }
-  if (beads) return out;
-  return out.join('');
-}
-
-function inverseRotation (rotation:any) { // Invert a rotation
-  const inverses = {
-    '012345678': [0,1,2,3,4,5,6,7,8],
-    '630741852': [2,5,8,1,4,7,0,3,6],
-    '876543210': [8,7,6,5,4,3,2,1,0],
-    '258147036': [6,3,0,7,4,1,8,5,2]
-  }
-  return inverses[rotation.join('')];
-}
-
 
 function trainMENACE (menace:ai, {result, matchMoves}) { // Teach the ai from its previous match
   const value = menace.incentives[result]; // Check how to reward (or punish) the ai
@@ -126,11 +73,11 @@ function trainMENACE (menace:ai, {result, matchMoves}) { // Teach the ai from it
     const index = move[0];
     // The match state may be a different transformation to that which is stored in the ai
     // - We need to find out this transformation so we can update the correct beads
-    const transformed = transformBoard(move[1], true); // TODO: array destructure: 0 is board, 1 is rotation, 2 is flip
+    const transformed = transformation.transformBoard(move[1], true); // TODO: array destructure: 0 is board, 1 is rotation, 2 is flip
     const transformedBeads = menace.states[transformed[0]]; // Get the beads as they are stored
-    const beads:any = inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform the beads to match the current match state
+    const beads:any = transformation.inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform the beads to match the current match state
     beads[index] = ((beads[index] + value >= 0) ? (beads[index] + value) : 0); // Update the beads with the incentive
-    let updatedBeads:any = transform(beads, transformed[1], transformed[2], true); // transform the beads back to be stored
+    let updatedBeads:any = transformation.transform(beads, transformed[1], transformed[2], true); // transform the beads back to be stored
     // Check for some edge cases
     if (updatedBeads.every(el => el === 0) || updatedBeads.length !== 9 || updatedBeads.some(el => Number(el) < 0)) { // TODO: review these conditions
       updatedBeads = addBeads(transformed[0]);
@@ -141,9 +88,9 @@ function trainMENACE (menace:ai, {result, matchMoves}) { // Teach the ai from it
 }
 
 function menacePlay (board:any, menace:ai) {
-  const transformed = transformBoard(board, true); // Normalise board
+  const transformed = transformation.transformBoard(board, true); // Normalise board
   const transformedBeads = menace.states[transformed[0]]; // Get beads using normalised board
-  const beads:any = inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform to match the current match state
+  const beads:any = transformation.inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform to match the current match state
   // Pick a place to go using the numbers of beads a weighted probabilities
   const totals = beads.map((str:string) => Number(str)); // TODO: Check if 'Number' still necessary
   let total = [];
