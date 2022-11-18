@@ -1,6 +1,9 @@
 // TODO: split up into create and play functions (modularity)
-function createMENACE (name, win = 3, lose = -1, draw = 1, color = 'red', history = [[0, 0]], results = {win: 0, draw: 0, lose: 0}) {
-  const states = generateStates(); // Generate every board state taking into account symmetries
+import {ai} from '../models/ais'
+//?josepcomments 
+
+function createMENACE (name:string, win:number = 3, lose:number = -1, draw:number = 1, color:string = 'red', history:[number[]] = [[0, 0]], results:{win:number,draw:number,lose:number} = {win: 0, draw: 0, lose: 0}) {
+  const states:{[state:string] : number[]} = generateStates(); // Generate every board state taking into account symmetries
   return {name, states, history, results, color, incentives: {win, lose, draw}};
 }
 
@@ -8,18 +11,18 @@ function generateStates () {
   const temp = ['000000000']; // queue to generate every possible state
   const out = {'000000000': addBeads('000000000')}; 
   while (temp.length) {
-    let current = temp.shift();
+    let current = temp.shift() as string;
     let numbers = {0:[], 1:0, 2:0}; // Determine who goes next by counting up the 1s and 2s 
     for (let i = 0; i < current.length; i++) { // TODO: can be calculated with just counting the zeros
       if (current[i] === '1') numbers[1]++;
       else if (current[i] === '2') numbers[2]++;
       else numbers[0].push(i); // Compile a list of all open spaces
     }
-    const toPlay = ((numbers[1] + numbers[2]) % 2) + 1; // This gives who is to go next (1 or 2)
+    const toPlay = String(((numbers[1] + numbers[2]) % 2) + 1); // This gives who is to go next (1 or 2)
     for (let place of numbers[0]) { // Cycle through open spaces and place 1 (or 2) there
-      let newState = current.split('');
-      newState[place] = toPlay;
-      newState = newState.join('');
+      let boardArr = current.split('');
+      boardArr[place] = toPlay;
+      let newState = boardArr.join('');
       if (checkWin(newState)) continue; // If it's a win then the AI doesn't need to know where to go next as the game is over
       newState = transformBoard(newState); // To deal with symmetries, we need to normalise which state is stored
       if (temp.includes(newState)) continue;
