@@ -58,9 +58,9 @@ function addBeads(state) {
     const out = Array(9).fill(0);
     const dict = { 9: 8, 8: 6, 7: 4, 6: 2, 5: 2, 4: 1, 3: 1, 2: 1, 1: 1 }; // States with more moves on require fewer beads to aid training speed
     for (let index of zeros) { // Loop through each possible move and add the right number of beads
-        let newState = state.split(''); // Create a new board as if you'd just played there
-        newState[index] = toPlay;
-        newState = transformBoard(newState.join('')); // Get the normalised version
+        let boardArr = state.split(''); // Create a new board as if you'd just played there
+        boardArr[index] = toPlay;
+        let newState = transformBoard(boardArr.join('')); // Get the normalised version
         if (symmetries.includes(newState))
             continue; // If true, we've already accounted for a symmetry of this position and don't need to add more beads
         out[index] = dict[zeros.length]; // Otherwise add beads and add state to symmetry array
@@ -134,7 +134,7 @@ function trainMENACE(menace, { result, matchMoves }) {
         const transformed = transformBoard(move[1], true); // TODO: array destructure: 0 is board, 1 is rotation, 2 is flip
         const transformedBeads = menace.states[transformed[0]]; // Get the beads as they are stored
         const beads = inverseTransform(transformedBeads, transformed[1], transformed[2], true); // Inverse transform the beads to match the current match state
-        beads[index] = beads[index] + value >= 0 ? beads[index] + value : 0; // Update the beads with the incentive
+        beads[index] = ((beads[index] + value >= 0) ? (beads[index] + value) : 0); // Update the beads with the incentive
         let updatedBeads = transform(beads, transformed[1], transformed[2], true); // transform the beads back to be stored
         // Check for some edge cases
         if (updatedBeads.every(el => el === 0) || updatedBeads.length !== 9 || updatedBeads.some(el => Number(el) < 0)) { // TODO: review these conditions
