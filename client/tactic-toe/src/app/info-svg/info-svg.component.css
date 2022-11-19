@@ -8,6 +8,7 @@ main {
   
 .svg-description:hover + .hide{
     background-color: var(--primary-bg-color);
+    filter: invert(0.85);
     border-radius: 15px;
     width:250px;
     height:max-content;
@@ -15,7 +16,7 @@ main {
     bottom:20px;
     display: block;
     font-size: small;
-    padding:15px
+    padding:15px;
 }
 .hide {
     display: none;
