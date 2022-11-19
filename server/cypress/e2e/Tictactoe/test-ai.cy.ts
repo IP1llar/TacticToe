@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('Register and log in', () => {
     beforeEach(() => {
         //REGISTER

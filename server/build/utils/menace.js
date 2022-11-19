@@ -7,7 +7,7 @@ function createMENACE(name, win = 3, lose = -1, draw = 1, color = 'red', history
     return { name, states, history, results, color, incentives: { win, lose, draw } };
 }
 function generateStates() {
-    const temp = ['000000000']; // queue to generate every possible state
+    const temp = ['000000000']; // queue to generate every possible state -   3^9 = 19.683 states
     const out = { '000000000': addBeads('000000000') };
     while (temp.length) {
         let current = temp.shift();
