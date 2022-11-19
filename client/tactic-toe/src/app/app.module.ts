@@ -29,6 +29,7 @@ import { AiBattleListComponent } from './ai-battle-list/ai-battle-list.component
 import { AiBattleInfoComponent } from './ai-battle-info/ai-battle-info.component';
 import { MatchComponent } from './match/match.component';
 import { MatchBoardComponent } from './match-board/match-board.component';
+import { InfoSvgComponent } from './info-svg/info-svg.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MatchBoardComponent } from './match-board/match-board.component';
     AiBattleListComponent,
     AiBattleInfoComponent,
     MatchComponent,
-    MatchBoardComponent
+    MatchBoardComponent,
+    InfoSvgComponent
   ],
   imports: [
     BrowserModule,

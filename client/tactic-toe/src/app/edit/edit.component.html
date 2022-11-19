@@ -18,7 +18,7 @@
     </select>
   
     <div class="incentives" formGroupName="incentives">
-      <h3>Incentives</h3>
+      <h3>Incentives <app-info-svg [description]="'Incentives'"></app-info-svg></h3>
       <label for="win">Win</label>
       <input type="number" id="win" formControlName="win" [value]="currentMenace.incentives.win">
   

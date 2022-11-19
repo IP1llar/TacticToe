@@ -1,0 +1,29 @@
+main {
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+.svg-description:hover + .hide{
+    background-color: var(--primary-bg-color);
+    border-radius: 15px;
+    width:250px;
+    height:max-content;
+    position:absolute;
+    bottom:20px;
+    display: block;
+    font-size: small;
+    padding:15px
+}
+.hide {
+    display: none;
+    text-align: justify;
+  }
+.svg-description{
+    fill:gray;
+}
+.svg-description:hover{
+    cursor: pointer;
+}
