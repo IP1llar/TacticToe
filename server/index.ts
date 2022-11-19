@@ -70,7 +70,6 @@ app.use(router);
 
 
 
-
 async function start() {
   try {
     await db.sequelize.sync();

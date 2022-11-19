@@ -7,7 +7,7 @@
         <p *ngIf="registerForm.controls.userEmail.errors?.['email']">Email is not valid</p>
       </div>
       <ng-template #validEmail><label for="email">Email</label></ng-template>
-      <input type="email" id="email" formControlName="userEmail">
+      <input type="email" id="register-email" formControlName="userEmail">
 
 
 
@@ -15,13 +15,13 @@
         <p *ngIf="registerForm.controls.userFirstName.errors?.['required']">First Name is required</p>
       </div>
       <ng-template #validFirstName><label for="firstName">First Name</label></ng-template>
-      <input type="text" id="firstName" formControlName="userFirstName">
+      <input type="text" id="register-firstName" formControlName="userFirstName">
     
       <div class='error' *ngIf="registerForm.controls.userLastName.invalid && (registerForm.controls.userLastName.dirty || registerForm.controls.userLastName.touched); else validLastName">
         <p *ngIf="registerForm.controls.userLastName.errors?.['required']">Last Name is required</p>
       </div>
       <ng-template #validLastName><label for="lastName">Last Name</label></ng-template>
-      <input type="text" id="lastName" formControlName="userLastName">
+      <input type="text" id="register-lastName" formControlName="userLastName">
     
 
 
@@ -30,11 +30,11 @@
         <p *ngIf="registerForm.controls.userPassword.errors?.['minlength']">Password must have at least 6 characters</p>
       </div>
       <ng-template #validPassword><label for="password">Password</label></ng-template>
-      <input type="password" formControlName="userPassword">
+      <input type="password" id="register-password" formControlName="userPassword">
 
       <div class="buttons">
         <button type="button" [routerLink]="['/login']">Login</button>
-        <button type="submit" [disabled]="!registerForm.valid">Register</button>
+        <button id="register-button" type="submit" [disabled]="!registerForm.valid">Register</button>
       </div>
     </form>
   </div>

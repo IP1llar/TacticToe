@@ -1,5 +1,5 @@
 <main>
-  <form [formGroup]="createForm" (ngSubmit)="handleSubmit()">
+  <form id="create-form" [formGroup]="createForm" (ngSubmit)="handleSubmit()">
     <div class='error' *ngIf="createForm.controls.name.invalid && (createForm.controls.name.dirty || createForm.controls.name.touched); else validName">
       <p *ngIf="createForm.controls.name.errors?.['required']">Name is required</p>
     </div>
@@ -30,7 +30,7 @@
     </div>
   
     <div class="buttons">
-      <button [disabled]="!createForm.valid">Create</button>
+      <button  [disabled]="!createForm.valid">Create</button>
     </div>
   
   </form>
