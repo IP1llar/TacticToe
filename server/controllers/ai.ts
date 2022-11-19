@@ -79,6 +79,7 @@ async function editAi(req:express.Request, res:express.Response) {
   }
 }
 
+
 function random(req:express.Request, res:express.Response) {
   try {
     let { board } = req.body;
@@ -112,6 +113,27 @@ async function create(req:express.Request, res:express.Response) {
     await db.Ais.create({ ...newAi, UserId: req.user })
     res.status(200);
     res.json('created');
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send('Error');
+  }
+}
+
+
+async function deleteAi(req:express.Request, res:express.Response) {
+  try {
+    let { id } = req.body;
+    let row = await db.Ais.findOne({
+      where: {
+        id: id
+      }
+    })
+    if(row){
+      await row.destroy();
+    }
+    res.status(200);
+    res.json('Edited');
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -168,4 +190,4 @@ async function get(req:express.Request, res:express.Response) {
   }
 }
 
-export { move, train, random, perfect, create, getAllAi, get, editAi }
+export { move, train, random, perfect, create, getAllAi, get, editAi, deleteAi }

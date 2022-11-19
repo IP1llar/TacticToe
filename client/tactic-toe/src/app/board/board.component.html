@@ -34,7 +34,7 @@
         <button (click)="resetBoard()" [disabled]="winner==='TBD'">Play</button>
         <button type='button' (click)="smartAiGo()" [disabled]="winner==='TBD'">Fast game</button>
         <div class="firstGo">
-          <label for="firstGo">Ai goes first (X): </label>
+          <label for="firstGo">{{currentMenace.name}} goes first (X): </label>
           <div class="checkbox">
             <input type="checkbox" formControlName="firstGo" id="firstGo">
             <span class="checkmark" (click)="toggleCheckbox('firstGo')"></span>

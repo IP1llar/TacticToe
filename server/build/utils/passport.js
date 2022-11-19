@@ -40,6 +40,7 @@ const auth = () => {
 };
 exports.auth = auth;
 const isLoggedIn = (req, res, next) => {
+    console.log('here');
     if (req.isAuthenticated()) {
         return next();
     }
