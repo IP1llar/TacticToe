@@ -5,7 +5,7 @@
   </div>
   <p>Games played: <span>{{ai.results.win + ai.results.draw + ai.results.lose}}</span></p>
   <div class="buttons">
-    <button [routerLink]="['/train', ai.id]">Train</button>
+    <button id="train-button" [routerLink]="['/train', ai.id]">Train</button>
     <button [routerLink]="['/edit', ai.id]">Edit</button> <!-- TODO: Implement route guard for stats and train guarding the ids -->
   </div>
 </div>

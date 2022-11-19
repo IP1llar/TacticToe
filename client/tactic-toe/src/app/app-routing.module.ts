@@ -6,7 +6,7 @@ import { BattleComponent } from './battle/battle.component';
 import { BoardComponent } from './board/board.component';
 import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
-import { HomeComponent } from './home/home.component';
+
 import { LoginComponent } from './login/login.component';
 import { MatchComponent } from './match/match.component';
 import { RegisterComponent } from './register/register.component';
