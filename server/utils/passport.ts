@@ -42,6 +42,7 @@ const auth = () => {
 }
 
 const isLoggedIn = (req:express.Request, res:express.Response, next:express.NextFunction) => {
+  console.log('here');
   if(req.isAuthenticated()){
       return next()
   }

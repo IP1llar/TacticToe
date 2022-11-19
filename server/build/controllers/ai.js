@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editAi = exports.get = exports.getAllAi = exports.create = exports.perfect = exports.random = exports.train = exports.move = void 0;
+exports.deleteAi = exports.editAi = exports.get = exports.getAllAi = exports.create = exports.perfect = exports.random = exports.train = exports.move = void 0;
 const ai = require('../utils/menace');
 const { db } = require('../models');
 // TODO: Better error messages
@@ -122,6 +122,27 @@ async function create(req, res) {
     }
 }
 exports.create = create;
+async function deleteAi(req, res) {
+    try {
+        let { id } = req.body;
+        let row = await db.Ais.findOne({
+            where: {
+                id: id
+            }
+        });
+        if (row) {
+            await row.destroy();
+        }
+        res.status(200);
+        res.json('Edited');
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500);
+        res.send('Error');
+    }
+}
+exports.deleteAi = deleteAi;
 async function retrieveAI(UserId, aiId) {
     try {
         const retrieved = await db.Ais.findOne({
