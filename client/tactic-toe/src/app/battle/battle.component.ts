@@ -51,4 +51,7 @@ export class BattleComponent implements OnInit {
     this.socketService.join(this.connect.value.key as string);
   }
 
+  connectToRoom(){
+    this.socketService.joinWaitingRoom()
+  }
 }

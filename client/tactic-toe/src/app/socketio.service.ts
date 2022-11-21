@@ -42,6 +42,11 @@ export class SocketioService {
     this.socket.on('opponent', (opponentName : string) => {
       this.opponent = opponentName;
     })
+
+    this.socket.on('waiting', (msg:string) => {
+      console.log(msg)
+    });
+
     this.socket.on('play again', (id : string) => {
       if (id === this.socket.id) {
         this.turnObservable.next(true);
@@ -53,6 +58,7 @@ export class SocketioService {
       this.playAgainObservable.next(true);
     })
   }
+
 
   disconnect() {
     if (this.socket) {
@@ -92,6 +98,11 @@ export class SocketioService {
     if (this.socket) {
       this.socket.emit('play again', this.key);
     }
+  }
+
+
+  joinWaitingRoom(){
+      this.socket.emit('joiningwait',this.socket.id);
   }
 
 }

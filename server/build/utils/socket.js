@@ -1,7 +1,9 @@
 "use strict";
 function ioFunctions(io) {
+    let joiningRoom = [];
     let keys = [];
     io.on('connection', (socket) => {
+        //battle friends
         socket.on('hosting', (key) => {
             keys.push(key);
             socket.join(key);
@@ -17,6 +19,20 @@ function ioFunctions(io) {
                 io.to(key).emit('allconnected', key, socket.id);
                 keys = keys.filter(el => el !== key);
             }
+        });
+        //search people
+        socket.on('joiningwait', (key) => {
+            console.log(key);
+            if (joiningRoom.length === 0) {
+                joiningRoom.push(key);
+                socket.join(key);
+            }
+            else {
+                let joinKey = joiningRoom.pop();
+                socket.join(joinKey);
+                io.to(joinKey).emit('allconnected', key, socket.id);
+            }
+            console.log(joiningRoom.length);
         });
         socket.on('turn', (index, key) => {
             socket.to(key).emit('turn', index);
