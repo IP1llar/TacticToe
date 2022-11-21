@@ -32,6 +32,10 @@ form {
   flex-direction: column;
 }
 
+.incentives-title{
+  display: flex;
+  align-items: center;
+}
 label {
   grid-column-start: 0;
   grid-column-end: 3;

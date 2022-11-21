@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-
+  
   board: string[] = Array(9).fill('');
   spacesLeft = 9;
   winner: '' | 'TBD' | 'X' | 'O' | 'Draw' = '';
