@@ -14,7 +14,7 @@ export class EditComponent implements OnInit {
 
 
   editForm = this.fb.group({
-    name: [this.currentMenace.name, [Validators.required]],
+    name: [this.currentMenace.name, [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: [this.currentMenace.color, [Validators.required]],
     incentives: this.fb.group({
       win: [3, [Validators.required]],
@@ -43,9 +43,10 @@ export class EditComponent implements OnInit {
 
   handleSubmit() {
     const { name, color, incentives } = this.editForm.value;
+    
     this.api
       .updateAi({
-        name: name as string, // TODO: Can we deal with this by defining ai type
+        name: name?.trim() as string, // TODO: Can we deal with this by defining ai type
         color: color as string,
         win: incentives?.win as number,
         draw: incentives?.draw as number,

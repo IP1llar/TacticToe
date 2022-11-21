@@ -4,7 +4,7 @@
       <p *ngIf="createForm.controls.name.errors?.['required']">Name is required</p>
     </div>
     <ng-template #validName><label for="email">Name</label></ng-template>
-    <input type="text" id="name" formControlName="name">
+    <input maxLength='9' type="text" id="name" formControlName="name">
   
     <label for="color">Colour</label>
     <select id="color" formControlName="color" >

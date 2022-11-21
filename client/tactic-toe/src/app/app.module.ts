@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
-
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
@@ -62,6 +62,7 @@ import { InfoSvgComponent } from './info-svg/info-svg.component';
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    ClipboardModule,
     HttpClientModule,
     NgChartsModule,
     LayoutModule

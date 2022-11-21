@@ -23,11 +23,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               {
                 "input": "src/darktheme.css",
                 "bundleName": "darktheme",
-                "inject":false
+                "inject": false
               }
             ],
             "scripts": []
@@ -98,6 +99,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

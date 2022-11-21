@@ -9,7 +9,7 @@ import { APIClientService } from '../apiclient.service';
 })
 export class CreateFormComponent implements OnInit {
   createForm = this.fb.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: ['red', [Validators.required]],
     incentives: this.fb.group({
       win: [3, [Validators.required]],
@@ -20,13 +20,16 @@ export class CreateFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private api: APIClientService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   handleSubmit() {
     const { name, color, incentives } = this.createForm.value;
+    this.createForm.controls['name'].reset()
     this.api
       .createAi({
-        name: name as string,
+        name: name?.trim() as string,
         color: color as string,
         win: incentives?.win as number,
         draw: incentives?.draw as number,
