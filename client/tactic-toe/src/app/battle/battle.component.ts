@@ -16,7 +16,7 @@ export class BattleComponent implements OnInit {
   })
 
   chosen = 1;
-  cancelDisable = false
+  haveAI = true
 
   constructor(
     public socketService : SocketioService, 
@@ -31,14 +31,14 @@ export class BattleComponent implements OnInit {
       if (data) {
         this.router.navigate(['/battle', this.api.chosen])
       }
-    });    
-    if(this.api.allAi.value.length === 0) {
-      this.socketService.searching = true
-      this.cancelDisable = true
-    } else {
-      this.socketService.searching = false
-      this.cancelDisable = false
-    }
+    });   
+     
+    this.api.sharedAllAi.subscribe(data => {
+      console.log(data)
+      if(data.length === 0) this.haveAI = false
+      else this.haveAI = true
+      console.log(this.haveAI)
+    })
   }
 
   // ngOnDestroy() {
