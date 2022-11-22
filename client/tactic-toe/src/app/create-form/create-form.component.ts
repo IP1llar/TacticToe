@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { APIClientService } from '../apiclient.service';
 
@@ -17,11 +17,20 @@ export class CreateFormComponent implements OnInit {
       lose: [-1, [Validators.required]],
     }),
   });
+  allAi: any[] = [];
+
+  @Output() optionCreate = new EventEmitter<any>;
+
 
   constructor(private fb: FormBuilder, private api: APIClientService) {}
 
   ngOnInit(): void {
-    
+    this.api.sharedAllAi.subscribe(data => this.allAi = data)
+  }
+  switchAction(){
+    if(this.allAi.length !== 0){
+      this.optionCreate.emit({data: this.allAi[0].id})
+    }
   }
 
   handleSubmit() {
