@@ -30,7 +30,7 @@
         <h2 class="playOnlineH2"> Play Online</h2>
         <div class="searchAndCancel">
           <button [disabled] = "socketService.searching" class="searchButton" (click)="connectToRoom()">Search</button>
-          <button id="close" (click)="cancelSearch()"> Cancel </button> 
+          <button [disabled] ="cancelDisable" id="close" (click)="cancelSearch()"> Cancel </button> 
         </div>
     </div>
    
