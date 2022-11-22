@@ -1,5 +1,6 @@
 
 .standOut {
+  position:relative;
   background-color: var(--primary-bg-color);
   width: 15vw;
   padding: 20px;
@@ -10,6 +11,36 @@
   justify-content: center;
   align-items: center;
   min-width: 175px;
+}
+.deletion{
+  position:absolute;
+  height: 20px;
+  width: 20px;
+  top:5%;
+  right:5%;
+  z-index: 1;/*there's a div named div-hidden comming from the main that without z.index does not let the deletion be clickable */
+}
+.hide{
+  display:none;
+}
+.bar1, .bar2{
+  position:absolute;
+  top:50%;
+  left:12%;
+  width: 13px;
+  height: 3.5px;
+  border-radius: 3px;
+  background-color: var(--text-accent-color);
+  transition: 0.4s;
+}
+.deletion:hover {
+  cursor: pointer;
+}
+.bar1{
+  transform: rotate(45deg);
+}
+.bar2{
+  transform: rotate(-45deg);
 }
 
 h2, span {

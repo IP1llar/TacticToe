@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import { SocketioService } from './socketio.service';
 import { dataResponse, response } from './types';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { dataResponse, response } from './types';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socket: SocketioService) { }
   
 
   public isLoggedIn = false;
@@ -40,6 +41,8 @@ export class AuthService {
   logout() {
     this.isLoggedIn = false;
     this.setUserInfo({});
+    this.socket.clearSearchArray()
+    this.socket.searching = false
     return this.http.delete<response>('/api/logout', {withCredentials: true});
   }
 

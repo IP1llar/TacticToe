@@ -37,7 +37,7 @@ export module transformations {
     }
     return (inverses as any)[rotation.join('')];
   }
-  export function transformBoard (board: any, show = false): any[] | number [] { // Each board state is given as a string '012120200' where 0 is empty, 1 is X and 2 is O
+  export function transformBoard (board: any, show = false): any[]{ // Each board state is given as a string '012120200' where 0 is empty, 1 is X and 2 is O
     let largest = [board, [0,1,2,3,4,5,6,7,8], [0,1,2,3,4,5,6,7,8]];         // To store the state we rotate the board until we get the largest base 3 number
     const rotations = [
       [0,1,2,3,4,5,6,7,8],

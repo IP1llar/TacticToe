@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {transformations} from '../utils/transformations';
-
+type Board = (string | number)[];
 @Component({
   selector: 'app-statboard',
   templateUrl: './statboard.component.html',
@@ -12,7 +12,7 @@ export class StatboardComponent implements OnInit {
 
   toPlay: 'X' | 'O' = 'X';
 
-  board: (string | number)[] = Array(9).fill('');
+  board: Board  = Array(9).fill('');
 
   history: number[] = [];
 

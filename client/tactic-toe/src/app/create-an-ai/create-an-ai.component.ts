@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { APIClientService } from '../apiclient.service';
 
 @Component({
   selector: 'app-create-an-ai',
@@ -7,10 +6,27 @@ import { APIClientService } from '../apiclient.service';
   styleUrls: ['./create-an-ai.component.css']
 })
 export class CreateAnAiComponent implements OnInit {
-
-  constructor(private auth : APIClientService) { }
+  optionCreate:boolean = true;
+  editAi:number;
+  
+  constructor() {}
 
   ngOnInit(): void {
+    if(history.state.id === undefined){
+      this.optionCreate = true;
+    }else{
+      this.optionCreate = false
+      this.editAi = history.state.id;
+    }
   }
 
+  refreshCreate(eventData:{ data :any}){
+    if(eventData.data===true){ 
+      this.optionCreate = eventData.data
+    }else{
+      this.optionCreate = false;
+      this.editAi = eventData.data
+    }
+    
+  }
 }

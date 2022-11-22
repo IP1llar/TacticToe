@@ -73,7 +73,12 @@ export class APIClientService {
       headers: {'Content-Type': 'application/json'}
     });
   }
-
+  deleteAi(ai:{id:number}){
+    return this.api.post('api/ai/delete', JSON.stringify(ai), {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'}
+    });
+  }
   updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
     return this.api.post('api/ai/edit', JSON.stringify(ai), {
       withCredentials: true,

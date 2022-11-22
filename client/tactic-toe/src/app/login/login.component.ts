@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           this.loginSuccess = 'success';
           this.authService.setUserInfo({'user' : response['data']});
           this.api.getAllAi();
-          this.router.navigate(['create'])
+          this.router.navigate(['yourai'])
         },
         error: error => {
           this.loginSuccess = 'error';
