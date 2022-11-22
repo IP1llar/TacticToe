@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Output, EventEmitter } from '@angular/core';
 import { APIClientService } from '../apiclient.service';
 import { Location } from '@angular/common';
+import { ActivatedRoute,Router } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-ai-info',
@@ -11,7 +13,8 @@ export class AiInfoComponent implements OnInit {
   flag:boolean = false;
   @Input() ai = {id: 1, name: 'Bruce', results: {win:1, draw: 2, lose: 700}, color:'black'};
 
-  constructor(private api: APIClientService, private location: Location) { }
+  @Output() optionCreate = new EventEmitter(); editAi = new EventEmitter();
+  constructor(private api: APIClientService, private location: Location,private route : Router) { }
 
   ngOnInit(): void {
     this.flag = (this.location.path() === '/yourai' || this.location.path() === '/create');
@@ -21,7 +24,22 @@ export class AiInfoComponent implements OnInit {
     this.api.deleteAi({id: this.ai.id as number}).subscribe((data) => {
       this.api.getAllAi();
     });
+  }
 
+  goEdit(){
+    if(this.location.path() !== '/yourai'){
+      this.route.navigateByUrl('/yourai', {
+        state: {id: this.ai.id}
+      });
+    }else{
+      this.route.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.route.onSameUrlNavigation = 'reload';
+      this.route.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+        this.route.navigateByUrl('/yourai', {
+          state: {id: this.ai.id}
+        });
+      })
+    }
   }
 
 }

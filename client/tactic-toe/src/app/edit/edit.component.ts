@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { APIClientService } from '../apiclient.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
@@ -9,10 +10,10 @@ import { APIClientService } from '../apiclient.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  currentMenace = {id: 1, name:'Bruce', color: 'black', incentives: {win: 3,draw: 1, lose: -1}, state: {}}
+  currentMenace = {id: 1, name:'', color: '', incentives: {win: 3,draw: 1, lose: -1}, state: {}}
   id = 1;
 
-
+  
   editForm = this.fb.group({
     name: [this.currentMenace.name, [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: [this.currentMenace.color, [Validators.required]],
@@ -23,13 +24,18 @@ export class EditComponent implements OnInit {
     }),
   });
 
+  @Input() AiId:number = 0;
 
-  constructor(private fb: FormBuilder, private api: APIClientService, private route : ActivatedRoute) {}
+  @Output() optionCreate = new EventEmitter<any>;
+
+
+  constructor(private fb: FormBuilder, private api: APIClientService, private router : Router) {}
+
+
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(data => {
-      this.id = data.get('id') as unknown as number;
-      this.api.getAi(this.id)
+    if(this.AiId !== 0){
+      this.api.getAi(this.AiId)
         .subscribe(ai => {
           this.currentMenace = ai as any;
           this.editForm.controls.name.setValue(this.currentMenace.name);
@@ -38,7 +44,11 @@ export class EditComponent implements OnInit {
           this.editForm.controls.incentives.controls.draw.setValue(this.currentMenace.incentives.draw);
           this.editForm.controls.incentives.controls.lose.setValue(this.currentMenace.incentives.lose);
         });
-    })
+    }
+  }
+
+  switchAction(){
+    this.optionCreate.emit({data:true});
   }
 
   handleSubmit() {

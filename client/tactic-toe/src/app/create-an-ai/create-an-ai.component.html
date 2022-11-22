@@ -1,7 +1,9 @@
 <main>
-  <div class="create standOut">
-    <h2>Create an Ai</h2>
-    <app-create-form></app-create-form>
+  <div *ngIf="optionCreate"  class="create standOut">
+    <app-create-form (optionCreate)="refreshCreate($event)" ></app-create-form>
+  </div>
+  <div *ngIf="!optionCreate" class="edit standOut">
+    <app-edit [AiId]="editAi" (optionCreate)="refreshCreate($event)"></app-edit>
   </div>
   <div class="yourai standOut">
     <h2>Your Ai</h2>
