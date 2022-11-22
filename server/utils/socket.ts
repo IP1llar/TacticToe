@@ -28,7 +28,9 @@ function ioFunctions (io:any) {
       } else {
         let joinKey = joiningRoom.pop()
         socket.join(joinKey)
-        io.to(joinKey).emit('allconnected', key, socket.id);
+        io.to(joinKey).emit('message', `${socket.id} joined room ${joinKey}`)
+        io.to(joinKey).emit('allconnected', joinKey, socket.id);
+        
       }
       console.log(joiningRoom.length)
     });

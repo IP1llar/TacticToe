@@ -11,6 +11,7 @@ import { SocketioService } from '../socketio.service';
 })
 export class BattleComponent implements OnInit {
 
+  searchFlag:boolean = false
 
   connect = this.fb.group({
     host: [true],
@@ -53,5 +54,6 @@ export class BattleComponent implements OnInit {
 
   connectToRoom(){
     this.socketService.joinWaitingRoom()
+    this.searchFlag = true
   }
 }

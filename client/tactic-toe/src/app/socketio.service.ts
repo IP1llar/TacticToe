@@ -27,6 +27,7 @@ export class SocketioService {
       if (msg === 'failure') this.searching = this.connected = false;
     });
     this.socket.on('allconnected', (key : number, socketId: string) => {
+      console.log(key, 'hello')
       this.key = key;
       this.connected = true;
       if (socketId === this.socket.id) {
@@ -42,10 +43,6 @@ export class SocketioService {
     this.socket.on('opponent', (opponentName : string) => {
       this.opponent = opponentName;
     })
-
-    this.socket.on('waiting', (msg:string) => {
-      console.log(msg)
-    });
 
     this.socket.on('play again', (id : string) => {
       if (id === this.socket.id) {
@@ -102,7 +99,7 @@ export class SocketioService {
 
 
   joinWaitingRoom(){
-      this.socket.emit('joiningwait',this.socket.id);
+      this.socket.emit('joiningwait',this.socket.id.slice(0,5));
   }
 
 }

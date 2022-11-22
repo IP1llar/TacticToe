@@ -12,6 +12,10 @@ h2 {
   color: var(--text-accent-color);
 }
 
+.copyAndPaste{
+  cursor: pointer;
+}
+
 form {
   width: 100%;
   display: flex;
@@ -57,6 +61,24 @@ form {
 span {
   color: var(--text-accent-color);
 }
+
+.searchGame{
+  margin-top: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.playOnlineH2{
+  align-self: flex-start;
+}
+
+.searchButton{
+  margin-right: 50px;
+}
+
+
 
 @media only screen and (max-width: 900px) {
   .container {

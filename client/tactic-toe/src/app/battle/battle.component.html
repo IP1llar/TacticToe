@@ -12,7 +12,7 @@
       <div class="host" *ngIf="connect.value.host; else join">
         <div class="Line">
           <p>Your key is: <span *ngIf="socketService.socket.id !== undefined">{{socketService.socket.id.slice(0, 5)}}  </span>
-          <svg cdkCopyToClipboard="{{socketService.socket.id.slice(0, 5)}}" xmlns="http://www.w3.org/2000/svg" height="20" width="20"><path d="M3.896 19.167q-.834 0-1.438-.605-.604-.604-.604-1.437V4.583h2.042v12.542h10.5v2.042Zm4.083-4.084q-.833 0-1.437-.604-.604-.604-.604-1.437V2.875q0-.833.604-1.437.604-.605 1.437-.605h8.125q.834 0 1.438.605.604.604.604 1.437v10.167q0 .833-.604 1.437-.604.604-1.438.604Zm0-2.041h8.125V2.875H7.979v10.167Zm0 0V2.875v10.167Z"/></svg></p>
+          <svg class="copyAndPaste" cdkCopyToClipboard="{{socketService.socket.id.slice(0, 5)}}" xmlns="http://www.w3.org/2000/svg" height="20" width="20"><path d="M3.896 19.167q-.834 0-1.438-.605-.604-.604-.604-1.437V4.583h2.042v12.542h10.5v2.042Zm4.083-4.084q-.833 0-1.437-.604-.604-.604-.604-1.437V2.875q0-.833.604-1.437.604-.605 1.437-.605h8.125q.834 0 1.438.605.604.604.604 1.437v10.167q0 .833-.604 1.437-.604.604-1.438.604Zm0-2.041h8.125V2.875H7.979v10.167Zm0 0V2.875v10.167Z"/></svg></p>
         </div>
         <button (click)="host()" type="button" [disabled]="socketService.searching">Host</button>
       </div>
@@ -26,7 +26,11 @@
         </div>
       </ng-template>
     </form>
-    <button (click)="connectToRoom()">search</button>
+    <div class="searchGame">
+      <h2 class="playOnlineH2"> Play Online </h2>
+      <button [disabled] = "searchFlag" class="searchButton" (click)="connectToRoom()">Search</button>
+    </div>
+   
   </div>
   <div class="yourAi standOut">
     <h2>Your Ai</h2>
