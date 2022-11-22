@@ -46,3 +46,7 @@ input, select {
   margin-bottom: 20px;
   padding: 5px;
 }
+
+.exceeded{
+  font-size: 20px;
+}
