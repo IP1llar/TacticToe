@@ -27,8 +27,11 @@
       </ng-template>
     </form>
     <div class="searchGame">
-      <h2 class="playOnlineH2"> Play Online </h2>
-      <button [disabled] = "searchFlag" class="searchButton" (click)="connectToRoom()">Search</button>
+        <h2 class="playOnlineH2"> Play Online</h2>
+        <div class="searchAndCancel">
+          <button [disabled] = "socketService.searching" class="searchButton" (click)="connectToRoom()">Search</button>
+          <button id="close" (click)="cancelSearch()"> Cancel </button> 
+        </div>
     </div>
    
   </div>

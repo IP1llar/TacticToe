@@ -10,9 +10,6 @@ import { SocketioService } from '../socketio.service';
   styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
-
-  searchFlag:boolean = false
-
   connect = this.fb.group({
     host: [true],
     key: ['', Validators.required]
@@ -33,7 +30,7 @@ export class BattleComponent implements OnInit {
       if (data) {
         this.router.navigate(['/battle', this.api.chosen])
       }
-    });
+    });    
   }
 
   // ngOnDestroy() {
@@ -42,6 +39,11 @@ export class BattleComponent implements OnInit {
 
   toggleCheckbox(name: string) {
     this.connect.controls.host.setValue(!this.connect.value.host);
+  }
+
+  cancelSearch() {
+    this.socketService.searching = false
+    this.socketService.clearSearchArray()
   }
 
   host () {
@@ -54,6 +56,5 @@ export class BattleComponent implements OnInit {
 
   connectToRoom(){
     this.socketService.joinWaitingRoom()
-    this.searchFlag = true
   }
 }

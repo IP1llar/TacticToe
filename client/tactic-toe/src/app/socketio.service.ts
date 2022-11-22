@@ -7,7 +7,6 @@ import { io } from 'socket.io-client';
 export class SocketioService {
 
   constructor() { }
-
   socket: any; // find typing
   connected = false;
   connectedObservable = new EventEmitter(this.connected);
@@ -27,7 +26,6 @@ export class SocketioService {
       if (msg === 'failure') this.searching = this.connected = false;
     });
     this.socket.on('allconnected', (key : number, socketId: string) => {
-      console.log(key, 'hello')
       this.key = key;
       this.connected = true;
       if (socketId === this.socket.id) {
@@ -36,6 +34,7 @@ export class SocketioService {
       }
       this.connectedObservable.emit(this.connected);
     })
+
     this.socket.on('turn', (index : number) => {
       this.indexObservable.next(index);
       this.turnObservable.next(true)
@@ -71,6 +70,12 @@ export class SocketioService {
     }
   }
 
+  clearSearchArray(){
+    if(this.socket) {
+      this.socket.emit('clear', 'hi')
+    }
+  }
+
   host() {
     if (this.socket && !this.searching && !this.connected) {
       this.searching = true;
@@ -100,6 +105,7 @@ export class SocketioService {
 
   joinWaitingRoom(){
       this.socket.emit('joiningwait',this.socket.id.slice(0,5));
+      this.searching = true
   }
 
 }

@@ -1,3 +1,5 @@
+import { join } from "cypress/types/lodash";
+
 function ioFunctions (io:any) {
   let joiningRoom:Array<any> = []
   let keys:Array<any> = [];
@@ -25,6 +27,7 @@ function ioFunctions (io:any) {
       if(joiningRoom.length === 0) {
         joiningRoom.push(key);
         socket.join(key);
+        io.to(key).emit('waiting', 'We are now searching')
       } else {
         let joinKey = joiningRoom.pop()
         socket.join(joinKey)
@@ -34,6 +37,16 @@ function ioFunctions (io:any) {
       }
       console.log(joiningRoom.length)
     });
+
+    socket.on('disconnect', (data:any) => {
+      console.log('someone disconnected')
+      joiningRoom = joiningRoom.filter(el => el !== socket.id.slice(0,5));
+      console.log(joiningRoom.length)
+    })
+
+    socket.on('clear', (data:string) => {
+       joiningRoom.pop()
+      })
 
 
      socket.on('turn', (index:any, key:any) => {
