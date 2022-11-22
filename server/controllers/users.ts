@@ -1,4 +1,5 @@
 import express from 'express'
+import { Socket } from 'socket.io';
 const bcrypt = require('bcrypt');
 const { db } = require('../models')
 const { Users } = db;

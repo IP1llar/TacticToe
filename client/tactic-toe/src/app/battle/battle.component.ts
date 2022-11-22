@@ -10,14 +10,13 @@ import { SocketioService } from '../socketio.service';
   styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
-
-
   connect = this.fb.group({
     host: [true],
     key: ['', Validators.required]
   })
 
   chosen = 1;
+  haveAI = true
 
   constructor(
     public socketService : SocketioService, 
@@ -32,7 +31,14 @@ export class BattleComponent implements OnInit {
       if (data) {
         this.router.navigate(['/battle', this.api.chosen])
       }
-    });
+    });   
+     
+    this.api.sharedAllAi.subscribe(data => {
+      console.log(data)
+      if(data.length === 0) this.haveAI = false
+      else this.haveAI = true
+      console.log(this.haveAI)
+    })
   }
 
   // ngOnDestroy() {
@@ -43,6 +49,11 @@ export class BattleComponent implements OnInit {
     this.connect.controls.host.setValue(!this.connect.value.host);
   }
 
+  cancelSearch() {
+    this.socketService.searching = false
+    this.socketService.clearSearchArray()
+  }
+
   host () {
     this.socketService.host();
   }
@@ -51,4 +62,7 @@ export class BattleComponent implements OnInit {
     this.socketService.join(this.connect.value.key as string);
   }
 
+  connectToRoom(){
+    this.socketService.joinWaitingRoom()
+  }
 }

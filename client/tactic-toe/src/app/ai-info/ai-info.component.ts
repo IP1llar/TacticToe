@@ -14,7 +14,7 @@ export class AiInfoComponent implements OnInit {
   constructor(private api: APIClientService, private location: Location) { }
 
   ngOnInit(): void {
-    this.flag = this.location.path() === '/yourai';
+    this.flag = (this.location.path() === '/yourai' || this.location.path() === '/create');
   }
 
   deleteAi(){

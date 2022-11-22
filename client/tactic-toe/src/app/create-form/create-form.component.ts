@@ -8,6 +8,9 @@ import { APIClientService } from '../apiclient.service';
   styleUrls: ['./create-form.component.css'],
 })
 export class CreateFormComponent implements OnInit {
+
+  tooManyAIs = false
+
   createForm = this.fb.group({
     name: ['', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: ['red', [Validators.required]],
@@ -21,7 +24,11 @@ export class CreateFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private api: APIClientService) {}
 
   ngOnInit(): void {
-    
+    this.api.sharedAllAi.subscribe((data:any) => {
+      console.log(data)
+      if(data.length > 12 ) this.tooManyAIs = true
+      else this.tooManyAIs = false
+    })
   }
 
   handleSubmit() {

@@ -11,17 +11,18 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent implements OnInit {
 
   registerForm = this.fb.group({
-    userEmail: ['', [Validators.required, Validators.email]],
-    userFirstName: ['', Validators.required],
-    userLastName: ['', Validators.required],
-    userPassword: ['', [Validators.required, Validators.minLength(6)]] // TODO: Add second password (check typed correctly)
+    userEmail: ['', [Validators.required, Validators.email,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
+    userFirstName: ['', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
+    userLastName: ['', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
+    userPassword: ['', [Validators.required, Validators.minLength(6),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]] // TODO: Add second password (check typed correctly)
   })
 
   registerSuccess = 'null';
 
   onSubmit() {
     const { userEmail, userFirstName, userLastName, userPassword } = this.registerForm.value;
-    this.authService.register(userEmail as string, userFirstName as string, userLastName as string, userPassword as string)
+
+    this.authService.register(userEmail?.trim() as string, userFirstName?.trim() as string, userLastName?.trim() as string, userPassword?.trim() as string)
       .subscribe({
         next: (response) => {
           this.registerSuccess = 'success';

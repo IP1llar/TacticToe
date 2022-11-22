@@ -32,7 +32,7 @@
       </table>
       <form [formGroup]="controls">
         <button (click)="resetBoard()" [disabled]="winner==='TBD'">Play</button>
-        <button type='button' (click)="smartAiGo()" [disabled]="winner==='TBD'">Fast game</button>
+        <button id="smartIaTrain" type='button' (click)="smartAiGo()" [disabled]="winner==='TBD'">Fast game</button>
         <div class="firstGo">
           <label for="firstGo"><span>{{currentMenace.name}}</span> goes first (X): </label>
           <div class="checkbox">
@@ -71,7 +71,7 @@
           <p>Losses:</p>
         </div>
         <div class="spans">
-          <p><span>{{ currentMenace.results.win + currentMenace.results.draw + currentMenace.results.lose }}</span></p>
+          <p><span id="total-games-played">{{ currentMenace.results.win + currentMenace.results.draw + currentMenace.results.lose }}</span></p>
           <p><span>{{ currentMenace.results.win }}</span></p>
           <p><span>{{ currentMenace.results.draw }}</span></p>
           <p><span>{{ currentMenace.results.lose }}</span></p>
