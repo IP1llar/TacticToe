@@ -21,13 +21,14 @@ export class CreateAnAiComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.sharedEditAi.subscribe(data =>{
+      console.log(data)
       if(data.length!==0){
         if(data.id!==0){
           this.editAi = data.id;
           this.optionCreate = false
+        }else{ 
+          this.optionCreate = true}
         }
-      }else{ 
-        this.optionCreate = true}
       })
   }
 
