@@ -22,7 +22,6 @@ import { CreateFormComponent } from './create-form/create-form.component';
 import { TrainComponent } from './train/train.component';
 import { StatsComponent } from './stats/stats.component';
 import { StatboardComponent } from './statboard/statboard.component';
-import { EditPageComponent } from './edit-page/edit-page.component';
 import { EditComponent } from './edit/edit.component';
 import { BattleComponent } from './battle/battle.component';
 import { AiBattleListComponent } from './ai-battle-list/ai-battle-list.component';
@@ -49,7 +48,6 @@ import { InfoSvgComponent } from './info-svg/info-svg.component';
     TrainComponent,
     StatsComponent,
     StatboardComponent,
-    EditPageComponent,
     EditComponent,
     BattleComponent,
     AiBattleListComponent,
