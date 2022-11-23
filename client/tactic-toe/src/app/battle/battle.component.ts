@@ -10,17 +10,16 @@ import { SocketioService } from '../socketio.service';
   styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
-  connect = this.fb.group({
-    host: [true],
-    key: ['', Validators.required]
-  })
+  createFlag:boolean = true;
+  
 
   chosen = 1;
   haveAI = true
 
+
   constructor(
     public socketService : SocketioService, 
-    private fb : FormBuilder,
+
     private api : APIClientService,
     private router : Router
   ) { }
@@ -45,24 +44,8 @@ export class BattleComponent implements OnInit {
   //   this.socketService.disconnect();
   // }
 
-  toggleCheckbox(name: string) {
-    this.connect.controls.host.setValue(!this.connect.value.host);
+  refreshCreate(eventData:{ data :any}){
+    this.createFlag = eventData.data ; 
   }
 
-  cancelSearch() {
-    this.socketService.searching = false
-    this.socketService.clearSearchArray()
-  }
-
-  host () {
-    this.socketService.host();
-  }
-
-  joinMatch () {
-    this.socketService.join(this.connect.value.key as string);
-  }
-
-  connectToRoom(){
-    this.socketService.joinWaitingRoom()
-  }
 }

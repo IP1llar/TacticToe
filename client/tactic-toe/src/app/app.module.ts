@@ -29,6 +29,8 @@ import { AiBattleInfoComponent } from './ai-battle-info/ai-battle-info.component
 import { MatchComponent } from './match/match.component';
 import { MatchBoardComponent } from './match-board/match-board.component';
 import { InfoSvgComponent } from './info-svg/info-svg.component';
+import { CreateBattleComponent } from './create-battle/create-battle.component';
+import { SearchBattleComponent } from './search-battle/search-battle.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { InfoSvgComponent } from './info-svg/info-svg.component';
     AiBattleInfoComponent,
     MatchComponent,
     MatchBoardComponent,
-    InfoSvgComponent
+    InfoSvgComponent,
+    CreateBattleComponent,
+    SearchBattleComponent
   ],
   imports: [
     BrowserModule,
