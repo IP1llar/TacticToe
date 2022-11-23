@@ -34,17 +34,20 @@ export class EditComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(this.AiId !== 0){
-      this.api.getAi(this.AiId)
-        .subscribe(ai => {
-          this.currentMenace = ai as any;
-          this.editForm.controls.name.setValue(this.currentMenace.name);
-          this.editForm.controls.color.setValue(this.currentMenace.color);
-          this.editForm.controls.incentives.controls.win.setValue(this.currentMenace.incentives.win);
-          this.editForm.controls.incentives.controls.draw.setValue(this.currentMenace.incentives.draw);
-          this.editForm.controls.incentives.controls.lose.setValue(this.currentMenace.incentives.lose);
-        });
-    }
+    this.api.sharedEditAi.subscribe(data =>{
+      if(data.id !== 0){
+        this.AiId = data.id
+        this.api.getAi(this.AiId)
+          .subscribe(ai => {
+            this.currentMenace = ai as any;
+            this.editForm.controls.name.setValue(this.currentMenace.name);
+            this.editForm.controls.color.setValue(this.currentMenace.color);
+            this.editForm.controls.incentives.controls.win.setValue(this.currentMenace.incentives.win);
+            this.editForm.controls.incentives.controls.draw.setValue(this.currentMenace.incentives.draw);
+            this.editForm.controls.incentives.controls.lose.setValue(this.currentMenace.incentives.lose);
+          });
+      }
+    })
   }
 
   switchAction(){

@@ -1,0 +1,60 @@
+h2 {
+  color: var(--text-accent-color);
+  display:inline;
+}
+.aiOptions{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.actionSel{
+  border-radius: 10px;
+  padding:10px;
+}
+.active{
+  background-color: var(--nav-bg-color);
+}
+
+.actionSel:hover {
+  cursor: pointer;
+}
+
+.copyAndPaste {
+  cursor: pointer;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hostcheckbox {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.join {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hostcheckbox, .host, .join {
+    width: max-content;
+  }
+  
+.checkmark {
+  position: absolute;
+  top: -5px;
+  left: 5px;
+  height: 25px;
+  width: 25px;
+  border-radius: 5px;
+  background-color: var(--shadow-color);
+}
+
+span {
+  color: var(--text-accent-color);
+}

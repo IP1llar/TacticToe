@@ -37,7 +37,7 @@ export class CreateFormComponent implements OnInit {
 
   switchAction(){
     if(this.allAi.length !== 0){
-      this.optionCreate.emit({data: this.allAi[0].id})
+      this.api.editAi(this.allAi[0].id)
     }
   }
 

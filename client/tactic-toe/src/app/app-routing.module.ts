@@ -4,7 +4,6 @@ import { AboutComponent } from './about/about.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { BattleComponent } from './battle/battle.component';
 import { CreateAnAiComponent } from './create-an-ai/create-an-ai.component';
-import { EditPageComponent } from './edit-page/edit-page.component';
 
 import { LoginComponent } from './login/login.component';
 import { MatchComponent } from './match/match.component';

@@ -88,6 +88,7 @@ export class MatchBoardComponent implements OnInit {
     this.toPlay = 'X';
     this.winner = 'TBD';
     this.socket.playAgainObservable.next(false);
+    this.spacesLeft = 9;
   }
 
   parseBoard(board: string[]) {
