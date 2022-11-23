@@ -33,10 +33,8 @@ export class BattleComponent implements OnInit {
     });   
      
     this.api.sharedAllAi.subscribe(data => {
-      console.log(data)
       if(data.length === 0) this.haveAI = false
       else this.haveAI = true
-      console.log(this.haveAI)
     })
   }
 

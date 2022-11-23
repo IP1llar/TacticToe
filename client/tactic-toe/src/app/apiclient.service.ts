@@ -9,14 +9,19 @@ import { succinctAi } from './aiType';
 export class APIClientService {
 
   allAi: BehaviorSubject<succinctAi[]> = new BehaviorSubject<succinctAi[]>([]);
-  // TODO: Find all anys
   public sharedAllAi: Observable<succinctAi[]> = this.allAi.asObservable();
   chosen = 1;
+
+  editAiState: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  public sharedEditAi: Observable<any> = this.editAiState.asObservable();
 
   constructor(private api: HttpClient) {
     this.getAllAi();
   }
 
+  editAi(id:number){
+    this.editAiState.next({id: id});
+  }
 
   getAiMove(board: string, id:number) {
     return this.api.post<string>(`api/ai/move`, JSON.stringify({board, id}), {

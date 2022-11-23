@@ -19,8 +19,9 @@
           >{{ socketService.socket.id.slice(0, 5) }}
         </span>
         <svg
+          *ngIf="socketService.socket.id"
           class="copyAndPaste"
-          cdkCopyToClipboard="{{ socketService.socket.id.slice(0, 5) }}"
+          cdkCopyToClipboard="{{ socketService.socket.id.slice(0, 5)}}"
           xmlns="http://www.w3.org/2000/svg"
           height="20"
           width="20"
