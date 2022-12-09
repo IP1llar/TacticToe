@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { SocketioService } from './socketio.service';
 import { dataResponse, response } from './types';
+import { APIClientService } from './apiclient.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private socket: SocketioService) { }
+  constructor(private http: HttpClient, private socket: SocketioService, private api : APIClientService) { }
   
 
   public isLoggedIn = false;
@@ -43,6 +44,7 @@ export class AuthService {
     this.setUserInfo({});
     this.socket.clearSearchArray()
     this.socket.searching = false
+    this.api.editAi(0)
     return this.http.delete<response>('/api/logout', {withCredentials: true});
   }
 
