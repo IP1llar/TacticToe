@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router} from '@angular/router';
+import {  Router} from '@angular/router';
 import { APIClientService } from '../apiclient.service';
-import { map, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit',
@@ -48,10 +48,6 @@ export class EditComponent implements OnInit {
           });
       }
     })
-  }
-
-  switchAction(){
-    this.optionCreate.emit({data:true});
   }
 
   handleSubmit() {

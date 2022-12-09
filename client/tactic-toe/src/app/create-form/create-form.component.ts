@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { APIClientService } from '../apiclient.service';
 
@@ -21,9 +21,6 @@ export class CreateFormComponent implements OnInit {
     }),
   });
   allAi: any[] = [];
-
-  @Output() optionCreate = new EventEmitter<any>;
-
 
   constructor(private fb: FormBuilder, private api: APIClientService) {}
 

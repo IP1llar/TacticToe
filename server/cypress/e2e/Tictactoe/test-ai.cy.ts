@@ -18,15 +18,12 @@ describe('Register and log in', () => {
         cy.get('#lose').should('have.value', '-1');
         cy.get('#lose').clear().type('-2').should('have.value', '-2');
         cy.get('#create-form').submit();
-
-        // cy.get('#delAI').click()
-        cy.get('#ai-list').children().should('have.length',1)
-        cy.get('#delAI').click()
-
-        
+        //DELETE Ai
+        cy.get('#ai-list').children().should('have.length', 1);
+        cy.get('#delAI').click();
     })
     it('Create AI and train', () => {
-        //CREATE Test2 and delete it
+        //CREATE Test2 and train it
         cy.get('#name').type('test2').should('have.value', 'test2');
         cy.get('#color').should('have.value', '0: red');
         cy.get('#color').select('2: gold').should('have.value', '2: gold')
@@ -44,7 +41,7 @@ describe('Register and log in', () => {
         cy.get('#total-games-played').contains('1')
 
         cy.visit('http://localhost:4200/yourai');
-        cy.get('#ai-list').children().should('have.length',1)
+        cy.get('#ai-list').children().should('have.length', 1)
         cy.get('#delAI').click()
     })
 
