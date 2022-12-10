@@ -2,7 +2,6 @@
 .standOut {
   position:relative;
   background-color: var(--primary-bg-color);
-  width: 15vw;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 0px 5px var(--shadow-color);
@@ -10,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 175px;
+  min-width: 275px;
 }
 .deletion{
   position:absolute;
