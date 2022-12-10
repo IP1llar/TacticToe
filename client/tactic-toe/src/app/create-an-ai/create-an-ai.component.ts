@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { APIClientService } from '../apiclient.service';
 
 @Component({
@@ -8,36 +7,37 @@ import { APIClientService } from '../apiclient.service';
   styleUrls: ['./create-an-ai.component.css']
 })
 export class CreateAnAiComponent implements OnInit {
-
-  editAi2: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  // TODO: Find all anys
   
   optionCreate:boolean = true;
   editAi:number;
+  allAi:any =[]
   
-  constructor(public api : APIClientService) {
-    
-  }
-
+  constructor(public api : APIClientService) {}
   ngOnInit(): void {
-    this.api.sharedEditAi.subscribe(data =>{
-      if(data.length!==0){
-        if(data.id!==0){
-          this.editAi = data.id;
-          this.optionCreate = false
+    this.api.sharedAllAi.subscribe(data=>{
+        this.allAi = data;
+        if(this.allAi.length ===0){ 
+          this.optionCreate = true;
+        }else if(this.optionCreate===false){
+            this.api.editAi(data[0].id)
         }
-      }else{ 
-        this.optionCreate = true}
-      })
+    });
+    this.api.sharedEditAi.subscribe(data =>{
+      if(data.id){
+        if(data){
+          this.optionCreate = false
+        }else{ 
+          this.optionCreate = true
+        } 
+      }
+    })
   }
 
-  refreshCreate(eventData:{ data :any}){
-    if(eventData.data===true){ 
-      this.optionCreate = eventData.data
-    }else{
-      this.optionCreate = false;
-      this.editAi = eventData.data
+  switchAction(state:boolean){
+    if(this.allAi.length !==0){
+      this.api.editAi(this.allAi[0].id);
+      this.optionCreate = state;
     }
-    
   }
+ 
 }

@@ -10,6 +10,8 @@ h2 {
 .actionSel{
   border-radius: 10px;
   padding:10px;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 .active{
   background-color: var(--nav-bg-color);

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { succinctAi } from './aiType';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,15 +11,15 @@ export class APIClientService {
   public sharedAllAi: Observable<succinctAi[]> = this.allAi.asObservable();
   chosen = 1;
 
-  editAiState: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  editAiState: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public sharedEditAi: Observable<any> = this.editAiState.asObservable();
 
   constructor(private api: HttpClient) {
-    this.getAllAi();
+    this.getAllAi()
   }
 
   editAi(id:number){
-    this.editAiState.next({id: id});
+      this.editAiState.next({id:id});
   }
 
   getAiMove(board: string, id:number) {
@@ -59,6 +58,7 @@ export class APIClientService {
     }).subscribe({
       next: data => {
         this.allAi.next(data);
+
         if (data.length) this.chosen = (data[0] as any).id
       },
       error: error => console.log(error)

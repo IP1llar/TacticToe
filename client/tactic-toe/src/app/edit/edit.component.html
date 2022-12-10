@@ -1,8 +1,3 @@
-<div class="aiOptions">
-  <div class="actionSel" (click)="switchAction()"><h2>Create</h2></div>
-  <h2 >|</h2>
-  <div class="actionSel active"><h2>Edit</h2></div>
-</div>
 <main>
   <form [formGroup]="editForm" (ngSubmit)="handleSubmit()">
     <div class='error' *ngIf="editForm.controls.name.invalid && (editForm.controls.name.dirty || editForm.controls.name.touched); else validName">

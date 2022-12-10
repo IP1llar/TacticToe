@@ -1,9 +1,14 @@
 <main>
-  <div *ngIf="optionCreate"  class="create standOut">
-    <app-create-form (optionCreate)="refreshCreate($event)" ></app-create-form>
-  </div>
-  <div *ngIf="!optionCreate" class="edit standOut">
-    <app-edit [AiId]="editAi" (optionCreate)="refreshCreate($event)"></app-edit>
+  <div class="create standOut">
+    <div class="aiOptions">
+      <div class="actionSel" [ngClass]="{'active' : optionCreate}" (click)="switchAction(true)"><h2>Create</h2></div>
+      <h2>|</h2>
+      <div class="actionSel" [ngClass]="{'active' : !optionCreate}" (click)="switchAction(false)"><h2>Edit</h2></div>
+    </div>
+
+    <app-create-form *ngIf="optionCreate" ></app-create-form>
+    <app-edit *ngIf="!optionCreate" [AiId]="editAi" ></app-edit>
+
   </div>
   <div class="yourai standOut">
     <h2>Your Ai</h2>

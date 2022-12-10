@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { APIClientService } from '../apiclient.service';
-import { map, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit',
@@ -10,12 +10,12 @@ import { map, Observable } from 'rxjs';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  currentMenace = {id: 1, name:'', color: '', incentives: {win: 3,draw: 1, lose: -1}, state: {}}
+  currentMenace = { id: 1, name: '', color: '', incentives: { win: 3, draw: 1, lose: -1 }, state: {} }
   id = 1;
 
-  
+
   editForm = this.fb.group({
-    name: [this.currentMenace.name, [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
+    name: [this.currentMenace.name, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: [this.currentMenace.color, [Validators.required]],
     incentives: this.fb.group({
       win: [3, [Validators.required]],
@@ -24,12 +24,12 @@ export class EditComponent implements OnInit {
     }),
   });
 
-  @Input() AiId:number = 0;
+  @Input() AiId: number = 0;
 
   @Output() optionCreate = new EventEmitter<any>;
 
 
-  constructor(private fb: FormBuilder, private api: APIClientService, private router : Router) {}
+  constructor(private fb: FormBuilder, private api: APIClientService, private router: Router) { }
 
 
 
@@ -50,13 +50,8 @@ export class EditComponent implements OnInit {
     })
   }
 
-  switchAction(){
-    this.optionCreate.emit({data:true});
-  }
-
   handleSubmit() {
     const { name, color, incentives } = this.editForm.value;
-    
     this.api
       .updateAi({
         name: name?.trim() as string, // TODO: Can we deal with this by defining ai type

@@ -1,19 +1,23 @@
-<div class="aiOptions">
-  <div class="actionSel active"><h2>Create</h2></div>
-  <h2 >|</h2>
-  <div class="actionSel" (click)="switchAction()"><h2>Edit</h2></div>
-</div>
 <main>
   <form id="create-form" [formGroup]="createForm" (ngSubmit)="handleSubmit()">
-    <h2 *ngIf="tooManyAIs" class='error exceeded'>Maximum AIs exceeded</h2>
-    <div class='error' *ngIf="createForm.controls.name.invalid && (createForm.controls.name.dirty || createForm.controls.name.touched); else validName">
-      <p *ngIf="createForm.controls.name.errors?.['required']">Name is required</p>
+    <h2 *ngIf="tooManyAIs" class="error exceeded">Maximum AIs exceeded</h2>
+    <div
+      class="error"
+      *ngIf="
+        createForm.controls.name.invalid &&
+          (createForm.controls.name.dirty || createForm.controls.name.touched);
+        else validName
+      "
+    >
+      <p *ngIf="createForm.controls.name.errors?.['required']">
+        Name is required
+      </p>
     </div>
     <ng-template #validName><label for="email">Name</label></ng-template>
-    <input maxLength='9' type="text" id="name" formControlName="name">
-  
+    <input maxLength="9" type="text" id="name" formControlName="name" />
+
     <label for="color">Colour</label>
-    <select id="color" formControlName="color" >
+    <select id="color" formControlName="color">
       <option selected="selected" ngValue="red">Red</option>
       <option ngValue="orange">Orange</option>
       <option ngValue="gold">Yellow</option>
@@ -22,25 +26,24 @@
       <option ngValue="indigo">Indigo</option>
       <option ngValue="violet">Violet</option>
     </select>
-  
+
     <div class="incentives" formGroupName="incentives">
       <div class="incentives-title">
-        <h3>Incentives </h3>
+        <h3>Incentives</h3>
         <app-info-svg [description]="'Incentives'"></app-info-svg>
       </div>
       <label for="win">Win</label>
-      <input type="number" id="win" formControlName="win" value="3">
-  
+      <input type="number" id="win" formControlName="win" value="3" />
+
       <label for="draw">Draw</label>
-      <input type="number" id="draw" formControlName="draw" value="1">
-  
+      <input type="number" id="draw" formControlName="draw" value="1" />
+
       <label for="lose">Loss</label>
-      <input type="number" id="lose" formControlName="lose" value="-1">
+      <input type="number" id="lose" formControlName="lose" value="-1" />
     </div>
-  
+
     <div class="buttons">
-      <button  [disabled]="!createForm.valid || tooManyAIs">Create</button>
+      <button [disabled]="!createForm.valid || tooManyAIs">Create</button>
     </div>
-  
   </form>
 </main>
