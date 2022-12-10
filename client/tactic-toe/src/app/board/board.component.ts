@@ -22,7 +22,7 @@ export class BoardComponent implements OnInit {
   smartAi = false;
   aiHistory: ((number | string)[])[] = [];
   playerMove = false;
-  currentMenace:any = {history: ['0', 0], results:{win:0, draw:0, lose:0}};
+  currentMenace:any = {history: ['0', 0], results:{win:0, draw:0, lose:0}, states: {'000000000': [0, 0, 0, 0, 0, 0, 0, 0, 0]}};
   id = 1;
   dimensions = [120, 120];
   controls = this.fb.group({
