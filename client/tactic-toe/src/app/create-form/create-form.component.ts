@@ -8,8 +8,11 @@ import { APIClientService } from '../apiclient.service';
   styleUrls: ['./create-form.component.css'],
 })
 export class CreateFormComponent implements OnInit {
+
+  tooManyAIs = false
+
   createForm = this.fb.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]],
     color: ['red', [Validators.required]],
     incentives: this.fb.group({
       win: [3, [Validators.required]],
@@ -17,16 +20,30 @@ export class CreateFormComponent implements OnInit {
       lose: [-1, [Validators.required]],
     }),
   });
+  allAi: any[] = [];
 
   constructor(private fb: FormBuilder, private api: APIClientService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.api.sharedAllAi.subscribe((data:any) => {
+      this.allAi = data
+      if(data.length > 12 ) this.tooManyAIs = true
+      else this.tooManyAIs = false
+    })
+  }
+
+  switchAction(){
+    if(this.allAi.length !== 0){
+      this.api.editAi(this.allAi[0].id)
+    }
+  }
 
   handleSubmit() {
     const { name, color, incentives } = this.createForm.value;
+    this.createForm.controls['name'].reset()
     this.api
       .createAi({
-        name: name as string,
+        name: name?.trim() as string,
         color: color as string,
         win: incentives?.win as number,
         draw: incentives?.draw as number,

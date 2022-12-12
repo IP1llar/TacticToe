@@ -10,18 +10,16 @@ import { SocketioService } from '../socketio.service';
   styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
-
-
-  connect = this.fb.group({
-    host: [true],
-    key: ['', Validators.required]
-  })
+  createFlag:boolean = true;
+  
 
   chosen = 1;
+  haveAI = true
+
 
   constructor(
     public socketService : SocketioService, 
-    private fb : FormBuilder,
+
     private api : APIClientService,
     private router : Router
   ) { }
@@ -32,23 +30,20 @@ export class BattleComponent implements OnInit {
       if (data) {
         this.router.navigate(['/battle', this.api.chosen])
       }
-    });
+    });   
+     
+    this.api.sharedAllAi.subscribe(data => {
+      if(data.length === 0) this.haveAI = false
+      else this.haveAI = true
+    })
   }
 
   // ngOnDestroy() {
   //   this.socketService.disconnect();
   // }
 
-  toggleCheckbox(name: string) {
-    this.connect.controls.host.setValue(!this.connect.value.host);
-  }
-
-  host () {
-    this.socketService.host();
-  }
-
-  joinMatch () {
-    this.socketService.join(this.connect.value.key as string);
+  refreshCreate(eventData:{ data :any}){
+    this.createFlag = eventData.data ; 
   }
 
 }

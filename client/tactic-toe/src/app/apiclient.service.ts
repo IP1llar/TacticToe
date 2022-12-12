@@ -2,21 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { succinctAi } from './aiType';
-
 @Injectable({
   providedIn: 'root'
 })
 export class APIClientService {
 
   allAi: BehaviorSubject<succinctAi[]> = new BehaviorSubject<succinctAi[]>([]);
-  // TODO: Find all anys
   public sharedAllAi: Observable<succinctAi[]> = this.allAi.asObservable();
   chosen = 1;
 
+  editAiState: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public sharedEditAi: Observable<any> = this.editAiState.asObservable();
+
   constructor(private api: HttpClient) {
-    this.getAllAi();
+    this.getAllAi()
   }
 
+  editAi(id:number){
+      this.editAiState.next({id:id});
+  }
 
   getAiMove(board: string, id:number) {
     return this.api.post<string>(`api/ai/move`, JSON.stringify({board, id}), {
@@ -54,6 +58,7 @@ export class APIClientService {
     }).subscribe({
       next: data => {
         this.allAi.next(data);
+
         if (data.length) this.chosen = (data[0] as any).id
       },
       error: error => console.log(error)
@@ -73,7 +78,12 @@ export class APIClientService {
       headers: {'Content-Type': 'application/json'}
     });
   }
-
+  deleteAi(ai:{id:number}){
+    return this.api.post('api/ai/delete', JSON.stringify(ai), {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'}
+    });
+  }
   updateAi(ai: {name:string, win:number, lose:number, draw:number, color:string, id:number}) {
     return this.api.post('api/ai/edit', JSON.stringify(ai), {
       withCredentials: true,

@@ -4,6 +4,30 @@ main {
   justify-content: center;
 }
 
+.aiOptions{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+h2 {
+  color: var(--text-accent-color);
+  display:inline;
+}
+
+.actionSel{
+  border-radius: 10px;
+  padding:10px;
+}
+.active{
+  background-color: var(--nav-bg-color);
+}
+
+.actionSel:hover {
+  cursor: pointer;
+}
+
+
 .standOut {
   width: 25vw;
   padding: 20px;
@@ -32,6 +56,10 @@ form {
   flex-direction: column;
 }
 
+.incentives-title{
+  display: flex;
+  align-items: center;
+}
 label {
   grid-column-start: 0;
   grid-column-end: 3;
@@ -41,4 +69,8 @@ label {
 input, select {
   margin-bottom: 20px;
   padding: 5px;
+}
+
+.exceeded{
+  font-size: 20px;
 }

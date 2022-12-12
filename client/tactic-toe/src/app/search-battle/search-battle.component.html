@@ -1,0 +1,11 @@
+<div class="aiOptions">
+  <div class="actionSel" (click)="switchAction()"><h2>Create</h2></div>
+  <h2>|</h2>
+  <div class="actionSel active"><h2>Search</h2></div>
+</div>
+<div class="searchGame">
+    <div class="searchAndCancel">
+      <button [disabled] = "socketService.searching"   class="searchButton" (click)="connectToRoom()">Search</button>
+      <button id="close" (click)="cancelSearch()"> Cancel </button> 
+    </div>
+</div>

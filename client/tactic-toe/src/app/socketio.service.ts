@@ -7,7 +7,6 @@ import { io } from 'socket.io-client';
 export class SocketioService {
 
   constructor() { }
-
   socket: any; // find typing
   connected = false;
   connectedObservable = new EventEmitter(this.connected);
@@ -35,6 +34,7 @@ export class SocketioService {
       }
       this.connectedObservable.emit(this.connected);
     })
+
     this.socket.on('turn', (index : number) => {
       this.indexObservable.next(index);
       this.turnObservable.next(true)
@@ -42,6 +42,7 @@ export class SocketioService {
     this.socket.on('opponent', (opponentName : string) => {
       this.opponent = opponentName;
     })
+
     this.socket.on('play again', (id : string) => {
       if (id === this.socket.id) {
         this.turnObservable.next(true);
@@ -54,6 +55,7 @@ export class SocketioService {
     })
   }
 
+
   disconnect() {
     if (this.socket) {
       this.socket.disconnect();
@@ -65,6 +67,12 @@ export class SocketioService {
   sendName(name:string) {
     if (this.socket) {
       this.socket.emit('opponent', name, this.key)
+    }
+  }
+
+  clearSearchArray(){
+    if(this.socket) {
+      this.socket.emit('clear', 'hi')
     }
   }
 
@@ -92,6 +100,12 @@ export class SocketioService {
     if (this.socket) {
       this.socket.emit('play again', this.key);
     }
+  }
+
+
+  joinWaitingRoom(){
+      this.socket.emit('joiningwait',this.socket.id.slice(0,5));
+      this.searching = true
   }
 
 }

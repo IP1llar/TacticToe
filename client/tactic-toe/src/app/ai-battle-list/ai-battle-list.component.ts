@@ -18,8 +18,10 @@ export class AiBattleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.sharedAllAi.subscribe(data => {
-      this.allAi = data;
-      this.chosen = data[0].id; 
+      if(data.length!==0){
+        this.allAi = data;
+        this.chosen = data[0].id; 
+      }
     })
   }
 

@@ -1,7 +1,14 @@
 <main>
   <div class="create standOut">
-    <h2>Create an Ai</h2>
-    <app-create-form></app-create-form>
+    <div class="aiOptions">
+      <div class="actionSel" [ngClass]="{'active' : optionCreate}" (click)="switchAction(true)"><h2>Create</h2></div>
+      <h2>|</h2>
+      <div class="actionSel" [ngClass]="{'active' : !optionCreate}" (click)="switchAction(false)"><h2>Edit</h2></div>
+    </div>
+
+    <app-create-form *ngIf="optionCreate" ></app-create-form>
+    <app-edit *ngIf="!optionCreate" [AiId]="editAi" ></app-edit>
+
   </div>
   <div class="yourai standOut">
     <h2>Your Ai</h2>

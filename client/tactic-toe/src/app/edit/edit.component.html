@@ -4,7 +4,7 @@
       <p *ngIf="editForm.controls.name.errors?.['required']">Name is required</p>
     </div>
     <ng-template #validName><label for="email">Name</label></ng-template>
-    <input type="text" id="name" formControlName="name" [value]="currentMenace.name">
+    <input maxLength='9' type="text" id="name" formControlName="name" [value]="currentMenace.name">
   
     <label for="color">Colour</label>
     <select id="color" formControlName="color">
@@ -18,7 +18,10 @@
     </select>
   
     <div class="incentives" formGroupName="incentives">
-      <h3>Incentives</h3>
+      <div class="incentives-title">
+        <h3>Incentives </h3>
+        <app-info-svg [description]="'Incentives'"></app-info-svg>
+      </div>
       <label for="win">Win</label>
       <input type="number" id="win" formControlName="win" [value]="currentMenace.incentives.win">
   
@@ -30,7 +33,7 @@
     </div>
   
     <div class="buttons">
-      <button [disabled]="!editForm.valid" [routerLink]="['/train', id]">Edit</button>
+      <button [disabled]="!editForm.valid" >Edit</button>
     </div>
   
   </form>
